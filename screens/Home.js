@@ -1,5 +1,12 @@
 import React from "react"
-import { View, Text, Button, StyleSheet } from "react-native"
+import {
+  View,
+  Text,
+  Button,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+} from "react-native"
 import { useNavigation } from "@react-navigation/native"
 
 const Home = () => {
@@ -8,7 +15,15 @@ const Home = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Home</Text>
-      <Text>This is where you swipe through users and see their profiles</Text>
+      <Text>Get hookd</Text>
+      <TouchableOpacity>
+        <Image
+          source={{
+            uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqDlIyL-V3IAgkKH2jzb1WOXXWEpORMdJ96w&usqp=CAU",
+          }}
+          style={{ width: 200, height: 200 }}
+        />
+      </TouchableOpacity>
       <Button
         title="Go to Matches"
         onPress={() => navigation.navigate("Matches")}
