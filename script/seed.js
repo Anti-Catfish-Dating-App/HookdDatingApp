@@ -34,6 +34,15 @@ async function seed() {
       isVerified: true,
     })
   }
+  const user1 = await User.findByPk(3);
+  const user2 = await User.findByPk(5);
+  const user3 = await User.findByPk(7);
+  await user1.addRightSwiped(user2);
+  await user2.addRightSwiped(user1);
+  await user1.addRightSwiped(user3);
+  await user3.addLeftSwiped(user1);
+
+  console.log(Object.keys(user1.__proto__));
 }
 
 async function runSeed() {
