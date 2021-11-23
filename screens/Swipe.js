@@ -28,6 +28,7 @@ class Swipe extends React.Component {
     this.state = {
       currentIndex: 0,
     }
+
     this.position = new Animated.ValueXY()
     this.rotate = this.position.x.interpolate({
       //length of the area that the animation can reach
@@ -43,6 +44,26 @@ class Swipe extends React.Component {
         ...this.position.getTranslateTransform(),
       ],
     }
+    this.catchOpacity = this.position.x.interpolate({
+      inputRange: [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2],
+      outputRange: [0, 0, 1],
+      extrapolate: "clamp",
+    })
+    this.releaseOpacity = this.position.x.interpolate({
+      inputRange: [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2],
+      outputRange: [1, 0, 0],
+      extrapolate: "clamp",
+    })
+    this.nextCardOpacity = this.position.x.interpolate({
+      inputRange: [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2],
+      outputRange: [1, 0, 1],
+      extrapolate: "clamp",
+    })
+    this.nextCardScale = this.position.x.interpolate({
+      inputRange: [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2],
+      outputRange: [1, 0.8, 1],
+      extrapolate: "clamp",
+    })
   }
 
   componentWillMount() {
@@ -51,7 +72,30 @@ class Swipe extends React.Component {
       onPanResponderMove: (evt, gestureState) => {
         this.position.setValue({ x: gestureState.dx, y: gestureState.dy })
       },
-      onPanResponderRelease: (evt, gestureState) => {},
+      onPanResponderRelease: (evt, gestureState) => {
+        if (gestureState.dx > 120) {
+          Animated.spring(this.position, {
+            toValue: { x: SCREEN_WIDTH + 100, y: gestureState.dy },
+          }).start(() => {
+            this.setState({ currentIndex: this.state.currentIndex + 1 }, () => {
+              this.position.setValue({ x: 0, y: 0 })
+            })
+          })
+        } else if (gestureState.dx < -120) {
+          Animated.spring(this.position, {
+            toValue: { x: -SCREEN_WIDTH - 100, y: gestureState.dy },
+          }).start(() => {
+            this.setState({ currentIndex: this.state.currentIndex + 1 }, () => {
+              this.position.setValue({ x: 0, y: 0 })
+            })
+          })
+        } else {
+          Animated.spring(this.position, {
+            toValue: { x: 0, y: 0 },
+            friction: 4,
+          }).start()
+        }
+      },
     })
   }
 
@@ -77,6 +121,7 @@ class Swipe extends React.Component {
             >
               <Animated.View
                 style={{
+                  opacity: this.catchOpacity,
                   transform: [{ rotate: "-30deg" }],
                   position: "absolute",
                   top: 50,
@@ -100,6 +145,7 @@ class Swipe extends React.Component {
               </Animated.View>
               <Animated.View
                 style={{
+                  opacity: this.releaseOpacity,
                   transform: [{ rotate: "30deg" }],
                   position: "absolute",
                   top: 50,
@@ -137,12 +183,16 @@ class Swipe extends React.Component {
           return (
             <Animated.View
               key={index}
-              style={{
-                height: SCREEN_HEIGHT - 120,
-                width: SCREEN_WIDTH,
-                padding: 10,
-                position: "absolute",
-              }}
+              style={[
+                {
+                  opacity: this.nextCardOpacity,
+                  transform: [{ scale: this.nextCardScale }],
+                  height: SCREEN_HEIGHT - 120,
+                  width: SCREEN_WIDTH,
+                  padding: 10,
+                  position: "absolute",
+                },
+              ]}
             >
               <Image
                 style={{
