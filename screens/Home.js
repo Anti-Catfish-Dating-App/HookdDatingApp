@@ -28,6 +28,7 @@ const Home = () => {
         title="Go to Matches"
         onPress={() => navigation.navigate("Matches")}
       />
+      <Button title="Swipe" onPress={() => navigation.navigate("Swipe")} />
     </View>
   )
 }
