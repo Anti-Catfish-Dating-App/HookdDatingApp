@@ -34,7 +34,7 @@ const Users = db.define('user', {
     }
   },
   bio: {
-    type: Sequelize.TEXT,
+    type: Sequelize.STRING,
   },
   baselinePhoto: {
     type: Sequelize.STRING
