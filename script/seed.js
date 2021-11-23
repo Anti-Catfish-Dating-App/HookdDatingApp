@@ -12,11 +12,13 @@ const {
   },
 } = require("../server/db")
 const faker = require("faker")
+require("dotenv").config()
 
 async function seed() {
   await db.sync({ force: true }) // clears db and matches models to tables
   console.log("db synced!")
 
+  console.log(process.env.FACEAPIKEY1)
   for (let i = 0; i < 10; i++) {
     let randomAge = Math.floor(Math.random() * 20 + 18)
 
