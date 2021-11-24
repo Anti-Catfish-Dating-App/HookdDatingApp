@@ -15,9 +15,10 @@ import {connect} from 'react-redux';
 import {authenticate} from '../store';
 
 
-const Login = () => {
+const Login = (props) => {
   const { control, handleSubmit } = useForm();
-  const onSubmit = (data) => this.props.submitForm(data.Email, data.object.Password);
+  const onSubmit = (data) => props.submitForm(data.Email, data.Password);
+  console.log(props);
 
   return (
     <View style={styles.container}>
@@ -62,10 +63,12 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    submitForm: (email, password, method = 'Login') => dispatch(authenticate(email, password, method))
-    /* submitForm(data) {
-      const email = data.email
-      const password = data.email
+    submitForm: (email, password, method = 'login') => {
+      dispatch(authenticate(email, password, method))
+    }
+   /*  submitForm(data) {
+      const email = data.Email
+      const password = data.Password
       dispatch(authenticate(email, password, 'Login'))
     } */
   }

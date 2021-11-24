@@ -18,13 +18,12 @@ async function seed() {
   await db.sync({ force: true }) // clears db and matches models to tables
   console.log("db synced!")
 
-  console.log(process.env.FACEAPIKEY1)
   for (let i = 0; i < 10; i++) {
     let randomAge = Math.floor(Math.random() * 20 + 18)
 
     const user = await User.create({
       email: faker.internet.email(),
-      password: "password12",
+      password: "Password12",
       gender: faker.name.gender(),
       age: randomAge,
       bio: `Just looking for the Pam to my Jim`,
@@ -42,7 +41,6 @@ async function seed() {
   await user1.addRightSwiped(user3);
   await user3.addLeftSwiped(user1);
 
-  console.log(Object.keys(user1.__proto__));
 }
 
 async function runSeed() {
