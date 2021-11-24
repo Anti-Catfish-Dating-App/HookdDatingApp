@@ -3,13 +3,13 @@ import React from "react"
 import { View, Text } from "react-native"
 import Home from "../screens/Home"
 import Matches from "../screens/Matches"
-import Signup from "../screens/Signup"
+import SignUp from "../screens/Signup"
 import Login from "../screens/Login"
 
 const stack = createNativeStackNavigator()
 
 const StackNavigator = () => {
-  const user = false
+  const user = true
   return (
     <stack.Navigator>
       {user ? (
@@ -20,7 +20,7 @@ const StackNavigator = () => {
       ) : (
         <>
           <stack.Screen name="Login" component={Login} />
-          <stack.Screen name="Sign Up" component={Signup} />
+          <stack.Screen name="SignUp" component={SignUp} />
         </>
       )}
     </stack.Navigator>

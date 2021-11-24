@@ -11,22 +11,25 @@ import {
 } from "react-native"
 import { StatusBar } from "expo-status-bar"
 import { InputForm } from "./Input"
-import {connect} from 'react-redux';
-import {authenticate} from '../store';
-
+import { connect } from "react-redux"
+import { authenticate } from "../store"
+import { useNavigation } from "@react-navigation/native"
 
 const Login = (props) => {
+  const navigation = useNavigation()
+
   const { control, handleSubmit } = useForm();
   const onSubmit = (data) => props.submitForm(data.Email, data.Password);
   console.log(props);
 
   return (
     <View style={styles.container}>
-      <StatusBar style='dark-content' />
+      <StatusBar style="dark-content" />
       <Text style={styles.title}>Login</Text>
       <InputForm name="Email" style={styles.input} control={control} />
       <InputForm name="Password" style={styles.input} control={control} />
       <Button title="Login" onPress={handleSubmit(onSubmit)} />
+      <Button title="Sign Up" onPress={() => navigation.navigate("Signup")} />
     </View>
   )
 }
@@ -34,44 +37,52 @@ const Login = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'gray',
+    backgroundColor: "gray",
     paddingTop: 50,
-    paddingHorizontal: 12
+    paddingHorizontal: 12,
   },
   title: {
     fontSize: 24,
-    fontWeight: '600',
-    color: '#fff',
-    alignSelf: 'center',
-    paddingBottom: 24
+    fontWeight: "600",
+    color: "#fff",
+    alignSelf: "center",
+    paddingBottom: 24,
   },
   input: {
     height: 40,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     margin: 12,
     borderWidth: 1,
-    padding: 10
-  }
+    padding: 10,
+  },
 })
 
-const mapState = state => {
+const mapState = (state) => {
   return {
-    name: 'login',
-    displayName: 'Login',
+    name: "login",
+    displayName: "Login",
   }
 }
 
-const mapDispatch = dispatch => {
+const mapDispatch = (dispatch) => {
   return {
+<<<<<<< HEAD
+    submitForm: (email, password, method = "Login") =>
+      dispatch(authenticate(email, password, method)),
+    /* submitForm(data) {
+      const email = data.email
+      const password = data.email
+=======
     submitForm: (email, password, method = 'login') => {
       dispatch(authenticate(email, password, method))
     }
    /*  submitForm(data) {
       const email = data.Email
       const password = data.Password
+>>>>>>> main
       dispatch(authenticate(email, password, 'Login'))
     } */
   }
 }
 
-export default connect(mapState, mapDispatch)(Login);
+export default connect(mapState, mapDispatch)(Login)
