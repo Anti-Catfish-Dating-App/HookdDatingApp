@@ -64,6 +64,9 @@ const compareImage = async () => {
         },
       }
     )
+
+    console.log(verify)
+
     return verify
   } catch (error) {
     new Error(error)
