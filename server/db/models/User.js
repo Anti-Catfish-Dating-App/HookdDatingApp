@@ -71,7 +71,7 @@ Users.authenticate = async function({ email, password }) {
 
 Users.findByToken = async function(token) {
   try {
-    const { id } = await jwt.verify(token, process.env.JWT);
+    const { id } = await jwt.verify(token.authorization, process.env.JWT);
     const user = Users.findByPk(id);
     if(!user){
       throw 'its broke';
