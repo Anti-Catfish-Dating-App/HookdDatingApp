@@ -3,6 +3,7 @@ import React from "react"
 import { View, Text } from "react-native"
 import Home from "./screens/Home"
 import Matches from "./screens/Matches"
+import Signup from "./screens/Signup"
 import Login from "./screens/Login"
 
 const stack = createNativeStackNavigator()
@@ -17,7 +18,10 @@ const StackNavigator = () => {
           <stack.Screen name="Matches" component={Matches} />
         </>
       ) : (
-        <stack.Screen name="Login" component={Login} />
+        <>
+          <stack.Screen name="Login" component={Login} />
+          <stack.Screen name="Sign Up" component={Signup} />
+        </>
       )}
     </stack.Navigator>
   )
