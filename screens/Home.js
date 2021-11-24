@@ -29,6 +29,7 @@ const Home = () => {
         onPress={() => navigation.navigate("Matches")}
       />
       <Button title="Swipe" onPress={() => navigation.navigate("Swipe")} />
+      <Button title="Swipe2" onPress={() => navigation.navigate("Swipe2")} />
     </View>
   )
 }
