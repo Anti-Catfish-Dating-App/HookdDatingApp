@@ -10,7 +10,8 @@ const SET_AUTH = 'SET_AUTH'
 const setAuth = auth => ({type: SET_AUTH, auth})
 
 export const me = () => async dispatch => {
-  const token = AsyncStorage.getItem(TOKEN);
+  const token = await AsyncStorage.getItem(TOKEN);
+  console.log("ME TOKEN: ", token);
   if(token){
     const res = await axios.get('http://192.168.0.6:8080/auth/me', {
       headers: {
@@ -26,7 +27,7 @@ export const authenticate = (email, password, method) => async dispatch => {
     console.log(email, password);
     const res = await axios.post(`http://192.168.0.6:8080/auth/login`, {email, password})
     AsyncStorage.setItem(TOKEN, res.data.token);
-    console.log(res);
+    console.log("TOKEN: ", res.data.token);
     dispatch(me());
   } catch (error) {
     return dispatch(setAuth({error: error}));

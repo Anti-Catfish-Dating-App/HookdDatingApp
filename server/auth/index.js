@@ -14,7 +14,7 @@ router.post('/login', async (req, res, next) => {
 
 router.get('/me', async (req, res, next) => {
   try {
-    res.send(await Users.findByToken(req.headers.authorization))
+    res.send(await Users.findByToken(req.headers))
   } catch (error) {
     next(error)
   }
