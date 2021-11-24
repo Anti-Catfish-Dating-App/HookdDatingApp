@@ -1,17 +1,11 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import React from "react"
 import { View, Text } from "react-native"
-<<<<<<< HEAD:navigation/StackNavigator.js
 import Home from "../screens/Home"
 import Matches from "../screens/Matches"
+import Signup from "../screens/Signup"
 import Login from "../screens/Login"
-=======
-import Home from "./screens/Home"
-import Matches from "./screens/Matches"
-import Signup from "./screens/Signup"
-import Login from "./screens/Login"
 
->>>>>>> main:StackNavigator.js
 const stack = createNativeStackNavigator()
 
 const StackNavigator = () => {
