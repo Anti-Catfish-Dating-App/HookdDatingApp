@@ -1,54 +1,49 @@
-const Sequelize = require('sequelize');
-const db = require('../db');
+const Sequelize = require("sequelize")
+const db = require("../db")
 
-const Users = db.define('user', {
+const Users = db.define("user", {
   email: {
     type: Sequelize.STRING,
     unique: true,
     validate: {
-      notNull: true,
       isEmail: true,
-    }
+    },
   },
   password: {
     type: Sequelize.STRING,
-    validate: {
-      is: /^[0-9a-f]{64}$/i,
-      notNull: true
-    }
+    // validate: {
+    //   is: /^[0-9a-f]{64}$/i,
+    // },
   },
   gender: {
-    type: Sequelize.ENUM({
-      values: ['Male', 'Female', 'Non-Binary']
-    }),
-    validate: {
-      notNull: true
-    }
+    type: Sequelize.STRING,
+    // type: Sequelize.ENUM({
+    //   values: ["Male", "Female", "Non-Binary"],
+    // }),
   },
   age: {
     type: Sequelize.INTEGER,
     validate: {
-      notNull: true,
       min: 18,
-      max: 99
-    }
+      max: 99,
+    },
   },
   bio: {
     type: Sequelize.STRING,
   },
   baselinePhoto: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
   },
   lastTimeVerified: {
     type: Sequelize.DATE,
     validate: {
       isDate: true,
-    }
+    },
   },
   isVerified: {
     type: Sequelize.BOOLEAN,
-    defaultValue: false
-  }
+    defaultValue: false,
+  },
 })
 
 module.exports = Users
