@@ -1,27 +1,29 @@
 import React from "react"
-import { StyleSheet, Text, View, SafeAreaView, TextInput } from "react-native"
+import { useController, useForm } from "react-hook-form"
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  TextInput,
+  Alert,
+  Button,
+} from "react-native"
+import { InputForm } from "./Input"
 
 const SignUp = () => {
-  const [email, onChangeEmail] = React.useState("")
-  const [password, onChangePassword] = React.useState("")
+  const { control, handleSubmit } = useForm()
+  const onSubmit = (data) => Alert.alert(JSON.stringify(data))
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Sign Up</Text>
       <Text>Please enter your email and password</Text>
-      <SafeAreaView style={styles.safe}>
-        <TextInput
-          style={styles.input}
-          onChangeText={onChangeEmail}
-          value={email}
-          placeholder="Enter your Email"
-        />
-        <TextInput
-          style={styles.input}
-          onChangeText={onChangePassword}
-          value={password}
-          placeholder="Enter your password"
-        />
-      </SafeAreaView>
+      <InputForm name="Email" style={styles.input} control={control} />
+
+      <InputForm name="Password" style={styles.input} control={control} />
+
+      <Button title="Sign Up" onPress={handleSubmit(onSubmit)} />
     </View>
   )
 }
