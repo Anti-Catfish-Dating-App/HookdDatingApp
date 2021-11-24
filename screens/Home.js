@@ -13,6 +13,7 @@ const Home = () => {
         title="Go to Matches"
         onPress={() => navigation.navigate("Matches")}
       />
+      <Button title="Sign Up" onPress={() => navigation.navigate("Sign Up")} />
     </View>
   )
 }
