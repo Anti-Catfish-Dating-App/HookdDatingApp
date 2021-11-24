@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.json())
 
 // auth and api routes
-// app.use("/auth", require("./auth"))
+app.use("/auth", require("./auth"))
 // app.use("/api", require("./api"))
 
 app.get("/", (req, res) =>

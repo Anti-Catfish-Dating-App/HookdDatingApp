@@ -10,6 +10,9 @@ import {
 import { useNavigation } from "@react-navigation/native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { AntDesign, Ionicons, Entypo } from "@expo/vector-icons"
+import { fetchUser } from "../store/singleUser"
+import { connect } from "react-redux"
+import { useEffect } from "react"
 
 const Home = () => {
   const navigation = useNavigation()
@@ -19,6 +22,12 @@ const Home = () => {
       headerShown: false,
     })
   }, [])
+
+  // useEffect(() => {
+  //   if (auth.id) {
+  //     fetchUser(auth.id)
+  //   }
+  // }, [])
 
   return (
     // header start
@@ -55,7 +64,20 @@ const Home = () => {
   )
 }
 
-export default Home
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth,
+    user: state.user,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getUser: (id) => dispatch(fetchUser(id)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home)
 
 const styles = StyleSheet.create({
   container: {
