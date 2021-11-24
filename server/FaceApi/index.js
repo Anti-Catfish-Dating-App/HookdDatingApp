@@ -19,11 +19,16 @@ const key = process.env.FACEAPIKEY1
 
 const compareImage = async () => {
   try {
+    //Test Images
     const image1 =
       "https://www.pngall.com/wp-content/uploads/5/Biden-Transparent.png"
 
+    const image2 =
+      "https://nypost.com/wp-content/uploads/sites/2/2021/11/JoeBiden-4.jpg"
+
+    //First Image Post - Get FaceId
     const firstImage = await axios.post(
-      `${process.env.FACEAPIENDPOINT}/face/v1.0/detect?returnFaceId=true&returnFaceLandmarks=false&recognitionModel=recognition_04&returnRecognitionModel=false&detectionModel=detection_03&faceIdTimeToLive=86400`,
+      `${process.env.FACEAPIENDPOINT}/face/v1.0/detect?returnFaceId=true&returnFaceLandmarks=true&recognitionModel=recognition_04&returnRecognitionModel=false&detectionModel=detection_03&faceIdTimeToLive=86400`,
       { url: image1 },
       {
         headers: {
@@ -32,8 +37,34 @@ const compareImage = async () => {
         },
       }
     )
-    console.log(firstImage)
-    return
+
+    //Second Image Post - Get FaceId
+    const secondImage = await axios.post(
+      `${process.env.FACEAPIENDPOINT}/face/v1.0/detect?returnFaceId=true&returnFaceLandmarks=false&recognitionModel=recognition_04&returnRecognitionModel=false&detectionModel=detection_03&faceIdTimeToLive=86400`,
+      { url: image2 },
+      {
+        headers: {
+          "Ocp-Apim-Subscription-Key": key,
+          "Content-Type": "application/json",
+        },
+      }
+    )
+
+    //Comparison of the two Images
+    const verify = await axios.post(
+      `${process.env.FACEAPIENDPOINT}/face/v1.0/verify?`,
+      {
+        faceId1: firstImage.data[0].faceId,
+        faceId2: secondImage.data[0].faceId,
+      },
+      {
+        headers: {
+          "Ocp-Apim-Subscription-Key": key,
+          "Content-Type": "application/json",
+        },
+      }
+    )
+    return verify
   } catch (error) {
     new Error(error)
   }
