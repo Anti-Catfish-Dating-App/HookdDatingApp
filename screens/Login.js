@@ -20,7 +20,6 @@ const Login = (props) => {
 
   const { control, handleSubmit } = useForm()
   const onSubmit = (data) => props.submitForm(data.Email, data.Password)
-  console.log(props)
 
   return (
     <View style={styles.container}>
@@ -66,7 +65,7 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    submitForm: (email, password, method = "Login") =>
+    submitForm: (email, password, method = "login") =>
       dispatch(authenticate(email, password, method)),
     /* submitForm(data) {
       const email = data.email
