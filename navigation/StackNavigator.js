@@ -5,6 +5,8 @@ import Home from "../screens/Home"
 import Matches from "../screens/Matches"
 import Signup from "../screens/Signup"
 import Login from "../screens/Login"
+import UserConsent from "../screens/UserConsent"
+import BaselinePhoto from "../screens/BaselinePhoto"
 
 const stack = createNativeStackNavigator()
 
@@ -20,7 +22,9 @@ const StackNavigator = () => {
       ) : (
         <>
           <stack.Screen name="Login" component={Login} />
-          <stack.Screen name="Sign Up" component={Signup} />
+          <stack.Screen name="Signup" component={Signup} />
+          <stack.Screen name="UserConsent" component={UserConsent} />
+          <stack.Screen name="BaselinePhoto" component={BaselinePhoto} />
         </>
       )}
     </stack.Navigator>

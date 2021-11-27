@@ -18,6 +18,17 @@ async function seed() {
   await db.sync({ force: true }) // clears db and matches models to tables
   console.log("db synced!")
 
+  const testUser = await User.create({
+    email: "test@test.com",
+    password: "123",
+    gender: "Cat",
+    age: 20,
+    bio: `Just looking for the Pam to my Jim`,
+    baselinePhoto: "https://pbs.twimg.com/media/E54a61HWEAI7EI4.jpg",
+    lastTimeVerified: 11 / 23 / 2040,
+    isVerified: true,
+  })
+
   for (let i = 0; i < 10; i++) {
     let randomAge = Math.floor(Math.random() * 20 + 18)
 
@@ -33,14 +44,13 @@ async function seed() {
       isVerified: true,
     })
   }
-  const user1 = await User.findByPk(3);
-  const user2 = await User.findByPk(5);
-  const user3 = await User.findByPk(7);
-  await user1.addRightSwiped(user2);
-  await user2.addRightSwiped(user1);
-  await user1.addRightSwiped(user3);
-  await user3.addLeftSwiped(user1);
-
+  const user1 = await User.findByPk(3)
+  const user2 = await User.findByPk(5)
+  const user3 = await User.findByPk(7)
+  await user1.addRightSwiped(user2)
+  await user2.addRightSwiped(user1)
+  await user1.addRightSwiped(user3)
+  await user3.addLeftSwiped(user1)
 }
 
 async function runSeed() {
