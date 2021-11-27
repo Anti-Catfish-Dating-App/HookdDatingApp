@@ -14,7 +14,33 @@ import {
 import { connect } from "react-redux"
 import { useNavigation } from "@react-navigation/native"
 import Swiper from "react-native-deck-swiper"
+import { Transitioning, Transition } from "react-native-reanimated"
 import pond from "../store/dummySwipeData"
+
+//animations
+const ANIMATION_DURATION = 200
+const transition = (
+  <Transition.Sequence>
+    <Transition.Out
+      type="slide-bottom"
+      durationMs={ANIMATION_DURATION}
+      interpolation="easeIn"
+    />
+    <Transition.Together>
+      <Transition.In
+        type="fade"
+        durationMs={ANIMATION_DURATION}
+        delayMs={ANIMATION_DURATION / 2}
+      />
+      <Transition.In
+        type="slide-bottom"
+        durationMs={ANIMATION_DURATION}
+        delayMs={ANIMATION_DURATION / 2}
+        interpolation="easeOut"
+      />
+    </Transition.Together>
+  </Transition.Sequence>
+)
 
 const Card = ({ card }) => {
   return (
@@ -36,6 +62,7 @@ const CardDetails = ({ index }) => (
 )
 
 const swiperRef = React.createRef()
+const transitionRef = React.createRef()
 
 export default function Swipe(props) {
   const navigation = useNavigation()
@@ -43,6 +70,8 @@ export default function Swipe(props) {
   const [index, setIndex] = React.useState(0)
   //Swiper gives this method.
   const onSwiped = () => {
+    //carddetails pop in animatedly
+    transitionRef.current.animateNextTransition()
     //infinitely go through stack
     setIndex((index + 1) % pond.length)
   }
@@ -57,9 +86,11 @@ export default function Swipe(props) {
           renderCard={(fish) => <Card card={fish} />}
           onSwiped={onSwiped}
           //if we want stacking effect but this is giving me issues
-          // stackSize={5}
-          // stackScale={10}
-          // stackSeperation={10}
+          showSecondCard
+          //can't make more than 1 for some reason, issue with JSON??
+          stackSize={1}
+          stackScale={10}
+          stackSeperation={10}
           disableTopSwipe
           disableBottomSwipe
           animateOverlayLabelsOpacity
@@ -119,7 +150,9 @@ export default function Swipe(props) {
             onPress={() => swiperRef.current.swipeRight()}
           />
         </View>
-        <CardDetails index={index} />
+        <Transitioning.View ref={transitionRef} transition={transition}>
+          <CardDetails index={index} />
+        </Transitioning.View>
       </View>
     </View>
   )
