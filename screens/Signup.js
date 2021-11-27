@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { useController, useForm } from "react-hook-form"
 import {
   StyleSheet,
@@ -8,6 +8,7 @@ import {
   TextInput,
   Alert,
   Button,
+  TouchableOpacity,
 } from "react-native"
 import { InputForm } from "./Input"
 import { connect } from "react-redux"
@@ -15,16 +16,18 @@ import { authenticate } from "../store"
 import { useNavigation } from "@react-navigation/native"
 
 const Signup = (props) => {
+  const navigation = useNavigation()
   const { control, handleSubmit } = useForm()
-  const onSubmit = (data) => props.submitForm(data.Email, data.Password)
 
-  useEffect(() => {
-    const user = props.auth
-    console.log(!Object.keys(user))
-    if (user) {
-      Alert.alert("Hello!")
+  const onSubmit = async (data) => {
+    const resStatus = await props.submitForm(data.Email, data.Password)
+
+    if (resStatus === 200) {
+      navigation.navigate("UserConsent")
+    } else {
+      Alert.alert("Error!")
     }
-  })
+  }
 
   return (
     <View style={styles.container}>

@@ -17,7 +17,6 @@ import { useNavigation } from "@react-navigation/native"
 
 const Login = (props) => {
   const navigation = useNavigation()
-
   const { control, handleSubmit } = useForm()
   const onSubmit = (data) => props.submitForm(data.Email, data.Password)
 

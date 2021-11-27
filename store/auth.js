@@ -30,6 +30,7 @@ export const authenticate = (email, password, method) => async (dispatch) => {
     })
     AsyncStorage.setItem(TOKEN, res.data.token)
     dispatch(me())
+    return res.status
   } catch (error) {
     return dispatch(setAuth({ error: error }))
   }
