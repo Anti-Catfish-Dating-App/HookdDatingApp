@@ -59,6 +59,14 @@ const Home = () => {
           />
         </TouchableOpacity>
       </View>
+      <TouchableOpacity>
+        <Ionicons
+          name="locate"
+          size={100}
+          style={styles.swipe}
+          onPress={() => navigation.navigate("Swipe")}
+        />
+      </TouchableOpacity>
     </SafeAreaView>
     // header end
   )
@@ -108,5 +116,12 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 0,
     color: "#8cdbd3",
+  },
+  //need to work on styling
+  swipe: {
+    alignItems: "center",
+    position: "relative",
+    justifyContent: "center",
+    margin: 100,
   },
 })
