@@ -3,7 +3,6 @@ const Users = require("../db/models/User")
 
 router.post("/login", async (req, res, next) => {
   try {
-    console.log("In the login post route")
     const { email, password } = req.body
     res.send({ token: await Users.authenticate({ email, password }) })
   } catch (error) {
@@ -27,7 +26,6 @@ router.post("/signup", async (req, res, next) => {
 router.get("/me", async (req, res, next) => {
   try {
     const User = await Users.findByToken(req.headers)
-    console.log(User)
     res.send(User)
   } catch (error) {
     next(error)
