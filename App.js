@@ -1,16 +1,16 @@
 import React from "react"
+import { StyleSheet, Text, View } from "react-native"
+import StackNavigator from './navigation/StackNavigator'
 import { NavigationContainer } from "@react-navigation/native"
-import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import Home from "./screens/Home"
-import Matches from "./screens/Matches"
-
-const Stack = createNativeStackNavigator()
+import { Provider } from 'react-redux';
+import store from './store'
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Screen name="Home" component={Home} options={{ title: "Hookd" }} />
-      <Stack.Screen name="Matches" component={Matches} />
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <StackNavigator />
+      </NavigationContainer>
+    </Provider>
   )
 }
