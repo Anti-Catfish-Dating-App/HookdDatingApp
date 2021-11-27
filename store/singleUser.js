@@ -3,6 +3,7 @@ import axios from "axios"
 //action types
 const SET_USER = "SET_USER"
 const SET_ERROR = "SET_ERROR"
+const SET_BASELINE = "SET_BASELINE"
 
 //action creators
 export const setUser = (user) => ({
@@ -15,6 +16,11 @@ export const setError = (error) => ({
   error,
 })
 
+export const setBaseLine = (baselineImg) => ({
+  type: SET_BASELINE,
+  baselineImg,
+})
+
 //thunk creators
 export const fetchUser = () => async (dispatch) => {
   try {
@@ -23,6 +29,14 @@ export const fetchUser = () => async (dispatch) => {
   } catch (error) {
     dispatch(setError(error))
   }
+}
+
+export const checkForFace = (imageData) => async (dispatch) => {
+  const { data } = await axios.post("http://10.0.0.64:8080/api/faceapi/", {
+    data: { imageData },
+  })
+  console.log("CHECK FOR FACE THUNK:", data)
+  dispatch(setBaseLine(data))
 }
 
 //reducer

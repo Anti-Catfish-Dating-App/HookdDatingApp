@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { useController, useForm } from "react-hook-form"
 import {
   StyleSheet,
@@ -8,12 +8,26 @@ import {
   TextInput,
   Alert,
   Button,
+  TouchableOpacity,
 } from "react-native"
 import { InputForm } from "./Input"
+import { connect } from "react-redux"
+import { authenticate } from "../store"
+import { useNavigation } from "@react-navigation/native"
 
-const SignUp = () => {
+const Signup = (props) => {
+  const navigation = useNavigation()
   const { control, handleSubmit } = useForm()
-  const onSubmit = (data) => Alert.alert(JSON.stringify(data))
+
+  const onSubmit = async (data) => {
+    const resStatus = await props.submitForm(data.Email, data.Password)
+
+    if (resStatus === 200) {
+      navigation.navigate("UserConsent")
+    } else {
+      Alert.alert("Error!")
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -27,8 +41,6 @@ const SignUp = () => {
     </View>
   )
 }
-
-export default SignUp
 
 const styles = StyleSheet.create({
   container: {
@@ -50,3 +62,22 @@ const styles = StyleSheet.create({
     padding: 10,
   },
 })
+
+const mapSignup = (state) => {
+  return {
+    name: "signup",
+    displayName: "Sign Up",
+    error: state.auth.error,
+    auth: state.auth,
+  }
+}
+
+const mapDispatch = (dispatch, { history }) => {
+  return {
+    submitForm: (userEmail, password, method = "signup") =>
+      dispatch(authenticate(userEmail, password, method, history)),
+  }
+}
+
+const connectedSignup = connect(mapSignup, mapDispatch)(Signup)
+export default connectedSignup
