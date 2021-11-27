@@ -1,5 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import React from "react"
+import { connect } from "react-redux"
 import { View, Text } from "react-native"
 import Home from "../screens/Home"
 import Matches from "../screens/Matches"
@@ -11,8 +12,8 @@ import Swipe from "../screens/Swipe"
 
 const stack = createNativeStackNavigator()
 
-const StackNavigator = () => {
-  const user = true
+const StackNavigator = (props) => {
+  const user = props.isLoggedIn
   return (
     <stack.Navigator>
       {user ? (
@@ -33,4 +34,10 @@ const StackNavigator = () => {
   )
 }
 
-export default StackNavigator
+const mapState = (state) => {
+  return {
+    isLoggedIn: !!state.auth.id,
+  }
+}
+
+export default connect(mapState)(StackNavigator)
