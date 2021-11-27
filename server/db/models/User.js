@@ -5,6 +5,9 @@ const bcrypt = require("bcrypt")
 require("dotenv").config()
 
 const Users = db.define("user", {
+  name: {
+    type: Sequelize.STRING,
+  },
   email: {
     type: Sequelize.STRING,
     unique: true,
@@ -35,6 +38,9 @@ const Users = db.define("user", {
     type: Sequelize.STRING,
   },
   baselinePhoto: {
+    type: Sequelize.STRING,
+  },
+  baselineFaceID: {
     type: Sequelize.STRING,
   },
   lastTimeVerified: {

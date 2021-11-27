@@ -16,9 +16,11 @@ import { useNavigation } from "@react-navigation/native"
 import { checkForFace } from "../store/singleUser"
 
 const BaselinePhoto = (props) => {
+  const navigation = useNavigation()
   const [hasPermission, setHasPermission] = useState(null)
   const [type, setType] = useState(Camera.Constants.Type.back)
   const [currentPhoto, setPhoto] = useState("")
+  const [loadingStatus, setLoading] = useState(false)
   let camera = Camera
 
   useEffect(() => {
@@ -27,6 +29,14 @@ const BaselinePhoto = (props) => {
       await setHasPermission(status === "granted")
     })()
   }, [])
+
+  if (loadingStatus === true) {
+    return (
+      <View>
+        <Text>Loading ....</Text>
+      </View>
+    )
+  }
 
   if (hasPermission === null) {
     return <View />
@@ -64,7 +74,6 @@ const BaselinePhoto = (props) => {
               onPress={async () => {
                 const photo = await camera.takePictureAsync()
                 setPhoto(photo)
-                console.log(currentPhoto)
               }}
             ></TouchableOpacity>
           </View>
@@ -74,7 +83,6 @@ const BaselinePhoto = (props) => {
   }
 
   if (currentPhoto.uri.length > 0) {
-    console.log(currentPhoto)
     return (
       <View style={styles.container}>
         <Image style={styles.image} source={{ uri: currentPhoto.uri }} />
@@ -90,13 +98,23 @@ const BaselinePhoto = (props) => {
           title="UPLOAD PHOTO"
           onPress={async () => {
             const form = new FormData()
-            form.append("Files", {
-              name: "BaselinePhoto.jpg",
+            form.append("file", {
+              name: `${props.auth.id}`,
               uri: currentPhoto.uri,
               type: "image/jpg",
             })
 
-            props.detectFace(form)
+            setLoading(true)
+            const loading = await props.detectFace(form)
+            console.log(loading)
+            setLoading(false)
+
+            if (loading === "No face found") {
+              setPhoto("")
+              Alert.alert(loading)
+            } else {
+              Alert.alert("Baseline photo setup")
+            }
           }}
         />
       </View>

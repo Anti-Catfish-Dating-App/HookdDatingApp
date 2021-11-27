@@ -32,11 +32,20 @@ export const fetchUser = () => async (dispatch) => {
 }
 
 export const checkForFace = (imageData) => async (dispatch) => {
-  const { data } = await axios.post("http://10.0.0.64:8080/api/faceapi/", {
-    data: { imageData },
-  })
-  console.log("CHECK FOR FACE THUNK:", data)
-  dispatch(setBaseLine(data))
+  const config = { headers: { "Content-Type": "multipart/form-data" } }
+
+  const { data } = await axios.post(
+    "http://10.0.0.64:8080/api/faceapi/",
+    imageData,
+    config
+  )
+
+  if (data.length > 0) {
+    return "Completed"
+  } else {
+    return "No face found"
+  }
+  // dispatch(setBaseLine(data))
 }
 
 //reducer
