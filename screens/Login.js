@@ -35,22 +35,21 @@ const Login = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "gray",
-    paddingTop: 50,
-    paddingHorizontal: 12,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
   title: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: "600",
-    color: "#fff",
     alignSelf: "center",
     paddingBottom: 24,
   },
   input: {
     height: 40,
-    backgroundColor: "white",
     margin: 12,
-    borderWidth: 1,
+    width: 250,
+    borderWidth: 2,
     padding: 10,
   },
 })
@@ -66,11 +65,6 @@ const mapDispatch = (dispatch) => {
   return {
     submitForm: (email, password, method = "login") =>
       dispatch(authenticate(email, password, method)),
-    /* submitForm(data) {
-      const email = data.email
-      const password = data.email
-      dispatch(authenticate(email, password, 'Login'))
-    } */
   }
 }
 
