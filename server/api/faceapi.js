@@ -1,46 +1,67 @@
 const router = require("express").Router()
-const { User } = require("../db/models/User")
+const {
+  models: { User },
+} = require("../db")
 const axios = require("axios")
+const multer = require("multer") // Middleware to upload and save files
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./server/tempStorage")
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + ".jpg") //Appending .jpg
+  },
+})
+const upload = multer({ storage: storage })
 const cloudinary = require("cloudinary").v2
 require("dotenv").config()
 
-cloudinary.config({
-  cloud_name: process.env.CLOUDNAME,
-  api_key: process.env.FACEAPIKEY1,
-  api_secret: process.env.CLOUDSECRET,
-  secure: true,
-})
-
-router.post("/", async (req, res, next) => {
+router.post("/", upload.any(), async (req, res, next) => {
   try {
-    console.log(
-      "INSIDE THE FACEAPI ROUTER",
-      req.body.data.imageData._parts[0][1].uri
-    )
+    console.log("INSIDE THE FACEAPI ROUTER", req)
+    console.log("FILE PATH IN SERVER", req.files[0].path)
 
+    //Cloudinary Config for API
+    cloudinary.config({
+      cloud_name: process.env.CLOUDNAME,
+      api_key: process.env.CLOUDKEY,
+      api_secret: process.env.CLOUDSECRET,
+      secure: true,
+    })
+
+    //Upload Photo to Cloudinary to be processed by Microsoft API
     const imageUrl = await cloudinary.uploader.upload(
-      req.body.data.imageData._parts[0][1].uri,
+      req.files[0].path,
       function (error, result) {
         console.log(result, error)
       }
     )
 
-    console.log("INSIDE THE FACEAPI ROUTER///////////", imageUrl)
+    //Check for faces in the image
+    const firstImage = await axios.post(
+      `${process.env.FACEAPIENDPOINT}/face/v1.0/detect?returnFaceId=true&returnFaceLandmarks=true&recognitionModel=recognition_04&returnRecognitionModel=false&detectionModel=detection_03&faceIdTimeToLive=86400`,
+      { url: imageUrl.url },
+      {
+        headers: {
+          "Ocp-Apim-Subscription-Key": process.env.FACEAPIKEY1,
+          "Content-Type": "application/json",
+        },
+      }
+    )
 
-    const key = process.env.FACEAPIKEY1
+    if (!firstImage.data) {
+      res.send("No face found")
+    } else res.send(firstImage.data)
+    console.log(firstImage.data)
+    console.log(req.files[0])
+    //Update User BaselineImageURL && FaceId here
+    let userId = parseInt(req.files[0].originalname)
+    let user = await User.findByPk(userId)
 
-    // const firstImage = await axios.post(
-    //   `${process.env.FACEAPIENDPOINT}/face/v1.0/detect?returnFaceId=true&returnFaceLandmarks=true&recognitionModel=recognition_04&returnRecognitionModel=false&detectionModel=detection_03&faceIdTimeToLive=86400`,
-    //   { url: imageUrl },
-    //   {
-    //     headers: {
-    //       "Ocp-Apim-Subscription-Key": key,
-    //       "Content-Type": "application/json",
-    //     },
-    //   }
-    // )
-
-    // res.send(firstImage)
+    user.baselinePhoto = imageUrl.url
+    user.baselineFaceID = firstImage.data[0].faceId
+    user.isVerified = true
+    await user.save()
   } catch (error) {
     next(error)
   }
