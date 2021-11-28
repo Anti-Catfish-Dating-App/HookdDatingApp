@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react"
+import React, { useState, useLayoutEffect } from "react"
 import {
   View,
   Text,
@@ -10,12 +10,19 @@ import {
 import { useNavigation } from "@react-navigation/native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { AntDesign, Ionicons, Entypo } from "@expo/vector-icons"
-import { fetchUser } from "../store/singleUser"
 import { connect } from "react-redux"
 import { useEffect } from "react"
+import Swipe from "./Swipe"
+import { me } from "../store/auth"
 
-const Home = () => {
+const Home = (props) => {
   const navigation = useNavigation()
+  const { user } = props
+
+  useEffect(() => {
+    props.getUser()
+    console.log("user", user)
+  }, [])
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -23,18 +30,15 @@ const Home = () => {
     })
   }, [])
 
-  // useEffect(() => {
-  //   if (auth.id) {
-  //     fetchUser(auth.id)
-  //   }
-  // }, [])
-
   return (
     // header start
     <SafeAreaView>
       <View style={styles.container}>
         <TouchableOpacity>
-          <Image source={require("../IMG_0194.jpeg")} style={styles.profile} />
+          <Image
+            style={styles.profile}
+            source={{ uri: `${user.profilePicture}` }}
+          />
         </TouchableOpacity>
         <View style={styles.logoContainer}>
           <TouchableOpacity>
@@ -59,33 +63,39 @@ const Home = () => {
           />
         </TouchableOpacity>
       </View>
-      <TouchableOpacity>
+      {/* <TouchableOpacity>
         <Ionicons
           name="locate"
           size={100}
           style={styles.swipe}
           onPress={() => navigation.navigate("Swipe")}
         />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
+      <View style={styles.swipeContainer}>
+        <View style={styles.swipePic}>
+          <View style={styles.swipe}>
+            <Swipe />
+          </View>
+        </View>
+      </View>
     </SafeAreaView>
     // header end
   )
 }
 
-const mapStateToProps = (state) => {
+const mapState = (state) => {
   return {
-    auth: state.auth,
-    user: state.user,
+    user: state.auth,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getUser: (id) => dispatch(fetchUser(id)),
+    getUser: () => dispatch(me()),
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home)
+export default connect(mapState, mapDispatchToProps)(Home)
 
 const styles = StyleSheet.create({
   container: {
@@ -118,10 +128,20 @@ const styles = StyleSheet.create({
     color: "#8cdbd3",
   },
   //need to work on styling
-  swipe: {
+  swipeContainer: {
+    flex: 1,
+  },
+  info: {
+    flex: 1,
     alignItems: "center",
-    position: "relative",
     justifyContent: "center",
-    margin: 100,
+  },
+  name: {
+    fontSize: 20,
+    color: "dodgerblue",
+  },
+  age: {
+    fontSize: 15,
+    color: "dodgerblue",
   },
 })

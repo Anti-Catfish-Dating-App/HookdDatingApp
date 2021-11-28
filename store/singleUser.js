@@ -23,11 +23,20 @@ export const setBaseLine = (baselineImg) => ({
 
 //thunk creators
 export const fetchUser = () => async (dispatch) => {
-  try {
-    const { data } = await axios.get("/api/user")
-    dispatch(setUser(data))
-  } catch (error) {
-    dispatch(setError(error))
+  const token = localStorage.getItem("token")
+  if (token) {
+    return async (dispatch) => {
+      try {
+        const { data } = await axios.get(`/api/users/user`, {
+          headers: {
+            Authorization: token,
+          },
+        })
+        dispatch(setUser(data))
+      } catch (error) {
+        dispatch(setError(error))
+      }
+    }
   }
 }
 
@@ -35,7 +44,7 @@ export const checkForFace = (imageData) => async (dispatch) => {
   const config = { headers: { "Content-Type": "multipart/form-data" } }
 
   const { data } = await axios.post(
-    "http://10.0.0.64:8080/api/faceapi/",
+    "http://192.168.39.131:8080/api/faceapi/",
     imageData,
     config
   )
