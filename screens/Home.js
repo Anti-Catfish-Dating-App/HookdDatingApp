@@ -19,11 +19,6 @@ const Home = (props) => {
   const navigation = useNavigation()
   const { user } = props
 
-  useEffect(() => {
-    props.getUser()
-    console.log("user", user)
-  }, [])
-
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,
@@ -34,7 +29,7 @@ const Home = (props) => {
     // header start
     <SafeAreaView>
       <View style={styles.container}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("Settings")}>
           <Image
             style={styles.profile}
             source={{ uri: `${user.profilePicture}` }}
@@ -89,13 +84,7 @@ const mapState = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getUser: () => dispatch(me()),
-  }
-}
-
-export default connect(mapState, mapDispatchToProps)(Home)
+export default connect(mapState)(Home)
 
 const styles = StyleSheet.create({
   container: {
