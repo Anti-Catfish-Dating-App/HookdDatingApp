@@ -23,12 +23,6 @@ const Settings = (props) => {
 
   const { user } = props
 
-  useLayoutEffect(() => {
-    props.navigation.setOptions({
-      headerShown: false,
-    })
-  }, [])
-
   useEffect(() => {
     ;(async () => {
       if (Platform.OS !== "web") {
@@ -92,9 +86,9 @@ const Settings = (props) => {
             <Text style={styles.inputAgeLabel}>Age</Text>
             <TextInput
               style={styles.inputAge}
-              placeholder={user.age}
+              placeholder={user.age.toString()}
               onChangeText={(text) => setAge(text)}
-              value={age}
+              value={age.toString()}
               keyboardType="numeric"
               maxLength={2}
             />
@@ -103,7 +97,7 @@ const Settings = (props) => {
             <Text style={styles.inputBioLabel}>Bio</Text>
             <TextInput
               style={styles.inputBio}
-              placeholder={user.bio}
+              // placeholder={user.bio}
               onChangeText={(text) => setBio(text)}
               value={bio}
               multiline={true}

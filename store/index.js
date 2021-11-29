@@ -1,4 +1,5 @@
 import singleUser from "./singleUser"
+import users from "./users"
 import { createStore, combineReducers, applyMiddleware } from "redux"
 import auth from "./auth"
 import axios from "axios"
@@ -7,6 +8,7 @@ import thunkMiddleware from "redux-thunk"
 const reducer = combineReducers({
   auth: auth,
   singleUser: singleUser,
+  users: users,
 })
 
 const middleware = applyMiddleware(thunkMiddleware.withExtraArgument({ axios }))
