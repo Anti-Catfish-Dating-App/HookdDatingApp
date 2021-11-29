@@ -38,7 +38,10 @@ const Home = (props) => {
           </TouchableOpacity>
         </View>
         <View style={styles.headerCenter}>
-          <Text style={styles.headerText}>Home</Text>
+          <Image
+            source={require("../hookd-logos_transparent.png")}
+            style={styles.logo}
+          />
         </View>
         <View style={styles.headerRight}>
           <TouchableOpacity
@@ -46,7 +49,11 @@ const Home = (props) => {
               navigation.navigate("Matches")
             }}
           >
-            <Ionicons name="ios-heart" size={30} color="white" />
+            <Ionicons
+              name="chatbubble-ellipses-outline"
+              size={48}
+              color="#288cd7"
+            />
           </TouchableOpacity>
         </View>
       </View>
@@ -83,7 +90,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     height: 80,
-    backgroundColor: "#8cdbd3",
   },
   headerLeft: {
     flexDirection: "row",
@@ -94,6 +100,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
+  logo: {
+    width: 140,
+    height: 100,
+  },
+
   headerText: {
     fontSize: 30,
     fontWeight: "bold",
@@ -103,11 +114,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     paddingRight: 20,
+    color: "#288cd7",
   },
   profile: {
     width: 50,
     height: 50,
-    borderRadius: 50,
+    borderRadius: 25,
+    borderWidth: 3,
+    borderColor: "#288cd7",
   },
   body: {
     flexDirection: "row",
@@ -130,14 +144,14 @@ const styles = StyleSheet.create({
 //     source={{ uri: `${user.profilePicture}` }}
 //   />
 // </TouchableOpacity>
-//           <View style={styles.logoContainer}>
-//             <TouchableOpacity>
-//               <Image
-//                 source={require("../hookd-logos.jpeg")}
-//                 style={styles.logo}
-//               />
-//             </TouchableOpacity>
-//           </View>
+// <View style={styles.logoContainer}>
+//   <TouchableOpacity>
+// <Image
+//   source={require("../hookd-logos.jpeg")}
+//   style={styles.logo}
+// />
+//   </TouchableOpacity>
+// </View>
 //           {/* <Text style={styles.title}>Home</Text>
 //         <Image source="dummyData.baselinePhoto" />
 //         <Button

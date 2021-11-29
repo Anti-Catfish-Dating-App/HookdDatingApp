@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
   changeProfilePicture: {
     fontSize: 15,
     fontWeight: "bold",
-    color: "#8cdbd3",
+    color: "#288cd7",
     textAlign: "center",
     marginTop: 10,
   },
@@ -163,13 +163,13 @@ const styles = StyleSheet.create({
   inputAgeLabel: {
     fontSize: 30,
     fontWeight: "bold",
-    color: "#8cdbd3",
+    color: "#288cd7",
     textAlign: "center",
   },
   inputBioLabel: {
     fontSize: 30,
     fontWeight: "bold",
-    color: "#8cdbd3",
+    color: "#288cd7",
     textAlign: "center",
     marginTop: 20,
   },
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   button: {
-    backgroundColor: "#8cdbd3",
+    backgroundColor: "#288cd7",
     padding: 10,
     margin: 20,
     alignItems: "center",

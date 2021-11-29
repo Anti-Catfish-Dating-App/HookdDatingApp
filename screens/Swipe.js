@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   currentCard: {
-    flex: 0.45,
+    flex: 0.7,
     borderRadius: 8,
     shadowRadius: 25,
     shadowColor: "black",
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 32,
     marginBottom: 10,
-    color: "blue",
+    color: "#288cd7",
     textAlign: "left",
     fontWeight: "600",
   },
