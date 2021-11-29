@@ -3,6 +3,20 @@ const {
   models: { User },
 } = require("../db")
 
+const axios = require("axios")
+const multer = require("multer") // Middleware to upload and save files
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./server/tempStorage")
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + ".jpg") //Appending .jpg
+  },
+})
+const upload = multer({ storage: storage })
+const cloudinary = require("cloudinary").v2
+require("dotenv").config()
+
 // route to edit user profile
 router.put("/:id", async (req, res, next) => {
   try {
