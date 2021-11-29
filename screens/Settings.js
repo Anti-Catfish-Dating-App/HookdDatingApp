@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useLayoutEffect } from "react"
 import {
   StyleSheet,
   Text,
@@ -10,6 +10,7 @@ import {
   Image,
   Keyboard,
   TouchableWithoutFeedback,
+  ScrollView,
 } from "react-native"
 import { connect } from "react-redux"
 import { editUser } from "../store/auth"
@@ -22,13 +23,11 @@ const Settings = (props) => {
 
   const { user } = props
 
-  const incompleteProfile = () => {
-    if (profilePicture === "" || age === "" || bio === "") {
-      return true
-    } else {
-      return false
-    }
-  }
+  useLayoutEffect(() => {
+    props.navigation.setOptions({
+      headerShown: false,
+    })
+  }, [])
 
   useEffect(() => {
     ;(async () => {
@@ -68,53 +67,60 @@ const Settings = (props) => {
   }
 
   return (
-    <KeyboardAvoidingView behavior="padding" style={styles.container}>
-      <View style={styles.container}>
-        <View style={styles.profilePictureContainer}>
-          <Image
-            style={styles.profilePicture}
-            source={{
-              uri: profilePicture || user.profilePicture,
-            }}
-          />
-          <TouchableOpacity onPress={pickImage}>
-            <Text style={styles.changeProfilePicture}>
-              Change Profile Picture
-            </Text>
-          </TouchableOpacity>
+    <KeyboardAvoidingView
+      style={{ flex: 1, flexDirection: "column", justifyContent: "center" }}
+      behavior="padding"
+      enabled
+      keyboardVerticalOffset={100}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.container}>
+          <View style={styles.profilePictureContainer}>
+            <Image
+              style={styles.profilePicture}
+              source={{
+                uri: profilePicture || user.profilePicture,
+              }}
+            />
+            <TouchableOpacity onPress={pickImage}>
+              <Text style={styles.changeProfilePicture}>
+                Change Profile Picture
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputAgeLabel}>Age</Text>
+            <TextInput
+              style={styles.inputAge}
+              placeholder={user.age}
+              onChangeText={(text) => setAge(text)}
+              value={age}
+              keyboardType="numeric"
+              maxLength={2}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputBioLabel}>Bio</Text>
+            <TextInput
+              style={styles.inputBio}
+              placeholder={user.bio}
+              onChangeText={(text) => setBio(text)}
+              value={bio}
+              multiline={true}
+              numberOfLines={4}
+            />
+          </View>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={handleSubmit}
+              // disabled={incompleteProfile()}
+            >
+              <Text style={styles.buttonText}>Save</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.inputLabel}>Age</Text>
-          <TextInput
-            style={styles.input}
-            placeholder={user.age}
-            onChangeText={(text) => setAge(text)}
-            value={age}
-            keyboardType="numeric"
-            maxLength={2}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.inputLabel}>Bio</Text>
-          <TextInput
-            style={styles.input}
-            placeholder={user.bio}
-            onChangeText={(text) => setBio(text)}
-            value={bio}
-            multiline={true}
-            numberOfLines={4}
-          />
-        </View>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={handleSubmit}
-            // disabled={incompleteProfile()}
-          >
-            <Text style={styles.buttonText}>Save</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+      </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   )
 }
@@ -146,45 +152,62 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   profilePicture: {
-    width: 150,
-    height: 150,
-    borderRadius: 75,
+    width: 200,
+    height: 200,
+    borderRadius: 15,
   },
   changeProfilePicture: {
-    fontSize: 18,
+    fontSize: 15,
     fontWeight: "bold",
-    color: "#000",
+    color: "#8cdbd3",
     textAlign: "center",
     marginTop: 10,
   },
   inputContainer: {
     marginTop: 20,
   },
-  inputLabel: {
-    fontSize: 18,
+  inputAgeLabel: {
+    fontSize: 30,
     fontWeight: "bold",
-    marginBottom: 5,
+    color: "#8cdbd3",
+    textAlign: "center",
   },
-  input: {
-    borderColor: "#000",
-    borderWidth: 1,
-    borderRadius: 5,
+  inputBioLabel: {
+    fontSize: 30,
+    fontWeight: "bold",
+    color: "#8cdbd3",
+    textAlign: "center",
+    marginTop: 20,
+  },
+  inputAge: {
+    textAlign: "center",
     padding: 5,
     margin: 5,
     width: 200,
+    color: "#f25da4",
+    fontSize: 20,
+  },
+  inputBio: {
+    textAlign: "center",
+    padding: 5,
+    margin: 5,
+    width: 200,
+    color: "#f25da4",
   },
   buttonContainer: {
     marginTop: 20,
   },
   button: {
-    backgroundColor: "#000",
+    backgroundColor: "#8cdbd3",
     padding: 10,
+    margin: 20,
+    alignItems: "center",
+    justifyContent: "center",
     borderRadius: 5,
   },
   buttonText: {
-    color: "#fff",
-    fontSize: 18,
-    fontWeight: "bold",
+    fontSize: 20,
+    color: "#f45ca5",
   },
 })
 
@@ -284,17 +307,7 @@ const styles = StyleSheet.create({
 //     margin: 10,
 //     padding: 10,
 //   },
-//   button: {
-//     backgroundColor: "#8cdbd3",
-//     padding: 10,
-//     margin: 20,
-//     alignItems: "center",
-//     justifyContent: "center",
-//   },
-//   buttonText: {
-//     fontSize: 20,
-//     color: "#fff",
-//   },
+
 //   disabled: {
 //     backgroundColor: "grey",
 //     padding: 10,
