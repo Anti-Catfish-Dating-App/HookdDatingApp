@@ -6,6 +6,7 @@ const SET_USER = "SET_USER"
 const SET_ERROR = "SET_ERROR"
 const SET_BASELINE = "SET_BASELINE"
 const EDIT_PROFILE = "EDIT_PROFILE"
+const EDIT_PROFILE_PIC = "EDIT_PROFILE_PIC"
 
 //action creators
 export const setUser = (user) => ({
@@ -28,10 +29,17 @@ export const editProfile = (user) => ({
   user,
 })
 
+export const editProfilePic = (user) => ({
+  type: EDIT_PROFILE_PIC,
+  user,
+})
+
 //thunk creators
 export const getUser = (userId) => async (dispatch) => {
   try {
-    const res = await axios.get(`http://10.0.0.64:8080/api/users/${userId}`)
+    const res = await axios.get(
+      `http://192.168.39.131:8080/api/users/${userId}`
+    )
     dispatch(setUser(res.data))
   } catch (error) {
     dispatch(setError(error))
@@ -42,7 +50,7 @@ export const checkForFace = (imageData) => async (dispatch) => {
   const config = { headers: { "Content-Type": "multipart/form-data" } }
 
   const { data } = await axios.post(
-    "http://10.0.0.64:8080/api/faceapi/",
+    "http://192.168.39.131:8080/api/faceapi/",
     imageData,
     config
   )
@@ -57,6 +65,18 @@ export const checkForFace = (imageData) => async (dispatch) => {
   }
 
   // dispatch(setBaseLine(data))
+}
+
+export const _editProfilePic = (imageData, id) => async (dispatch) => {
+  const config = { headers: { "Content-Type": "multipart/form-data" } }
+
+  const { data } = await axios.post(
+    `http://192.168.39.131:8080/api/faceapi/profilepic/${id}`,
+    imageData,
+    config
+  )
+  console.log("FRONT END CONSOLE LOG", data)
+  dispatch(editProfilePic(data))
 }
 
 //reducer
@@ -78,6 +98,8 @@ export default function (state = initialState, action) {
         error: action.error,
       }
     case SET_BASELINE:
+      return { ...state, user: action.user }
+    case EDIT_PROFILE_PIC:
       return { ...state, user: action.user }
     default:
       return state

@@ -45,6 +45,7 @@ async function seed() {
       bio: `Just looking for the Pam to my Jim`,
       baselinePhoto:
         "https://upload.wikimedia.org/wikipedia/commons/f/fb/Welchcorgipembroke.JPG",
+      baselineFaceID: "04e07a29-7a04-4feb-9fc5-363efafd358c",
       lastTimeVerified: 11 / 23 / 2040,
       isVerified: true,
     })

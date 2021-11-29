@@ -10,6 +10,7 @@ import UserConsent from "../screens/UserConsent"
 import BaselinePhoto from "../screens/BaselinePhoto"
 import Swipe from "../screens/Swipe"
 import Settings from "../screens/Settings"
+import ChangeProfilePic from "../screens/ChangeProfilePic"
 
 const stack = createNativeStackNavigator()
 
@@ -26,6 +27,10 @@ const StackNavigator = (props) => {
           </stack.Group>
           <stack.Group screenOptions={{ presentation: "modal" }}>
             <stack.Screen name="Settings" component={Settings} />
+            <stack.Screen
+              name="ChangeProfilePic"
+              component={ChangeProfilePic}
+            />
           </stack.Group>
         </>
       ) : (
