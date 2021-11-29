@@ -7,6 +7,13 @@ require("dotenv").config()
 const Users = db.define("user", {
   name: {
     type: Sequelize.STRING,
+    allowNull: false,
+  },
+  profilePicture: {
+    type: Sequelize.STRING,
+    validation: {
+      isUrl: true,
+    },
   },
   email: {
     type: Sequelize.STRING,

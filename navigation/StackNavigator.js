@@ -9,6 +9,7 @@ import Login from "../screens/Login"
 import UserConsent from "../screens/UserConsent"
 import BaselinePhoto from "../screens/BaselinePhoto"
 import Swipe from "../screens/Swipe"
+import Settings from "../screens/Settings"
 
 const stack = createNativeStackNavigator()
 
@@ -18,9 +19,14 @@ const StackNavigator = (props) => {
     <stack.Navigator>
       {user ? (
         <>
-          <stack.Screen name="Home" component={Home} />
-          <stack.Screen name="Matches" component={Matches} />
-          <stack.Screen name="Swipe" component={Swipe} />
+          <stack.Group>
+            <stack.Screen name="Home" component={Home} />
+            <stack.Screen name="Matches" component={Matches} />
+            <stack.Screen name="Swipe" component={Swipe} />
+          </stack.Group>
+          <stack.Group screenOptions={{ presentation: "modal" }}>
+            <stack.Screen name="Settings" component={Settings} />
+          </stack.Group>
         </>
       ) : (
         <>

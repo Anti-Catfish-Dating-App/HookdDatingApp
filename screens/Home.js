@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react"
+import React, { useState, useLayoutEffect } from "react"
 import {
   View,
   Text,
@@ -10,12 +10,14 @@ import {
 import { useNavigation } from "@react-navigation/native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { AntDesign, Ionicons, Entypo } from "@expo/vector-icons"
-import { fetchUser } from "../store/singleUser"
 import { connect } from "react-redux"
 import { useEffect } from "react"
+import Swipe from "./Swipe"
+import { me } from "../store/auth"
 
-const Home = () => {
+const Home = (props) => {
   const navigation = useNavigation()
+  const { user } = props
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -23,105 +25,114 @@ const Home = () => {
     })
   }, [])
 
-  // useEffect(() => {
-  //   if (auth.id) {
-  //     fetchUser(auth.id)
-  //   }
-  // }, [])
-
   return (
     // header start
-    <SafeAreaView>
-      <View style={styles.container}>
-        <TouchableOpacity>
-          <Image source={require("../IMG_0194.jpeg")} style={styles.profile} />
-        </TouchableOpacity>
-        <View style={styles.logoContainer}>
-          <TouchableOpacity>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <View style={styles.headerLeft}>
+          <TouchableOpacity onPress={() => navigation.navigate("Settings")}>
             <Image
-              source={require("../hookd-logos.jpeg")}
-              style={styles.logo}
+              style={styles.profile}
+              source={{ uri: `${user.profilePicture}` }}
             />
           </TouchableOpacity>
         </View>
-        {/* <Text style={styles.title}>Home</Text>
-        <Image source="dummyData.baselinePhoto" />
-        <Button
-        title="Go to Matches"
-        onPress={() => navigation.navigate("Matches")}
-      /> */}
-        <TouchableOpacity>
-          <Ionicons
-            name="chatbubble-ellipses-sharp"
-            size={50}
-            style={styles.icon}
-            onPress={() => navigation.navigate("Matches")}
+        <View style={styles.headerCenter}>
+          <Image
+            source={require("../hookd-logos_transparent.png")}
+            style={styles.logo}
           />
-        </TouchableOpacity>
+        </View>
+        <View style={styles.headerRight}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("Matches")
+            }}
+          >
+            <Ionicons
+              name="chatbubble-ellipses-outline"
+              size={48}
+              color="#288cd7"
+            />
+          </TouchableOpacity>
+        </View>
       </View>
-      <TouchableOpacity>
-        <Ionicons
-          name="locate"
-          size={100}
-          style={styles.swipe}
-          onPress={() => navigation.navigate("Swipe")}
-        />
-      </TouchableOpacity>
+      {/* header end */}
+      {/* body start */}
+      <View style={styles.body}>
+        <View style={styles.bodyRight}>
+          <Swipe />
+        </View>
+      </View>
+      {/* body end */}
     </SafeAreaView>
-    // header end
   )
 }
 
-const mapStateToProps = (state) => {
+const mapState = (state) => {
   return {
-    auth: state.auth,
-    user: state.user,
+    user: state.auth,
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getUser: (id) => dispatch(fetchUser(id)),
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home)
+export default connect(mapState)(Home)
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "stretch",
-    justifyContent: "center",
-    padding: 20,
-  },
-  title: {
-    fontSize: 30,
-    color: "dodgerblue",
-  },
-  profile: {
-    width: 50,
-    height: 50,
-    borderRadius: 50,
-  },
-  logoContainer: {
+    backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+    height: 80,
+  },
+  headerLeft: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingLeft: 20,
+  },
+  headerCenter: {
+    flexDirection: "row",
+    alignItems: "center",
   },
   logo: {
-    width: 75,
-    height: 75,
-    borderRadius: 50,
+    width: 140,
+    height: 100,
   },
-  icon: {
-    position: "absolute",
-    right: 0,
-    color: "#8cdbd3",
+
+  headerText: {
+    fontSize: 30,
+    fontWeight: "bold",
+    color: "white",
   },
-  //need to work on styling
-  swipe: {
+  headerRight: {
+    flexDirection: "row",
     alignItems: "center",
-    position: "relative",
-    justifyContent: "center",
-    margin: 100,
+    paddingRight: 20,
+    color: "#288cd7",
+  },
+  profile: {
+    width: 55,
+    height: 55,
+    borderRadius: 25,
+    borderWidth: 3,
+    borderColor: "#288cd7",
+  },
+  body: {
+    flexDirection: "row",
+    width: "100%",
+    height: "100%",
+    paddingBottom: 180,
+  },
+  bodyRight: {
+    flex: 1,
+    width: "50%",
+    height: "100%",
+    backgroundColor: "#8cdbd3",
   },
 })

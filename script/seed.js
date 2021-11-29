@@ -19,6 +19,8 @@ async function seed() {
   console.log("db synced!")
 
   const testUser = await User.create({
+    name: "test",
+    profilePicture: "https://pbs.twimg.com/media/E54a61HWEAI7EI4.jpg",
     email: "test@test.com",
     password: "123",
     gender: "Cat",
@@ -33,6 +35,8 @@ async function seed() {
     let randomAge = Math.floor(Math.random() * 20 + 18)
 
     const user = await User.create({
+      name: faker.name.findName(),
+      profilePicture: faker.image.imageUrl(),
       email: faker.internet.email(),
       password: "Password12",
       gender: faker.name.gender(),
