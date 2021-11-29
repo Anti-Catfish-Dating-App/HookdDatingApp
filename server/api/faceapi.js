@@ -60,7 +60,6 @@ router.post("/", upload.any(), async (req, res, next) => {
 
       user.baselinePhoto = imageUrl.url
       user.baselineFaceID = firstImage.data[0].faceId
-      user.isVerified = true
       await user.save()
       res.send(user)
     } else {
