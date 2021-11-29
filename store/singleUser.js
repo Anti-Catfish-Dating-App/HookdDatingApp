@@ -1,9 +1,11 @@
 import axios from "axios"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 //action types
 const SET_USER = "SET_USER"
 const SET_ERROR = "SET_ERROR"
 const SET_BASELINE = "SET_BASELINE"
+const EDIT_PROFILE = "EDIT_PROFILE"
 
 //action creators
 export const setUser = (user) => ({
@@ -16,16 +18,21 @@ export const setError = (error) => ({
   error,
 })
 
-export const setBaseLine = (baselineImg) => ({
+export const setBaseLine = (user) => ({
   type: SET_BASELINE,
-  baselineImg,
+  user,
+})
+
+export const editProfile = (user) => ({
+  type: EDIT_PROFILE,
+  user,
 })
 
 //thunk creators
-export const fetchUser = () => async (dispatch) => {
+export const getUser = (userId) => async (dispatch) => {
   try {
-    const { data } = await axios.get("/api/user")
-    dispatch(setUser(data))
+    const res = await axios.get(`http://10.0.0.64:8080/api/users/${userId}`)
+    dispatch(setUser(res.data))
   } catch (error) {
     dispatch(setError(error))
   }
@@ -40,11 +47,15 @@ export const checkForFace = (imageData) => async (dispatch) => {
     config
   )
 
-  if (data.length > 0) {
-    return "Completed"
-  } else {
+  console.log("FRONT END CONSOLE LOG", data)
+
+  if (data.baselinePhoto === null) {
     return "No face found"
+  } else {
+    dispatch(setBaseLine(data))
+    return "Completed"
   }
+
   // dispatch(setBaseLine(data))
 }
 
@@ -66,6 +77,8 @@ export default function (state = initialState, action) {
         ...state,
         error: action.error,
       }
+    case SET_BASELINE:
+      return { ...state, user: action.user }
     default:
       return state
   }

@@ -97,6 +97,9 @@ const BaselinePhoto = (props) => {
         <Button
           title="UPLOAD PHOTO"
           onPress={async () => {
+            console.log(props)
+            console.log(currentPhoto)
+
             const form = new FormData()
             form.append("file", {
               name: `${props.auth.id}`,
@@ -113,6 +116,7 @@ const BaselinePhoto = (props) => {
               setPhoto("")
               Alert.alert(loading)
             } else {
+              navigation.navigate("Login")
               Alert.alert("Baseline photo setup")
             }
           }}
@@ -180,11 +184,5 @@ const connectedBaselinePhoto = connect(
   mapBaselinePhoto,
   dispatchBaselinePhoto
 )(BaselinePhoto)
-
-BaselinePhoto.defaultProps = {
-  CloudinaryName: process.env.CLOUDNAME,
-  CloudinaryKey: process.env.CLOUDKEY,
-  CloudinarySecret: process.env.CLOUDSECRET,
-}
 
 export default connectedBaselinePhoto

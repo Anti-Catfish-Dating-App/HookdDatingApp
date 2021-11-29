@@ -19,12 +19,15 @@ async function seed() {
   console.log("db synced!")
 
   const testUser = await User.create({
+    name: "test",
+    profilePicture: "https://pbs.twimg.com/media/E54a61HWEAI7EI4.jpg",
     email: "test@test.com",
     password: "123",
     gender: "Cat",
     age: 20,
     bio: `Just looking for the Pam to my Jim`,
     baselinePhoto: "https://pbs.twimg.com/media/E54a61HWEAI7EI4.jpg",
+    baselineFaceID: "1ed85b66-5085-4880-8edc-9f3cb0492d8d",
     lastTimeVerified: 11 / 23 / 2040,
     isVerified: true,
   })
@@ -33,6 +36,8 @@ async function seed() {
     let randomAge = Math.floor(Math.random() * 20 + 18)
 
     const user = await User.create({
+      name: faker.name.findName(),
+      profilePicture: faker.image.imageUrl(),
       email: faker.internet.email(),
       password: "Password12",
       gender: faker.name.gender(),
