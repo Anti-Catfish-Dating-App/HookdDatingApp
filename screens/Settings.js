@@ -8,20 +8,31 @@ import {
   KeyboardAvoidingView,
 } from "react-native"
 import { connect } from "react-redux"
+import { editUser } from "../store/auth"
 
 const Settings = (props) => {
-  const [image, setImage] = useState("")
+  const [profilePicture, setImage] = useState("")
   const [age, setAge] = useState("")
-  const [Bio, setBio] = useState("")
+  const [bio, setBio] = useState("")
 
   const { user } = props
 
   const incompleteProfile = () => {
-    if (image === "" || age === "" || Bio === "") {
+    if (profilePicture === "" || age === "" || bio === "") {
       return true
     } else {
       return false
     }
+  }
+
+  const handleSubmit = () => {
+    props.editUser({
+      id: user.id,
+      profilePicture,
+      age,
+      bio,
+    })
+    props.navigation.navigate("Home")
   }
 
   return (
@@ -31,7 +42,7 @@ const Settings = (props) => {
 
         <Text style={styles.steps}>Step 1: Profile Picture</Text>
         <TextInput
-          value={image}
+          value={profilePicture}
           onChangeText={(text) => setImage(text)}
           style={styles.input}
           placeholder="Enter your image"
@@ -43,19 +54,24 @@ const Settings = (props) => {
           onChangeText={(text) => setAge(text)}
           style={styles.input}
           placeholder="Enter your age"
+          keyboardType="numeric"
+          maxLength={2}
         />
 
         <Text style={styles.steps}>Step 3: Bio</Text>
         <TextInput
-          value={Bio}
+          value={bio}
           onChangeText={(text) => setBio(text)}
           style={styles.input}
           placeholder="Tell me a little bit about yourself..."
+          multiline={true}
+          maxLength={250}
         />
 
         <TouchableOpacity
           disabled={incompleteProfile()}
           style={incompleteProfile() ? styles.disabled : styles.button}
+          onPress={handleSubmit}
         >
           <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
@@ -70,7 +86,13 @@ const mapState = (state) => {
   }
 }
 
-export default connect(mapState)(Settings)
+const mapDispatch = (dispatch) => {
+  return {
+    editUser: (user) => dispatch(editUser(user)),
+  }
+}
+
+export default connect(mapState, mapDispatch)(Settings)
 
 const styles = StyleSheet.create({
   container: {
