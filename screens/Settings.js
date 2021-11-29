@@ -76,13 +76,13 @@ const Settings = (props) => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
           <View style={styles.profilePictureContainer}>
-            <Image
-              style={styles.profilePicture}
-              source={{
-                uri: profilePicture || user.profilePicture,
-              }}
-            />
             <TouchableOpacity onPress={pickImage}>
+              <Image
+                style={styles.profilePicture}
+                source={{
+                  uri: profilePicture || user.profilePicture,
+                }}
+              />
               <Text style={styles.changeProfilePicture}>
                 Change Profile Picture
               </Text>
