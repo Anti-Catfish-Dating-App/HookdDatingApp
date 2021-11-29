@@ -49,19 +49,25 @@ router.post("/", upload.any(), async (req, res, next) => {
       }
     )
 
-    if (!firstImage.data) {
-      res.send("No face found")
-    } else res.send(firstImage.data)
-    console.log(firstImage.data)
-    console.log(req.files[0])
-    //Update User BaselineImageURL && FaceId here
-    let userId = parseInt(req.files[0].originalname)
-    let user = await User.findByPk(userId)
+    // console.log(firstImage)
 
-    user.baselinePhoto = imageUrl.url
-    user.baselineFaceID = firstImage.data[0].faceId
-    user.isVerified = true
-    await user.save()
+    if (firstImage.data.length > 0) {
+      // console.log(firstImage.data)
+      // console.log(req.files[0])
+      //Update User BaselineImageURL && FaceId here
+      let userId = parseInt(req.files[0].originalname)
+      let user = await User.findByPk(userId)
+
+      user.baselinePhoto = imageUrl.url
+      user.baselineFaceID = firstImage.data[0].faceId
+      await user.save()
+      res.send(user)
+    } else {
+      let userId = parseInt(req.files[0].originalname)
+      let user = await User.findByPk(userId)
+
+      res.send(user)
+    }
   } catch (error) {
     next(error)
   }

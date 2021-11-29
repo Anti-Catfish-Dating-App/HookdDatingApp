@@ -18,9 +18,9 @@ export const setError = (error) => ({
   error,
 })
 
-export const setBaseLine = (baselineImg) => ({
+export const setBaseLine = (user) => ({
   type: SET_BASELINE,
-  baselineImg,
+  user,
 })
 
 export const editProfile = (user) => ({
@@ -31,9 +31,7 @@ export const editProfile = (user) => ({
 //thunk creators
 export const getUser = (userId) => async (dispatch) => {
   try {
-    const res = await axios.get(
-      `http://192.168.39.131:8080/api/users/${userId}`
-    )
+    const res = await axios.get(`http://10.0.0.64:8080/api/users/${userId}`)
     dispatch(setUser(res.data))
   } catch (error) {
     dispatch(setError(error))
@@ -44,16 +42,20 @@ export const checkForFace = (imageData) => async (dispatch) => {
   const config = { headers: { "Content-Type": "multipart/form-data" } }
 
   const { data } = await axios.post(
-    "http://192.168.39.131:8080/api/faceapi/",
+    "http://10.0.0.64:8080/api/faceapi/",
     imageData,
     config
   )
 
-  if (data.length > 0) {
-    return "Completed"
-  } else {
+  console.log("FRONT END CONSOLE LOG", data)
+
+  if (data.baselinePhoto === null) {
     return "No face found"
+  } else {
+    dispatch(setBaseLine(data))
+    return "Completed"
   }
+
   // dispatch(setBaseLine(data))
 }
 
@@ -75,6 +77,8 @@ export default function (state = initialState, action) {
         ...state,
         error: action.error,
       }
+    case SET_BASELINE:
+      return { ...state, user: action.user }
     default:
       return state
   }

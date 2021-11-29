@@ -27,6 +27,7 @@ async function seed() {
     age: 20,
     bio: `Just looking for the Pam to my Jim`,
     baselinePhoto: "https://pbs.twimg.com/media/E54a61HWEAI7EI4.jpg",
+    baselineFaceID: "1ed85b66-5085-4880-8edc-9f3cb0492d8d",
     lastTimeVerified: 11 / 23 / 2040,
     isVerified: true,
   })

@@ -42,7 +42,7 @@ const StackNavigator = (props) => {
 
 const mapState = (state) => {
   return {
-    isLoggedIn: !!state.auth.id,
+    isLoggedIn: !!state.auth.baselineFaceID,
   }
 }
 

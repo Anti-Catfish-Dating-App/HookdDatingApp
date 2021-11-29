@@ -18,7 +18,8 @@ import { useNavigation } from "@react-navigation/native"
 const Login = (props) => {
   const navigation = useNavigation()
   const { control, handleSubmit } = useForm()
-  const onSubmit = (data) => props.submitForm(data.Email, data.Password)
+  const onSubmit = (data) =>
+    props.submitForm(data.Email, data.Password, data.Name === "null")
 
   return (
     <View style={styles.container}>
@@ -63,8 +64,8 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    submitForm: (email, password, method = "login") =>
-      dispatch(authenticate(email, password, method)),
+    submitForm: (email, password, name, method = "login") =>
+      dispatch(authenticate(email, password, name, method)),
   }
 }
 

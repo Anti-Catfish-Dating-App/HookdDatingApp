@@ -20,7 +20,13 @@ const Signup = (props) => {
   const { control, handleSubmit } = useForm()
 
   const onSubmit = async (data) => {
-    const resStatus = await props.submitForm(data.Email, data.Password)
+    const resStatus = await props.submitForm(
+      data.Email,
+      data.Password,
+      data.Name
+    )
+
+    console.log(resStatus)
 
     if (resStatus === 200) {
       navigation.navigate("UserConsent")
@@ -33,6 +39,8 @@ const Signup = (props) => {
     <View style={styles.container}>
       <Text style={styles.title}>Sign Up</Text>
       <Text>Please enter your email and password</Text>
+      <InputForm name="Name" style={styles.input} control={control} />
+
       <InputForm name="Email" style={styles.input} control={control} />
 
       <InputForm name="Password" style={styles.input} control={control} />
@@ -74,8 +82,8 @@ const mapSignup = (state) => {
 
 const mapDispatch = (dispatch, { history }) => {
   return {
-    submitForm: (userEmail, password, method = "signup") =>
-      dispatch(authenticate(userEmail, password, method, history)),
+    submitForm: (userEmail, password, name, method = "signup") =>
+      dispatch(authenticate(userEmail, password, name, method, history)),
   }
 }
 
