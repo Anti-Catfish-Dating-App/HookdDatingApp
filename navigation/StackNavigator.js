@@ -13,7 +13,7 @@ import Swipe from "../screens/Swipe"
 const stack = createNativeStackNavigator()
 
 const StackNavigator = (props) => {
-  const user = props.isLoggedIn
+  const user = false
   return (
     <stack.Navigator>
       {user ? (
