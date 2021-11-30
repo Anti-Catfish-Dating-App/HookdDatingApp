@@ -43,7 +43,12 @@ const Signup = (props) => {
 
       <InputForm name="Email" style={styles.input} control={control} />
 
-      <InputForm name="Password" style={styles.input} control={control} />
+      <InputForm
+        name="Password"
+        secureTextEntry={true}
+        style={styles.input}
+        control={control}
+      />
 
       <Button title="Sign Up" onPress={handleSubmit(onSubmit)} />
     </View>
