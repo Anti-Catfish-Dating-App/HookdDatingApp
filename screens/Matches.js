@@ -1,15 +1,38 @@
-import React from "react"
-import { StyleSheet, Text, View } from "react-native"
+import React, { useEffect, useState } from "react"
+import { StyleSheet, Text, View, FlatList } from "react-native"
+import { connect } from "react-redux"
+import { getMatches } from "../store/matches"
 
-const Matches = () => {
+const Matches = (props) => {
+  const [matches, setMatches] = useState(props.matches);
+  //console.log("MATCHES: ", props.matches.matches[0]);
+  useEffect(() => {
+    setMatches(props.getMatches());
+  }, [])
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>All Matches</Text>
+      <FlatList
+        data={props.matches.matches}
+        renderItem={({item}) => <Text style={styles.title}>{item.name}</Text>}
+      />
     </View>
   )
 }
 
-export default Matches
+const mapState = (state) => {
+  return {
+    matches: state.matches
+  }
+}
+
+const mapDispatch = (dispatch) => {
+  return {
+    getMatches: () => dispatch(getMatches())
+  }
+}
+
+export default connect(mapState, mapDispatch)(Matches)
 
 const styles = StyleSheet.create({
   container: {
