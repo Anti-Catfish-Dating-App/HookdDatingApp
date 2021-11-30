@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { StyleSheet, Text, View } from "react-native"
+import { StyleSheet, Text, View, FlatList } from "react-native"
 import { connect } from "react-redux"
 import { getMatches } from "../store/matches"
 
@@ -8,11 +8,10 @@ const Matches = (props) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>
-        {
-          props.matches.matches.map(x => x.name)
-        }
-      </Text>
+      <FlatList
+        data={props.matches.matches}
+        renderItem={({item}) => <Text style={styles.title}>{item.name}</Text>}
+      />
     </View>
   )
 }
