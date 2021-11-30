@@ -6,13 +6,13 @@ import { getMatches } from "../store/matches"
 const Matches = (props) => {
   const [matches, setMatches] = useState(props.matches);
 
-  useEffect(() => {
-    setMatches(props.getMatches());
-  }, [])
-
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>All Matches</Text>
+      <Text style={styles.title}>
+        {
+          props.matches.matches.map(x => x.name)
+        }
+      </Text>
     </View>
   )
 }
