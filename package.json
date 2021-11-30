@@ -9,6 +9,7 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "start:server": "nodemon server",
+    "start:heroku": "node server",
     "seed": "node script/seed"
   },
   "dependencies": {
