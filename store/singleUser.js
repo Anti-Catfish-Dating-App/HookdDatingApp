@@ -37,9 +37,7 @@ export const editProfilePic = (user) => ({
 //thunk creators
 export const getUser = (userId) => async (dispatch) => {
   try {
-    const res = await axios.get(
-      `http://192.168.39.131:8080/api/users/${userId}`
-    )
+    const res = await axios.get(`http:/10.0.0.64:8080/api/users/${userId}`)
     dispatch(setUser(res.data))
   } catch (error) {
     dispatch(setError(error))
@@ -50,7 +48,7 @@ export const checkForFace = (imageData) => async (dispatch) => {
   const config = { headers: { "Content-Type": "multipart/form-data" } }
 
   const { data } = await axios.post(
-    "http://192.168.39.131:8080/api/faceapi/",
+    "http://10.0.0.64:8080/api/faceapi/",
     imageData,
     config
   )
@@ -71,7 +69,7 @@ export const _editProfilePic = (imageData, id) => async (dispatch) => {
   const config = { headers: { "Content-Type": "multipart/form-data" } }
 
   const { data } = await axios.post(
-    `http://192.168.39.131:8080/api/faceapi/profilepic/${id}`,
+    `http://10.0.0.64:8080/api/faceapi/profilepic/${id}`,
     imageData,
     config
   )

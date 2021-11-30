@@ -14,10 +14,11 @@ const editProfile = (user) => ({ type: EDIT_PROFILE, user })
 export const editUser = (user) => async (dispatch) => {
   try {
     const res = await axios.put(
-      `http://192.168.39.131:8080/api/users/${user.id}`,
+      `http://10.0.0.64:8080/api/users/${user.id}`,
       user
     )
     dispatch(editProfile(res.data))
+    return res.status
   } catch (error) {
     console.log(error)
   }
@@ -26,7 +27,7 @@ export const editUser = (user) => async (dispatch) => {
 export const me = () => async (dispatch) => {
   const token = await AsyncStorage.getItem(TOKEN)
   if (token) {
-    const res = await axios.get("http://192.168.39.131:8080/auth/me", {
+    const res = await axios.get("http://10.0.0.64:8080/auth/me", {
       headers: {
         authorization: token,
       },
@@ -39,14 +40,11 @@ export const authenticate =
   (email, password, name, method) => async (dispatch) => {
     try {
       console.log("AUTH", email, password, name)
-      const res = await axios.post(
-        `http://192.168.39.131:8080/auth/${method}`,
-        {
-          email,
-          password,
-          name,
-        }
-      )
+      const res = await axios.post(`http://10.0.0.64:8080/auth/${method}`, {
+        email,
+        password,
+        name,
+      })
       AsyncStorage.setItem(TOKEN, res.data.token)
       dispatch(me())
       return res.status

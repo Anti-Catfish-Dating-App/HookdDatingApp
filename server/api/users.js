@@ -21,7 +21,7 @@ require("dotenv").config()
 router.put("/:id", async (req, res, next) => {
   try {
     const { id } = req.params
-    const { profilePicture, age, bio } = req.body
+    const { profilePicture, age, bio, gender } = req.body
     const user = await User.findByPk(id)
     if (!user) {
       const error = Error("User not found")
@@ -32,6 +32,7 @@ router.put("/:id", async (req, res, next) => {
       profilePicture,
       age,
       bio,
+      gender,
     })
     res.send(user)
   } catch (error) {

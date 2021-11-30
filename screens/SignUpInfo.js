@@ -12,24 +12,23 @@ import {
 } from "react-native"
 import { InputForm } from "./Input"
 import { connect } from "react-redux"
-import { authenticate } from "../store"
 import { useNavigation } from "@react-navigation/native"
+import { editUser } from "../store/auth"
 
-const Signup = (props) => {
+const SignUpInfo = (props) => {
   const navigation = useNavigation()
   const { control, handleSubmit } = useForm()
 
   const onSubmit = async (data) => {
-    const resStatus = await props.submitForm(
-      data.Email,
-      data.Password,
-      data.Name
-    )
-
-    console.log(resStatus)
+    const resStatus = await props.editUser({
+      id: props.auth.id,
+      age: data.Age,
+      gender: data.Gender,
+      bio: data.Bio,
+    })
 
     if (resStatus === 200) {
-      navigation.navigate("SignUpInfo")
+      navigation.navigate("UserConsent")
     } else {
       Alert.alert("Error!")
     }
@@ -38,14 +37,15 @@ const Signup = (props) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Sign Up</Text>
-      <Text>Please enter your email and password</Text>
-      <InputForm name="Name" style={styles.input} control={control} />
+      <Text>Please enter your information</Text>
 
-      <InputForm name="Email" style={styles.input} control={control} />
+      <InputForm name="Age" style={styles.input} control={control} />
 
-      <InputForm name="Password" style={styles.input} control={control} />
+      <InputForm name="Gender" style={styles.input} control={control} />
 
-      <Button title="Sign Up" onPress={handleSubmit(onSubmit)} />
+      <InputForm name="Bio" style={styles.input2} control={control} />
+
+      <Button title="Submit" onPress={handleSubmit(onSubmit)} />
     </View>
   )
 }
@@ -69,23 +69,26 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     padding: 10,
   },
+  input2: {
+    height: 200,
+    margin: 12,
+    width: 250,
+    borderWidth: 2,
+    padding: 10,
+  },
 })
 
 const mapSignup = (state) => {
   return {
-    name: "signup",
-    displayName: "Sign Up",
-    error: state.auth.error,
     auth: state.auth,
   }
 }
 
-const mapDispatch = (dispatch, { history }) => {
+const mapDispatch = (dispatch) => {
   return {
-    submitForm: (userEmail, password, name, method = "signup") =>
-      dispatch(authenticate(userEmail, password, name, method, history)),
+    editUser: (user) => dispatch(editUser(user)),
   }
 }
 
-const connectedSignup = connect(mapSignup, mapDispatch)(Signup)
-export default connectedSignup
+const connectedSignUpInfo = connect(mapSignup, mapDispatch)(SignUpInfo)
+export default connectedSignUpInfo
