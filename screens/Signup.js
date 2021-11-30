@@ -29,7 +29,7 @@ const Signup = (props) => {
     console.log(resStatus)
 
     if (resStatus === 200) {
-      navigation.navigate("UserConsent")
+      navigation.navigate("SignUpInfo")
     } else {
       Alert.alert("Error!")
     }

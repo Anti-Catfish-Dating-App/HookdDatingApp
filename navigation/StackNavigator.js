@@ -11,6 +11,7 @@ import BaselinePhoto from "../screens/BaselinePhoto"
 import Swipe from "../screens/Swipe"
 import Settings from "../screens/Settings"
 import ChangeProfilePic from "../screens/ChangeProfilePic"
+import SignUpInfo from "../screens/SignUpInfo"
 
 const stack = createNativeStackNavigator()
 
@@ -37,6 +38,7 @@ const StackNavigator = (props) => {
         <>
           <stack.Screen name="Login" component={Login} />
           <stack.Screen name="Signup" component={Signup} />
+          <stack.Screen name="SignUpInfo" component={SignUpInfo} />
           <stack.Screen name="UserConsent" component={UserConsent} />
           <stack.Screen name="BaselinePhoto" component={BaselinePhoto} />
         </>
