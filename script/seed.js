@@ -53,6 +53,9 @@ async function seed() {
   const user1 = await User.findByPk(3)
   const user2 = await User.findByPk(5)
   const user3 = await User.findByPk(7)
+  const user4 = await User.findByPk(4)
+  const user5 = await User.findByPk(6)
+  const user6 = await User.findByPk(8)
   await user1.addSwiped(user2, {
     through: {
       isRightSwipe: true}
@@ -68,6 +71,20 @@ async function seed() {
   await user3.addSwiped(user1, {
     through: {
       isRightSwipe: false}
+    })
+  await user6.addSwiped(user1, {
+    through: {
+      isRightSwipe: true
+    }
+  })
+  await user5.addSwiped(user1, {
+    through: {
+      isRightSwipe: true
+    }
+  })
+  await user1.addSwiped(user6, {
+    through: {
+      isRightSwipe: true}
     })
 }
 
