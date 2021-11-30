@@ -37,7 +37,7 @@ export const editProfilePic = (user) => ({
 //thunk creators
 export const getUser = (userId) => async (dispatch) => {
   try {
-    const res = await axios.get(`http:/10.0.0.64:8080/api/users/${userId}`)
+    const res = await axios.get(`http:/192.168.1.161:8080/api/users/${userId}`)
     dispatch(setUser(res.data))
   } catch (error) {
     dispatch(setError(error))

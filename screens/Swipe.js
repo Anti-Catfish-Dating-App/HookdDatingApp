@@ -15,6 +15,7 @@ import { connect } from "react-redux"
 import { useNavigation } from "@react-navigation/native"
 import Swiper from "react-native-deck-swiper"
 import { Transitioning, Transition } from "react-native-reanimated"
+import UserProfile from "./UserProfile"
 import pond from "../store/dummySwipeData"
 
 //animations
@@ -84,6 +85,9 @@ export default function Swipe(props) {
           cards={pond}
           cardIndex={index}
           renderCard={(fish) => <Card card={fish} />}
+          onTapCard={() => {
+            navigation.navigate("UserProfile")
+          }}
           onSwiped={onSwiped}
           //if we want stacking effect but this is giving me issues
           showSecondCard

@@ -12,7 +12,7 @@ export const setUsers = (users) => ({
 //thunk creators
 export const getUsers = () => async (dispatch) => {
   try {
-    const res = await axios.get(`http://192.168.39.131:8080/api/users`)
+    const res = await axios.get(`http://192.168.1.161:8080/api/users`)
     dispatch(setUsers(res.data))
   } catch (error) {
     console.log(error)
