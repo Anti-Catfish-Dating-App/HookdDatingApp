@@ -5,6 +5,10 @@ import { getMatches } from "../store/matches"
 
 const Matches = (props) => {
   const [matches, setMatches] = useState(props.matches);
+  //console.log("MATCHES: ", props.matches.matches[0]);
+  useEffect(() => {
+    setMatches(props.getMatches());
+  }, [])
 
   return (
     <View style={styles.container}>
