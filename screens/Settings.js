@@ -15,12 +15,14 @@ import {
 import { connect } from "react-redux"
 import { editUser } from "../store/auth"
 import * as ImagePicker from "expo-image-picker"
+import { useNavigation } from "@react-navigation/native"
 
 const Settings = (props) => {
   const [profilePicture, setImage] = useState(props.user.profilePicture)
   const [age, setAge] = useState(props.user.age)
   const [bio, setBio] = useState(props.user.bio)
 
+  const navigation = useNavigation()
   const { user } = props
 
   const handleSubmit = () => {
@@ -44,7 +46,7 @@ const Settings = (props) => {
         <View style={styles.container}>
           <View style={styles.profilePictureContainer}>
             <TouchableOpacity
-              onPress={props.navigation.navigate("ChangeProfilePic")}
+              onPress={() => navigation.navigate("ChangeProfilePic")}
             >
               <Image
                 style={styles.profilePicture}
