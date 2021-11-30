@@ -9,26 +9,23 @@ router.get("/", async (req, res, next) => {
 
 
     //Where swipedId = userId && boolean === true
-    const matches = await Matches.findAll({
+    const userMatches = await Matches.findAll({
       where: {
         SwipedId: user.id,
         isRightSwipe: true
       }
     })
+    const userSwipedMatchesIds = userMatches.map(x => x.userId)
 
-    const allMatches = matches.map(x => x.userId)
-    //console.log(allMatches);
-    const otherMatches = await Matches.findAll({
+    const otherUserSwipedMatchesIds = await Matches.findAll({
       where: {
         userId: user.id,
         isRightSwipe: true
       }
     })
-    const allMatches2 = otherMatches.map(x => x.SwipedId);
-    //console.log(allMatches2);
+    const swipedUserMatches = otherUserSwipedMatchesIds.map(x => x.SwipedId);
 
-    const data = allMatches.filter(item => allMatches2.includes(item))
-    console.log(data);
+    const data = userSwipedMatchesIds.filter(item => swipedUserMatches.includes(item))
 
     const matchData = await data.map(async x => await User.findByPk(x))
     const matchedUsers = await Promise.all(matchData)
