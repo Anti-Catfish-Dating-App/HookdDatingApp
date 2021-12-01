@@ -1375,6 +1375,10 @@
   resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.2.1.tgz#32b9f540d8e88a73d8856f73cca88251cecb9614"
   integrity sha512-EC7yv22QLHlTfnbC1ez9IUdXTOh1W31x96Oir0PfskSGFFJMWWdLTg4VrcE2DsGLzbfjjkBk123c173vf2a5MQ==
 
+"@react-native-picker/picker@react-native-picker/picker":
+  version "2.2.1"
+  resolved "https://codeload.github.com/react-native-picker/picker/tar.gz/82713309dd55ae8c94166e8a9f59bf5543b9471c"
+
 "@react-native/assets@1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@react-native/assets/-/assets-1.0.0.tgz#c6f9bf63d274bafc8e970628de24986b30a55c8e"
@@ -5297,11 +5301,6 @@ react-native-deck-swiper@^2.0.5:
   dependencies:
     prop-types "15.5.10"
 
-react-native-dropdown-picker@^5.2.3:
-  version "5.2.3"
-  resolved "https://registry.yarnpkg.com/react-native-dropdown-picker/-/react-native-dropdown-picker-5.2.3.tgz#2ab6819f258ba58328cdc69c9593fb3769f20347"
-  integrity sha512-nT2p/3pzydi6CAUPbC7WR1Yo2/FDX6napouAQ1ueuCGD48afYiWERh2J+mAUes/v4MKl68oriEz9C7GM6aAILg==
-
 react-native-image-picker@^4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-4.3.0.tgz#d68640061d3c5e6bef1d417c8085828318162874"
@@ -6384,11 +6383,6 @@ uuid@^8.1.0:
   version "8.3.2"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
-
-val-loader@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/val-loader/-/val-loader-4.0.0.tgz#c5ccf8abfe486de412d2cd59fa56deb49d44ec8d"
-  integrity sha512-tpDHHpVo1hrO9xFhpEcOw+RCK4wnQqqNkZmylwHJ04iVeue1YSYxIdDwCdKd7LVQ8g/fsGX/EC5gLda9BXovkg==
 
 validator@^13.7.0:
   version "13.7.0"
