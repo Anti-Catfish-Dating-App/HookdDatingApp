@@ -21,10 +21,11 @@ const OtherGender = (props) => {
   const navigation = useNavigation()
   const { control, handleSubmit } = useForm()
   const [gender, setGender] = useState("")
-  const onSubmit = async () => {
+  const onSubmit = async (data) => {
     const resStatus = await props.editUser({
       id: props.auth.id,
-      gender: gender,
+      gender: data.Gender,
+      genderCategory: gender,
     })
 
     if (resStatus === 200) {
