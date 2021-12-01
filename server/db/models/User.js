@@ -34,6 +34,11 @@ const Users = db.define("user", {
     //   values: ["Male", "Female", "Non-Binary"],
     // }),
   },
+  genderCategory: {
+    type: Sequelize.ENUM({
+      values: ["Man", "Woman", "Other"],
+    }),
+  },
   age: {
     type: Sequelize.INTEGER,
     validate: {
