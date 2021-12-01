@@ -20,7 +20,7 @@ const Matches = (props) => {
         renderItem={({item}) =>
         <ScrollView>
           <View style={styles.item}>
-            <TouchableOpacity onPress={() => navigation.navigate("AddMatchReview")}>
+            <TouchableOpacity onPress={() => navigation.navigate("AddMatchReview", {matchId: item.id})}>
               <Image
                 style={styles.tinyImage}
                 source={{uri: item.profilePicture}}

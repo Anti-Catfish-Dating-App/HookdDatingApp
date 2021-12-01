@@ -23,6 +23,9 @@ const User = require("./models/User")
 //Associations
 User.belongsToMany(User, { as: "Swiped", through: Matches })
 
+User.hasMany(Reviews);
+Reviews.belongsTo(User);
+
 module.exports = {
   db,
   models: {
