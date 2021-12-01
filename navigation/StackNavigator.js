@@ -12,11 +12,8 @@ import Swipe from "../screens/Swipe"
 import Settings from "../screens/Settings"
 import ChangeProfilePic from "../screens/ChangeProfilePic"
 import SignUpInfo from "../screens/SignUpInfo"
-<<<<<<< HEAD
 import AddMatchReview from "../screens/AddMatchReview"
-=======
 import UserProfile from "../screens/UserProfile"
->>>>>>> main
 
 const stack = createNativeStackNavigator()
 

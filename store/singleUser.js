@@ -37,13 +37,9 @@ export const editProfilePic = (user) => ({
 //thunk creators
 export const getUser = (userId) => async (dispatch) => {
   try {
-<<<<<<< HEAD
-    const res = await axios.get(`http://192.168.0.6:8080/api/users/${userId}`)
-=======
     const res = await axios.get(
       `https://hookd-datingapp.herokuapp.com/api/users/${userId}`
     )
->>>>>>> main
     dispatch(setUser(res.data))
   } catch (error) {
     dispatch(setError(error))

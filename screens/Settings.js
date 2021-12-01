@@ -16,6 +16,7 @@ import { connect } from "react-redux"
 import { editUser } from "../store/auth"
 import * as ImagePicker from "expo-image-picker"
 import { useNavigation } from "@react-navigation/native"
+import { logout } from "../store"
 
 const Settings = (props) => {
   const [profilePicture, setImage] = useState(props.user.profilePicture)
@@ -105,6 +106,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     editUser: (user) => dispatch(editUser(user)),
+    logout: () => dispatch(logout())
   }
 }
 
