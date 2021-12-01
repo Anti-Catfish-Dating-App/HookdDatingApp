@@ -18,11 +18,8 @@ import { Transitioning, Transition } from "react-native-reanimated"
 import UserProfile from "./UserProfile"
 
 import { getUsers } from "../store/users"
-<<<<<<< HEAD
 import { addSwipe } from "../store/matches"
-=======
 import { getUser } from "../store/singleUser"
->>>>>>> main
 
 //animations
 const ANIMATION_DURATION = 200
@@ -197,11 +194,8 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     getUsersToSwipe: () => dispatch(getUsers()),
-<<<<<<< HEAD
-    addSwipe: (direction, id) => dispatch(addSwipe(direction, id))
-=======
+    addSwipe: (direction, id) => dispatch(addSwipe(direction, id)),
     getUser: (userId) => dispatch(getUser(userId)),
->>>>>>> main
   }
 }
 
