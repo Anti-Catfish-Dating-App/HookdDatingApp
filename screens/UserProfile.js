@@ -29,7 +29,7 @@ const UserProfile = (props) => {
 
 // const mapState = (state) => {
 //   return {
-//     user: state.auth,
+//     user: ,
 //   }
 // }
 
