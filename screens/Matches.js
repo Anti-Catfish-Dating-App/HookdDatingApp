@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react"
-import { StyleSheet, Text, View, FlatList, Image, ScrollView } from "react-native"
+import { StyleSheet, Text, View, FlatList, Image, ScrollView, TouchableOpacity } from "react-native"
 import { connect } from "react-redux"
 import { getMatches } from "../store/matches"
+import { useNavigation } from "@react-navigation/native"
 
 const Matches = (props) => {
+  const navigation = useNavigation();
+
   const [matches, setMatches] = useState(props.matches);
 
   useEffect(() => {
@@ -17,10 +20,12 @@ const Matches = (props) => {
         renderItem={({item}) =>
         <ScrollView>
           <View style={styles.item}>
-            <Image
-              style={styles.tinyImage}
-              source={{uri: item.profilePicture}}
-            />
+            <TouchableOpacity onPress={() => navigation.navigate("AddMatchReview", {matchId: item.id})}>
+              <Image
+                style={styles.tinyImage}
+                source={{uri: item.profilePicture}}
+              />
+            </TouchableOpacity>
             <Text style={styles.title}>{item.name}</Text>
           </View>
           <View style={styles.separator} />
