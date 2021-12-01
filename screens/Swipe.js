@@ -15,7 +15,9 @@ import { connect } from "react-redux"
 import { useNavigation } from "@react-navigation/native"
 import Swiper from "react-native-deck-swiper"
 import { Transitioning, Transition } from "react-native-reanimated"
-import pond from "../store/dummySwipeData"
+import UserProfile from "./UserProfile"
+
+import { getUsers } from "../store/users"
 
 //animations
 const ANIMATION_DURATION = 200
@@ -42,29 +44,10 @@ const transition = (
   </Transition.Sequence>
 )
 
-const Card = ({ card }) => {
-  return (
-    <View style={styles.currentCard}>
-      <Image source={{ uri: card.pic }} style={styles.cardImage} />
-    </View>
-  )
-}
-
-const CardDetails = ({ index }) => (
-  <View key={pond[index].id} style={{ alignItems: "center" }}>
-    <Text style={[styles.text, styles.heading]} numberOfLines={2}>
-      {pond[index].first_name}
-    </Text>
-    <Text style={[styles.text, styles.age]}>{pond[index].age}</Text>
-    <Text style={[styles.text, styles.gender]}>{pond[index].gender}</Text>
-    <Text style={[styles.text, styles.bio]}>{pond[index].bio}</Text>
-  </View>
-)
-
 const swiperRef = React.createRef()
 const transitionRef = React.createRef()
 
-export default function Swipe(props) {
+const Swipe = (props) => {
   const navigation = useNavigation()
   //set initial index
   const [index, setIndex] = React.useState(0)
@@ -76,6 +59,36 @@ export default function Swipe(props) {
     setIndex((index + 1) % pond.length)
   }
 
+  useEffect(async () => {
+    await props.getUsersToSwipe()
+    console.log(props.users.users)
+  }, [])
+
+  const pond = props.users.users
+
+  if (!pond.length) {
+    return <Text>...Loading</Text>
+  }
+
+  const Card = ({ card }) => {
+    return (
+      <View style={styles.currentCard}>
+        <Image source={{ uri: card.profilePicture }} style={styles.cardImage} />
+      </View>
+    )
+  }
+
+  const CardDetails = ({ index }) => (
+    <View key={pond[index].id} style={{ alignItems: "center" }}>
+      <Text style={[styles.text, styles.heading]} numberOfLines={2}>
+        {pond[index].name}
+      </Text>
+      <Text style={[styles.text, styles.age]}>{pond[index].age}</Text>
+      <Text style={[styles.text, styles.gender]}>{pond[index].gender}</Text>
+      <Text style={[styles.text, styles.bio]}>{pond[index].bio}</Text>
+    </View>
+  )
+
   return (
     <View style={styles.container}>
       <View style={styles.swiperContainer}>
@@ -84,6 +97,9 @@ export default function Swipe(props) {
           cards={pond}
           cardIndex={index}
           renderCard={(fish) => <Card card={fish} />}
+          onTapCard={() => {
+            navigation.navigate("UserProfile")
+          }}
           onSwiped={onSwiped}
           //if we want stacking effect but this is giving me issues
           showSecondCard
@@ -157,6 +173,18 @@ export default function Swipe(props) {
     </View>
   )
 }
+
+const mapState = (state) => {
+  return { users: state.users }
+}
+
+const mapDispatch = (dispatch) => {
+  return {
+    getUsersToSwipe: () => dispatch(getUsers()),
+  }
+}
+
+export default connect(mapState, mapDispatch)(Swipe)
 
 const styles = StyleSheet.create({
   container: {

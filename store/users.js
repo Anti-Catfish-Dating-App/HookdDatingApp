@@ -12,7 +12,9 @@ export const setUsers = (users) => ({
 //thunk creators
 export const getUsers = () => async (dispatch) => {
   try {
-    const res = await axios.get(`http://192.168.0.6:8080/api/users`)
+    const res = await axios.get(
+      `https://hookd-datingapp.herokuapp.com/api/users`
+    )
     dispatch(setUsers(res.data))
   } catch (error) {
     console.log(error)
@@ -20,6 +22,7 @@ export const getUsers = () => async (dispatch) => {
 }
 
 //reducer
+//because of the way state declared props.users.users will give you corrct rendrings
 const initialState = {
   users: [],
 }

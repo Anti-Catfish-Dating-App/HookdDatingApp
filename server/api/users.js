@@ -28,12 +28,7 @@ router.put("/:id", async (req, res, next) => {
       error.status = 404
       throw error
     }
-    await user.update({
-      profilePicture,
-      age,
-      bio,
-      gender,
-    })
+    await user.update(req.body)
     res.send(user)
   } catch (error) {
     next(error)
