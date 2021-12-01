@@ -21,6 +21,10 @@ const SignUpInfo = (props) => {
   const { control, handleSubmit } = useForm()
   const [gender, setGender] = useState("")
   const onSubmit = async (data) => {
+    if (gender === "Other") {
+      setGender(null)
+    }
+
     const resStatus = await props.editUser({
       id: props.auth.id,
       age: data.Age,

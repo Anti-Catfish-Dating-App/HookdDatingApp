@@ -36,7 +36,7 @@ const Users = db.define("user", {
   },
   genderCategory: {
     type: Sequelize.ENUM({
-      values: ["Man", "Woman"],
+      values: ["Man", "Woman", "Other"],
     }),
   },
   age: {
