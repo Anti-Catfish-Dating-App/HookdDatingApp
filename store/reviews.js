@@ -2,10 +2,16 @@ import axios from "axios"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 
 const ADD_REVIEW = "ADD_REVIEW"
+const GET_USER_REVIEWS = "GET_USER_REVIEWS"
 
 export const _addReview = (review) => ({
   type: ADD_REVIEW,
   review
+})
+
+export const _getReviews = (reviews) => ({
+  type: GET_USER_REVIEWS,
+  reviews
 })
 
 export const addReview = (reviewInfo) => async (dispatch) => {
@@ -23,9 +29,19 @@ export const addReview = (reviewInfo) => async (dispatch) => {
   }
 }
 
+export const getReviews = (userId) => async (dispatch) => {
+  try {
+    const res = await axios.get(`https://hookd-datingapp.herokuapp.com/api/reviews/${userId}`);
+    dispatch(_getReviews(res.data));
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 const initialState = {
   review: {},
-  allUserReviews: []
+  allUserReviews: [],
+  avgRating: null
 }
 
 export default function(state = initialState, action){
@@ -33,6 +49,12 @@ export default function(state = initialState, action){
     case ADD_REVIEW:
       return {
         ...state, review: action.review
+      }
+    case GET_USER_REVIEWS:
+      return {
+        ...state,
+        allUserReviews: action.reviews.userReviews,
+        avgRating: action.reviews.avgRating
       }
     default:
       return state

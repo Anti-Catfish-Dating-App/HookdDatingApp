@@ -11,7 +11,7 @@ import {
 } from "react-native"
 import { connect } from "react-redux"
 import { InputForm } from "./Input"
-import { addReview } from "../store/reviews";
+import { addReview, getReviews } from "../store/reviews";
 import { useNavigation } from "@react-navigation/native"
 
 
@@ -39,14 +39,14 @@ const AddMatchReview = (props) => {
       <InputForm name="Rating" style={styles.input} control={control} />
       <InputForm name="Review" style={styles.input} control={control} />
       <Button title="Submit Review" onPress={handleSubmit(onSubmit)} />
-
     </View>
   )
 }
 
 const mapDispatch = (dispatch) => {
   return {
-    addReview: (reviewInfo) => dispatch(addReview(reviewInfo))
+    addReview: (reviewInfo) => dispatch(addReview(reviewInfo)),
+    getReviews: (userId) => dispatch(getReviews(userId))
   }
 
 }
