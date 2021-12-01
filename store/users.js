@@ -20,6 +20,7 @@ export const getUsers = () => async (dispatch) => {
 }
 
 //reducer
+//because of the way state declared props.users.users will give you corrct rendrings
 const initialState = {
   users: [],
 }
