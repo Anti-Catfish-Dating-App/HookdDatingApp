@@ -18,6 +18,7 @@ import { Transitioning, Transition } from "react-native-reanimated"
 import UserProfile from "./UserProfile"
 
 import { getUsers } from "../store/users"
+import { getUser } from "../store/singleUser"
 
 //animations
 const ANIMATION_DURATION = 200
@@ -61,7 +62,6 @@ const Swipe = (props) => {
 
   useEffect(async () => {
     await props.getUsersToSwipe()
-    console.log(props.users.users)
   }, [])
 
   const pond = props.users.users
@@ -97,8 +97,12 @@ const Swipe = (props) => {
           cards={pond}
           cardIndex={index}
           renderCard={(fish) => <Card card={fish} />}
-          onTapCard={() => {
-            navigation.navigate("UserProfile")
+          onTapCard={async () => {
+            await props.getUser(pond[index].id)
+            navigation.navigate("UserProfile", {
+              id: pond[index].id,
+              name: pond[index].name,
+            })
           }}
           onSwiped={onSwiped}
           //if we want stacking effect but this is giving me issues
@@ -181,6 +185,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     getUsersToSwipe: () => dispatch(getUsers()),
+    getUser: (userId) => dispatch(getUser(userId)),
   }
 }
 
