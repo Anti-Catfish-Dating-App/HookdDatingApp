@@ -25,11 +25,16 @@ const SignUpInfo = (props) => {
       id: props.auth.id,
       age: data.Age,
       gender: gender,
+      genderCategory: gender,
       bio: data.Bio,
     })
 
     if (resStatus === 200) {
-      navigation.navigate("UserConsent")
+      if (gender === "Other") {
+        navigation.navigate("OtherGender")
+      } else {
+        navigation.navigate("UserConsent")
+      }
     } else {
       Alert.alert("Error!")
     }

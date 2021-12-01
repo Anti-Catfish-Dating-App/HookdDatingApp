@@ -24,6 +24,7 @@ async function seed() {
     email: "test@test.com",
     password: "123",
     gender: "Cat",
+    genderCategory: "Woman",
     age: 20,
     bio: `Just looking for the Pam to my Jim`,
     baselinePhoto: "https://pbs.twimg.com/media/E54a61HWEAI7EI4.jpg",
@@ -35,12 +36,16 @@ async function seed() {
   for (let i = 0; i < 10; i++) {
     let randomAge = Math.floor(Math.random() * 20 + 18)
 
+    const genderCategory = ["Man", "Woman"]
+    const randomGender = genderCategory[Math.floor(Math.random() * 2)]
+
     const user = await User.create({
       name: faker.name.findName(),
       profilePicture: faker.image.imageUrl(),
       email: faker.internet.email(),
       password: "Password12",
       gender: faker.name.gender(),
+      genderCategory: randomGender,
       age: randomAge,
       bio: `Just looking for the Pam to my Jim`,
       baselinePhoto:
@@ -61,39 +66,46 @@ async function seed() {
   const user9 = await User.findByPk(9)
   const user10 = await User.findByPk(10)
 
-
   await user1.addSwiped(user2, {
     through: {
-      isRightSwipe: true}
-    })
+      isRightSwipe: true,
+    },
+  })
   await user2.addSwiped(user1, {
     through: {
-      isRightSwipe: true}
-    })
+      isRightSwipe: true,
+    },
+  })
   await user1.addSwiped(user3, {
     through: {
-      isRightSwipe: true}
-    })
+      isRightSwipe: true,
+    },
+  })
   await user3.addSwiped(user1, {
     through: {
-      isRightSwipe: true}
-    })
+      isRightSwipe: true,
+    },
+  })
   await user1.addSwiped(user4, {
     through: {
-      isRightSwipe: true}
-    })
+      isRightSwipe: true,
+    },
+  })
   await user4.addSwiped(user1, {
     through: {
-      isRightSwipe: true}
-    })
+      isRightSwipe: true,
+    },
+  })
   await user1.addSwiped(user5, {
     through: {
-      isRightSwipe: true}
-    })
+      isRightSwipe: true,
+    },
+  })
   await user5.addSwiped(user1, {
     through: {
-      isRightSwipe: true}
-    })
+      isRightSwipe: true,
+    },
+  })
 }
 
 async function runSeed() {
