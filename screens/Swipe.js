@@ -18,6 +18,7 @@ import { Transitioning, Transition } from "react-native-reanimated"
 import UserProfile from "./UserProfile"
 
 import { getUsers } from "../store/users"
+import { addSwipe } from "../store/matches"
 import { getUser } from "../store/singleUser"
 
 //animations
@@ -51,13 +52,17 @@ const transitionRef = React.createRef()
 const Swipe = (props) => {
   const navigation = useNavigation()
   //set initial index
-  const [index, setIndex] = React.useState(0)
+  const [index, setIndex] = React.useState(1)
   //Swiper gives this method.
   const onSwiped = () => {
     //carddetails pop in animatedly
     transitionRef.current.animateNextTransition()
     //infinitely go through stack
     setIndex((index + 1) % pond.length)
+  }
+
+  const userHasSwiped = (direction, id) => {
+    props.addSwipe(direction, id);
   }
 
   useEffect(async () => {
@@ -105,6 +110,10 @@ const Swipe = (props) => {
             })
           }}
           onSwiped={onSwiped}
+          //Right swipe:
+          onSwipedRight={() => userHasSwiped("right", pond[index].id)}
+          //Left swipe:
+          onSwipedLeft={() => userHasSwiped("left", pond[index].id)}
           //if we want stacking effect but this is giving me issues
           showSecondCard
           //can't make more than 1 for some reason, issue with JSON??
@@ -185,6 +194,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     getUsersToSwipe: () => dispatch(getUsers()),
+    addSwipe: (direction, id) => dispatch(addSwipe(direction, id)),
     getUser: (userId) => dispatch(getUser(userId)),
   }
 }
