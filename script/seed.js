@@ -62,7 +62,7 @@ async function seed() {
   const user10 = await User.findByPk(10)
 
 
-  await user1.addSwiped(user2, {
+  /* await user1.addSwiped(user2, {
     through: {
       isRightSwipe: true}
     })
@@ -93,7 +93,7 @@ async function seed() {
   await user5.addSwiped(user1, {
     through: {
       isRightSwipe: true}
-    })
+    }) */
 }
 
 async function runSeed() {
