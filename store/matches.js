@@ -13,7 +13,7 @@ export const getMatches = () => async (dispatch) => {
     const token = await AsyncStorage.getItem("token")
 
     const res = await axios.get(
-      `https://hookd-datingapp.herokuapp.com/api/matches`,
+      `http://192.168.0.6:8080/api/matches`,
       {
         headers: {
           authorization: token,
