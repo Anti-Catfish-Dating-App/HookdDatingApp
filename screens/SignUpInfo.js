@@ -21,15 +21,24 @@ const SignUpInfo = (props) => {
   const { control, handleSubmit } = useForm()
   const [gender, setGender] = useState("")
   const onSubmit = async (data) => {
+    if (gender === "Other") {
+      setGender(null)
+    }
+
     const resStatus = await props.editUser({
       id: props.auth.id,
       age: data.Age,
       gender: gender,
+      genderCategory: gender,
       bio: data.Bio,
     })
 
     if (resStatus === 200) {
-      navigation.navigate("UserConsent")
+      if (gender === "Other") {
+        navigation.navigate("OtherGender")
+      } else {
+        navigation.navigate("UserConsent")
+      }
     } else {
       Alert.alert("Error!")
     }
