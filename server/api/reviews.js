@@ -3,8 +3,30 @@ const {
   models: { User, Reviews },
 } = require("../db");
 
+router.get("/:reviewedId", async (req, res, next) => {
+  try {
+    const allUserReviewInfo = await Reviews.findAll({
+      where: {
+        reviewedUser: req.params.reviewedId
+      }
+    })
+    const avgRating = (allUserReviewInfo.reduce((prev, curr) => {
+      return prev + curr.rating
+    }, 0)/ allUserReviewInfo.length);
 
+    const userReviews = []
+    allUserReviewInfo.forEach(x => {
+      const obj = new Object();
+      obj["rating"] = x.rating
+      obj["reviewText"] = x.reviewText
+      userReviews.push(obj);
+    });
 
+    res.send({avgRating, userReviews});
+  } catch (error) {
+    next(error)
+  }
+})
 
 router.post("/", async (req, res, next) => {
   try {
