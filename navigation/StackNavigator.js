@@ -14,6 +14,7 @@ import ChangeProfilePic from "../screens/ChangeProfilePic"
 import SignUpInfo from "../screens/SignUpInfo"
 import AddMatchReview from "../screens/AddMatchReview"
 import UserProfile from "../screens/UserProfile"
+import OtherGender from "../screens/OtherGender"
 
 const stack = createNativeStackNavigator()
 
@@ -43,6 +44,7 @@ const StackNavigator = (props) => {
           <stack.Screen name="Login" component={Login} />
           <stack.Screen name="Signup" component={Signup} />
           <stack.Screen name="SignUpInfo" component={SignUpInfo} />
+          <stack.Screen name="OtherGender" component={OtherGender} />
           <stack.Screen name="UserConsent" component={UserConsent} />
           <stack.Screen name="BaselinePhoto" component={BaselinePhoto} />
         </>

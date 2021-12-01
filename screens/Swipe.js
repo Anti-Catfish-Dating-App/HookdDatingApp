@@ -18,7 +18,11 @@ import { Transitioning, Transition } from "react-native-reanimated"
 import UserProfile from "./UserProfile"
 
 import { getUsers } from "../store/users"
+<<<<<<< HEAD
 import { addSwipe } from "../store/matches"
+=======
+import { getUser } from "../store/singleUser"
+>>>>>>> main
 
 //animations
 const ANIMATION_DURATION = 200
@@ -101,8 +105,12 @@ const Swipe = (props) => {
           cards={pond}
           cardIndex={index}
           renderCard={(fish) => <Card card={fish} />}
-          onTapCard={() => {
-            navigation.navigate("UserProfile")
+          onTapCard={async () => {
+            await props.getUser(pond[index].id)
+            navigation.navigate("UserProfile", {
+              id: pond[index].id,
+              name: pond[index].name,
+            })
           }}
           onSwiped={onSwiped}
           //Right swipe:
@@ -189,7 +197,11 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     getUsersToSwipe: () => dispatch(getUsers()),
+<<<<<<< HEAD
     addSwipe: (direction, id) => dispatch(addSwipe(direction, id))
+=======
+    getUser: (userId) => dispatch(getUser(userId)),
+>>>>>>> main
   }
 }
 
