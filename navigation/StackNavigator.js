@@ -12,6 +12,7 @@ import Swipe from "../screens/Swipe"
 import Settings from "../screens/Settings"
 import ChangeProfilePic from "../screens/ChangeProfilePic"
 import SignUpInfo from "../screens/SignUpInfo"
+import AddMatchReview from "../screens/AddMatchReview"
 
 const stack = createNativeStackNavigator()
 
@@ -32,6 +33,7 @@ const StackNavigator = (props) => {
               name="ChangeProfilePic"
               component={ChangeProfilePic}
             />
+            <stack.Screen name="AddMatchReview" component={AddMatchReview} />
           </stack.Group>
         </>
       ) : (
