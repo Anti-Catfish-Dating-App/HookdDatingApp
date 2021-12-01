@@ -11,7 +11,7 @@ export const _addReview = (review) => ({
 export const addReview = (reviewInfo) => async (dispatch) => {
   try {
     const token = await AsyncStorage.getItem("token");
-    const res = await axios.post(`http://192.168.0.6:8080/api/reviews`, {reviewInfo}, {
+    const res = await axios.post(`https://hookd-datingapp.herokuapp.com/api/reviews`, {reviewInfo}, {
       headers: {
         authorization: token
       }
