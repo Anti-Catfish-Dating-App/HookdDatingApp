@@ -13,7 +13,7 @@ export const setUsers = (users) => ({
 export const getUsers = () => async (dispatch) => {
   try {
     const res = await axios.get(
-      `http://192.168.0.6:8080/api/users`
+      `https://hookd-datingapp.herokuapp.com/api/users`
     )
     dispatch(setUsers(res.data))
   } catch (error) {

@@ -38,7 +38,7 @@ export const editProfilePic = (user) => ({
 export const getUser = (userId) => async (dispatch) => {
   try {
     const res = await axios.get(
-      `http://192.168.0.6:8080/api/users/${userId}`
+      `https://hookd-datingapp.herokuapp.com/api/users/${userId}`
     )
     dispatch(setUser(res.data))
   } catch (error) {
