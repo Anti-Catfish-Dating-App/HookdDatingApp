@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react"
-import { StyleSheet, Text, View, FlatList } from "react-native"
+import { StyleSheet, Text, View, FlatList, Image, ScrollView } from "react-native"
 import { connect } from "react-redux"
 import { getMatches } from "../store/matches"
 
 const Matches = (props) => {
   const [matches, setMatches] = useState(props.matches);
-  //console.log("MATCHES: ", props.matches.matches[0]);
+
   useEffect(() => {
     setMatches(props.getMatches());
   }, [])
@@ -14,7 +14,18 @@ const Matches = (props) => {
     <View style={styles.container}>
       <FlatList
         data={props.matches.matches}
-        renderItem={({item}) => <Text style={styles.title}>{item.name}</Text>}
+        renderItem={({item}) =>
+        <ScrollView>
+          <View style={styles.item}>
+            <Image
+              style={styles.tinyImage}
+              source={{uri: item.profilePicture}}
+            />
+            <Text style={styles.title}>{item.name}</Text>
+          </View>
+          <View style={styles.separator} />
+        </ScrollView>
+        }
       />
     </View>
   )
@@ -37,13 +48,31 @@ export default connect(mapState, mapDispatch)(Matches)
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'row',
+    justifyContent: "space-between",
     backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+  },
+  item: {
+    flexDirection: 'row',
+    paddingVertical: 10,
+    alignItems: 'center',
+    paddingHorizontal: 20,
+  },
+  separator: {
+    height: 1,
+    width: "100%",
+    backgroundColor: "#808080",
   },
   title: {
     fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 20,
+    color: "#288cd7",
+    fontWeight: "600"
   },
+  tinyImage: {
+    width: 50,
+    height: 50,
+    marginRight: 10,
+    borderRadius: 75,
+    overflow: "hidden"
+  }
 })
