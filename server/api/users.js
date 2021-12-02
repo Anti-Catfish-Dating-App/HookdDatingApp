@@ -1,6 +1,6 @@
 const router = require("express").Router()
 const {
-  models: { User },
+  models: { User, Matches },
 } = require("../db")
 
 const axios = require("axios")
@@ -28,12 +28,7 @@ router.put("/:id", async (req, res, next) => {
       error.status = 404
       throw error
     }
-    await user.update({
-      profilePicture,
-      age,
-      bio,
-      gender,
-    })
+    await user.update(req.body)
     res.send(user)
   } catch (error) {
     next(error)
@@ -51,6 +46,63 @@ router.get("/:id", async (req, res, next) => {
       throw error
     }
     res.send(user)
+  } catch (error) {
+    next(error)
+  }
+})
+
+// route to get user pond
+router.get("/pond/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params
+    const userMatches = await Matches.findAll({
+      where: { userId: id },
+    })
+
+    const allUsers = await User.findAll({})
+
+    const matchFilteredUsers = allUsers.filter(
+      (user) => !userMatches.some((match) => match.SwipedId === user.id)
+    )
+
+    const user = await User.findByPk(id)
+    const userSexualOrientation = user.sexualOrientation
+    const userGender = user.genderCategory
+
+    const orientationFilter = matchFilteredUsers.filter((user) => {
+      if (userSexualOrientation === "Bisexual") {
+        return user
+      } else if (userSexualOrientation === "Straight") {
+        if (userGender === "Woman") {
+          return (
+            user.genderCategory === "Man" &&
+            (user.sexualOrientation === "Straight" ||
+              user.sexualOrientation === "Bisexual")
+          )
+        } else
+          return (
+            user.genderCategory ===
+            (user.genderCategory === "Woman" &&
+              (user.sexualOrientation === "Straight" ||
+                user.sexualOrientation === "Bisexual"))
+          )
+      } else if (userSexualOrientation === "Gay") {
+        if (userGender === "Man") {
+          return (
+            user.genderCategory === "Man" &&
+            (user.sexualOrientation === "Gay" ||
+              user.sexualOrientation === "Bisexual")
+          )
+        } else
+          return (
+            user.genderCategory === "Woman" &&
+            (user.sexualOrientation === "Gay" ||
+              user.sexualOrientation === "Bisexual")
+          )
+      }
+    })
+
+    res.send(orientationFilter)
   } catch (error) {
     next(error)
   }

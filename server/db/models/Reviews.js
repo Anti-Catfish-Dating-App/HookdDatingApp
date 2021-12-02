@@ -11,6 +11,12 @@ const Reviews = db.define('review', {
   },
   reviewText: {
     type: Sequelize.STRING
+  },
+  reviewer: {
+    type: Sequelize.INTEGER
+  },
+  reviewedUser: {
+    type: Sequelize.INTEGER
   }
 })
 

@@ -2,6 +2,9 @@
   "name": "hookd",
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
+  "engines": {
+    "node": "^16.9.1"
+  },
   "scripts": {
     "start": "JWT=tomato expo start",
     "android": "expo start --android",
@@ -9,11 +12,12 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "start:server": "nodemon server",
-    "start:heroku": "node server",
+    "start:heroku": "JWT=tomato node server",
     "seed": "node script/seed"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.11",
+    "@react-native-picker/picker": "react-native-picker/picker",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
     "@types/convict": "^6.1.1",
@@ -41,6 +45,7 @@
     "react-hook-form": "^7.20.2",
     "react-native": "0.64.3",
     "react-native-deck-swiper": "^2.0.5",
+    "react-native-elements": "^3.4.2",
     "react-native-image-picker": "^4.3.0",
     "react-native-reanimated": "^2.2.4",
     "react-native-safe-area-context": "3.3.2",
@@ -50,8 +55,7 @@
     "react-redux": "^7.2.6",
     "redux": "^4.1.2",
     "redux-thunk": "^2.4.0",
-    "sequelize": "^6.12.0-alpha.1",
-    "val-loader": "^4.0.0"
+    "sequelize": "^6.12.0-alpha.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

@@ -2,16 +2,13 @@ const router = require("express").Router()
 const {
   models: { User, Matches },
 } = require("../db")
+const { requireToken } = require("./middleware");
 
-router.get("/", async (req, res, next) => {
+router.get("/", requireToken, async (req, res, next) => {
   try {
-    const user = await User.findByToken(req.headers);
-
-
-    //Where swipedId = userId && boolean === true
     const userMatches = await Matches.findAll({
       where: {
-        SwipedId: user.id,
+        SwipedId: req.user.id,
         isRightSwipe: true
       }
     })
@@ -19,7 +16,7 @@ router.get("/", async (req, res, next) => {
 
     const otherUserSwipedMatchesIds = await Matches.findAll({
       where: {
-        userId: user.id,
+        userId: req.user.id,
         isRightSwipe: true
       }
     })
@@ -29,11 +26,35 @@ router.get("/", async (req, res, next) => {
 
     const matchData = await data.map(async x => await User.findByPk(x))
     const matchedUsers = await Promise.all(matchData)
-    console.log(matchedUsers);
+
 
     res.send(matchedUsers);
   } catch (error) {
     next(error)
+  }
+})
+
+router.post("/", requireToken, async (req, res, next) => {
+  try {
+    const direction = req.body.direction
+    const swipedUser = req.body.id
+
+    if(direction === "right"){
+      await req.user.addSwiped(swipedUser, {
+        through: {
+          isRightSwipe: true
+        }
+      })
+    } else if (direction === "left"){
+      await req.user.addSwiped(swipedUser, {
+        through: {
+          isRightSwipe: false
+        }
+      })
+    }
+    res.sendStatus(200);
+  } catch (error) {
+    next(error);
   }
 })
 

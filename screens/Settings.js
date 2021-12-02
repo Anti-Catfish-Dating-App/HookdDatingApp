@@ -16,6 +16,7 @@ import { connect } from "react-redux"
 import { editUser } from "../store/auth"
 import * as ImagePicker from "expo-image-picker"
 import { useNavigation } from "@react-navigation/native"
+import { logout } from "../store"
 
 const Settings = (props) => {
   const [profilePicture, setImage] = useState(props.user.profilePicture)
@@ -44,6 +45,7 @@ const Settings = (props) => {
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
+          <Button title="LOGOUT (TEMP)" onPress={() => props.logout()} />
           <View style={styles.profilePictureContainer}>
             <TouchableOpacity
               onPress={() => navigation.navigate("ChangeProfilePic")}
@@ -105,6 +107,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     editUser: (user) => dispatch(editUser(user)),
+    logout: () => dispatch(logout())
   }
 }
 

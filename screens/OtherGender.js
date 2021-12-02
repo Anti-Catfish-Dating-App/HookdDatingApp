@@ -15,30 +15,21 @@ import { connect } from "react-redux"
 import { useNavigation } from "@react-navigation/native"
 import { editUser } from "../store/auth"
 import { Picker } from "@react-native-picker/picker"
+import { AutoFocus } from "expo-camera/build/Camera.types"
 
-const SignUpInfo = (props) => {
+const OtherGender = (props) => {
   const navigation = useNavigation()
   const { control, handleSubmit } = useForm()
   const [gender, setGender] = useState("")
   const onSubmit = async (data) => {
-    if (gender === "Other") {
-      setGender(null)
-    }
-
     const resStatus = await props.editUser({
       id: props.auth.id,
-      age: data.Age,
-      gender: gender,
+      gender: data.Gender,
       genderCategory: gender,
-      bio: data.Bio,
     })
 
     if (resStatus === 200) {
-      if (gender === "Other") {
-        navigation.navigate("OtherGender")
-      } else {
-        navigation.navigate("UserConsent")
-      }
+      navigation.navigate("UserConsent")
     } else {
       Alert.alert("Error!")
     }
@@ -47,12 +38,13 @@ const SignUpInfo = (props) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Sign Up</Text>
-      <Text>Please enter your information</Text>
+      <Text>Please enter your gender identity</Text>
 
-      <InputForm name="Age" style={styles.input} control={control} />
+      <InputForm name="Gender" style={styles.input} control={control} />
 
-      <InputForm name="Bio" style={styles.input2} control={control} />
-
+      <Text style={styles.innerText}>
+        Which gender category would you prefer to be catergorized in?
+      </Text>
       <Picker
         selectedValue={gender}
         onValueChange={(itemValue, itemIndex) => setGender(itemValue)}
@@ -62,7 +54,6 @@ const SignUpInfo = (props) => {
       >
         <Picker.Item label="Man" value="Man" />
         <Picker.Item label="Woman" value="Woman" />
-        <Picker.Item label="Other" value="Other" />
       </Picker>
 
       <Button title="Submit" onPress={handleSubmit(onSubmit)} />
@@ -82,26 +73,30 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 20,
   },
+  innerText: {
+    width: 250,
+    textAlign: "center",
+    marginBottom: 20,
+    marginTop: 20,
+  },
   input: {
     height: 40,
+    marginBottom: 200,
     margin: 12,
     width: 250,
     borderWidth: 2,
     padding: 10,
   },
-  input2: {
-    height: 200,
-    margin: 12,
-    width: 250,
-    borderWidth: 2,
-    padding: 10,
+  pickerContainer: {
+    width: 400,
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
   },
   picker: {
     width: 250,
     borderWidth: 2,
-    padding: 10,
-    margin: 12,
-    overflow: "hidden",
+    position: "relative",
   },
 })
 
@@ -117,5 +112,5 @@ const mapDispatch = (dispatch) => {
   }
 }
 
-const connectedSignUpInfo = connect(mapSignup, mapDispatch)(SignUpInfo)
+const connectedSignUpInfo = connect(mapSignup, mapDispatch)(OtherGender)
 export default connectedSignUpInfo

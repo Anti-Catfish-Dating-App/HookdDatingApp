@@ -34,6 +34,16 @@ const Users = db.define("user", {
     //   values: ["Male", "Female", "Non-Binary"],
     // }),
   },
+  genderCategory: {
+    type: Sequelize.ENUM({
+      values: ["Man", "Woman", "Other"],
+    }),
+  },
+  sexualOrientation: {
+    type: Sequelize.ENUM({
+      values: ["Straight", "Gay", "Bisexual"],
+    }),
+  },
   age: {
     type: Sequelize.INTEGER,
     validate: {
@@ -84,7 +94,6 @@ Users.authenticate = async function ({ email, password }) {
 
 Users.findByToken = async function (token) {
   try {
-    console.log("HERES THE TOKEN: ", token)
     const { id } = await jwt.verify(token.authorization, process.env.JWT)
     const user = await Users.findByPk(id)
     if (!user) {

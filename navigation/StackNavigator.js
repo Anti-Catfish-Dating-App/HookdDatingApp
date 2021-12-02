@@ -13,6 +13,9 @@ import Settings from "../screens/Settings"
 import ChangeProfilePic from "../screens/ChangeProfilePic"
 import SignUpInfo from "../screens/SignUpInfo"
 import Messages from "../screens/Messages"
+import AddMatchReview from "../screens/AddMatchReview"
+import UserProfile from "../screens/UserProfile"
+import OtherGender from "../screens/OtherGender"
 
 const stack = createNativeStackNavigator()
 
@@ -27,6 +30,7 @@ const StackNavigator = (props) => {
             <stack.Screen name="Matches" component={Matches} />
             <stack.Screen name="Swipe" component={Swipe} />
             <stack.Screen name="Messages" component={Messages} />
+            <stack.Screen name="UserProfile" component={UserProfile} />
           </stack.Group>
           <stack.Group screenOptions={{ presentation: "modal" }}>
             <stack.Screen name="Settings" component={Settings} />
@@ -34,6 +38,7 @@ const StackNavigator = (props) => {
               name="ChangeProfilePic"
               component={ChangeProfilePic}
             />
+            <stack.Screen name="AddMatchReview" component={AddMatchReview} />
           </stack.Group>
         </>
       ) : (
@@ -41,6 +46,7 @@ const StackNavigator = (props) => {
           <stack.Screen name="Login" component={Login} />
           <stack.Screen name="Signup" component={Signup} />
           <stack.Screen name="SignUpInfo" component={SignUpInfo} />
+          <stack.Screen name="OtherGender" component={OtherGender} />
           <stack.Screen name="UserConsent" component={UserConsent} />
           <stack.Screen name="BaselinePhoto" component={BaselinePhoto} />
         </>
