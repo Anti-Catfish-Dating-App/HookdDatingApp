@@ -23,17 +23,13 @@ const User = require("./models/User")
 //Associations
 User.belongsToMany(User, { as: "Swiped", through: Matches })
 
-User.belongsToMany(Conversations, {
-  foriegnKey: "userId",
-  through: Messages,
-})
-Conversations.belongsToMany(User, {
+User.hasMany(Conversations)
+Conversations.belongsTo(User, {
   foriegnKey: "conversationId",
-  through: Messages,
 })
 
 Messages.belongsTo(Conversations)
-Conversations.hasMany(Messages)
+// Conversations.hasMany(Messages)
 
 Messages.belongsTo(User)
 

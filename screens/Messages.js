@@ -9,7 +9,7 @@ import {
   View,
 } from "react-native"
 import { connect } from "react-redux"
-import { fetchMessages } from "../store/messages"
+import { fetchMessages, sendMessageThunk } from "../store/messages"
 
 const Messages = (props) => {
   const [message, setMessage] = React.useState(props.messages)
@@ -22,10 +22,10 @@ const Messages = (props) => {
     setMessage(text)
   }
 
-  console.log("props", props)
-  console.log(props.messages)
-  console.log(props.messages.userId)
-  console.log("reciever", props.route.params)
+  // console.log("props", props)
+  // console.log(props.messages)
+  // console.log(props.messages.userId)
+  // console.log("reciever", props.route.params)
   //if the reciever id is equal to the userId then display the messages on the left side
 
   return (
@@ -35,6 +35,21 @@ const Messages = (props) => {
         renderItem={({ item }) => <Text>{item.message}</Text>}
         keyExtractor={(item, index) => index.toString()}
       />
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          onChangeText={handleChange}
+          value={props.message}
+          placeholder="Type a message"
+        />
+        <Button
+          title="Send"
+          onPress={() => {
+            props.sendMessage(props.route.params.match.id, message)
+            setMessage("")
+          }}
+        />
+      </View>
     </View>
   )
 }
@@ -44,6 +59,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
+    justifyContent: "center",
+  },
+  input: {
+    width: "100%",
+    borderColor: "black",
+    borderWidth: 1,
+    padding: 10,
+    margin: 10,
+    paddingBottom: 40,
     justifyContent: "center",
   },
 })
@@ -58,6 +82,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getMessages: (id) => dispatch(fetchMessages(id)),
+    sendMessage: (id, message) => dispatch(sendMessageThunk(id, message)),
   }
 }
 
