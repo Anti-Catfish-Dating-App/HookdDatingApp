@@ -4,13 +4,15 @@ import { createStore, combineReducers, applyMiddleware } from "redux"
 import auth from "./auth"
 import axios from "axios"
 import thunkMiddleware from "redux-thunk"
-import matches from './matches'
+import matches from "./matches"
+import messages from "./messages"
 
 const reducer = combineReducers({
   auth: auth,
   singleUser: singleUser,
   users: users,
-  matches: matches
+  matches: matches,
+  messages: messages,
 })
 
 const middleware = applyMiddleware(thunkMiddleware.withExtraArgument({ axios }))

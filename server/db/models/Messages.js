@@ -2,14 +2,13 @@ const Sequelize = require("sequelize")
 const db = require("../db")
 
 const Messages = db.define("message", {
-  messageBody: {
+  message: {
     type: Sequelize.TEXT,
+    allowNull: false,
   },
-  images: {
-    type: Sequelize.STRING,
-  },
-  time: {
-    type: Sequelize.DATE,
+  userId: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
   },
 })
 

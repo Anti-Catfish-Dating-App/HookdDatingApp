@@ -1,31 +1,45 @@
 import React, { useEffect, useState } from "react"
-import { StyleSheet, Text, View, FlatList, Image, ScrollView } from "react-native"
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  Image,
+  ScrollView,
+  Button,
+} from "react-native"
 import { connect } from "react-redux"
 import { getMatches } from "../store/matches"
 
 const Matches = (props) => {
-  const [matches, setMatches] = useState(props.matches);
+  const [matches, setMatches] = useState(props.matches)
 
   useEffect(() => {
-    setMatches(props.getMatches());
+    setMatches(props.getMatches())
   }, [])
 
   return (
     <View style={styles.container}>
       <FlatList
         data={props.matches.matches}
-        renderItem={({item}) =>
-        <ScrollView>
-          <View style={styles.item}>
-            <Image
-              style={styles.tinyImage}
-              source={{uri: item.profilePicture}}
+        renderItem={({ item }) => (
+          <ScrollView>
+            <View style={styles.item}>
+              <Image
+                style={styles.tinyImage}
+                source={{ uri: item.profilePicture }}
+              />
+              <Text style={styles.title}>{item.name}</Text>
+            </View>
+            <Button
+              title="Chat"
+              onPress={() =>
+                props.navigation.navigate("Messages", { match: item })
+              }
             />
-            <Text style={styles.title}>{item.name}</Text>
-          </View>
-          <View style={styles.separator} />
-        </ScrollView>
-        }
+            <View style={styles.separator} />
+          </ScrollView>
+        )}
       />
     </View>
   )
@@ -33,13 +47,13 @@ const Matches = (props) => {
 
 const mapState = (state) => {
   return {
-    matches: state.matches
+    matches: state.matches,
   }
 }
 
 const mapDispatch = (dispatch) => {
   return {
-    getMatches: () => dispatch(getMatches())
+    getMatches: () => dispatch(getMatches()),
   }
 }
 
@@ -48,14 +62,14 @@ export default connect(mapState, mapDispatch)(Matches)
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: "row",
     justifyContent: "space-between",
     backgroundColor: "#fff",
   },
   item: {
-    flexDirection: 'row',
+    flexDirection: "row",
     paddingVertical: 10,
-    alignItems: 'center',
+    alignItems: "center",
     paddingHorizontal: 20,
   },
   separator: {
@@ -66,13 +80,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     color: "#288cd7",
-    fontWeight: "600"
+    fontWeight: "600",
   },
   tinyImage: {
     width: 50,
     height: 50,
     marginRight: 10,
     borderRadius: 75,
-    overflow: "hidden"
-  }
+    overflow: "hidden",
+  },
 })

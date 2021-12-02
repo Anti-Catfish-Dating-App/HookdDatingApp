@@ -49,6 +49,7 @@ async function seed() {
       lastTimeVerified: 11 / 23 / 2040,
       isVerified: true,
     })
+    console.log(Object.keys(user.__proto__))
   }
   const user1 = await User.findByPk(3)
   const user2 = await User.findByPk(5)
@@ -58,34 +59,55 @@ async function seed() {
   const user6 = await User.findByPk(8)
   await user1.addSwiped(user2, {
     through: {
-      isRightSwipe: true}
-    })
+      isRightSwipe: true,
+    },
+  })
   await user2.addSwiped(user1, {
     through: {
-      isRightSwipe: true}
-    })
+      isRightSwipe: true,
+    },
+  })
   await user1.addSwiped(user3, {
     through: {
-      isRightSwipe: true}
-    })
+      isRightSwipe: true,
+    },
+  })
   await user3.addSwiped(user1, {
     through: {
-      isRightSwipe: false}
-    })
+      isRightSwipe: false,
+    },
+  })
   await user6.addSwiped(user1, {
     through: {
-      isRightSwipe: true
-    }
+      isRightSwipe: true,
+    },
   })
   await user5.addSwiped(user1, {
     through: {
-      isRightSwipe: true
-    }
+      isRightSwipe: true,
+    },
   })
   await user1.addSwiped(user6, {
     through: {
-      isRightSwipe: true}
-    })
+      isRightSwipe: true,
+    },
+  })
+  //seed user 1 with a conversation with user 2 and a message
+  const conversation = await Conversations.create({
+    user1Id: user1.id,
+    user2Id: user2.id,
+  })
+  const message = await Messages.create({
+    message: "Hi",
+    userId: user1.id,
+    conversationId: conversation.id,
+  })
+  //seed user 2 with a message to user 1
+  const message2 = await Messages.create({
+    message: "Hello",
+    userId: user2.id,
+    conversationId: conversation.id,
+  })
 }
 
 async function runSeed() {

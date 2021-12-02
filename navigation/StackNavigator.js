@@ -12,6 +12,7 @@ import Swipe from "../screens/Swipe"
 import Settings from "../screens/Settings"
 import ChangeProfilePic from "../screens/ChangeProfilePic"
 import SignUpInfo from "../screens/SignUpInfo"
+import Messages from "../screens/Messages"
 
 const stack = createNativeStackNavigator()
 
@@ -25,6 +26,7 @@ const StackNavigator = (props) => {
             <stack.Screen name="Home" component={Home} />
             <stack.Screen name="Matches" component={Matches} />
             <stack.Screen name="Swipe" component={Swipe} />
+            <stack.Screen name="Messages" component={Messages} />
           </stack.Group>
           <stack.Group screenOptions={{ presentation: "modal" }}>
             <stack.Screen name="Settings" component={Settings} />
