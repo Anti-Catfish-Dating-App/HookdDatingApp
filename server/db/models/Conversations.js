@@ -7,6 +7,14 @@ const Conversations = db.define("conversations", {
     primaryKey: true,
     autoIncrement: true,
   },
+  user1: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+  },
+  user2: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+  },
 })
 
 module.exports = Conversations

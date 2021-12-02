@@ -4,61 +4,30 @@ const {
 } = require("../db")
 const { Op } = require("sequelize")
 
-// post a message
-router.post("/", async (req, res, next) => {
-  try {
-    const token = req.headers
-    const { conversationId, message } = req.body
-    const user = await User.findOne({
-      where: {
-        token,
-      },
-    })
-    const conversation = await Conversations.findOne({
-      where: {
-        id: conversationId,
-      },
-    })
-    if (!user || !conversation) {
-      return res.status(401).send("Unauthorized")
-    }
-    const newMessage = await Messages.create({
-      message,
-      userId: user.id,
-      recieverId: conversation.recieverId,
-      conversationId: conversation.id,
-    })
-    res.status(201).send(newMessage)
-  } catch (error) {
-    next(error)
-  }
-})
-
-// get all messages
 router.get("/", async (req, res, next) => {
   try {
-    const token = req.headers
-    const user = await User.findOne({
-      where: {
-        token,
-      },
-    })
-    if (!user) {
-      return res.status(401).send("Unauthorized")
-    }
-    const messages = await Messages.findAll({
+    const user = await User.findByToken(req.headers)
+
+    const { id } = user
+    const conversations = await Conversations.findAll({
       where: {
         [Op.or]: [
           {
-            userId: user.id,
+            user1: id,
           },
           {
-            recieverId: user.id,
+            user2: id,
           },
         ],
       },
     })
-    res.status(200).send(messages)
+    const messages = await Messages.findAll({
+      where: {
+        conversationId: conversations.map((conversation) => conversation.id),
+      },
+    })
+
+    res.json(messages)
   } catch (error) {
     next(error)
   }
