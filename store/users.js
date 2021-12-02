@@ -28,11 +28,11 @@ export const getUsers = () => async (dispatch) => {
 
 export const getPond = (userId) => async (dispatch) => {
   try {
-    // const res = await axios.get(
-    //   `https://hookd-datingapp.herokuapp.com/api/users/pond/${userId}`
-    // )
+    const res = await axios.get(
+      `https://hookd-datingapp.herokuapp.com/api/users/pond/${userId}`
+    )
     console.log(res.data)
-    // dispatch(setPond(res.data))
+    dispatch(setPond(res.data))
   } catch (error) {
     console.log(error)
   }
