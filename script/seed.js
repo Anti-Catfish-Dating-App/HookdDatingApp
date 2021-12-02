@@ -55,7 +55,7 @@ async function seed() {
       isVerified: true,
     })
   }
-/*   const user1 = await User.findByPk(1)
+  /*   const user1 = await User.findByPk(1)
   const user2 = await User.findByPk(2)
   const user3 = await User.findByPk(3)
   const user4 = await User.findByPk(4)
@@ -106,7 +106,7 @@ async function seed() {
       isRightSwipe: true}
     })
 } */
-
+}
 async function runSeed() {
   console.log("seeding...")
   try {
