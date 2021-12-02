@@ -39,6 +39,11 @@ const Users = db.define("user", {
       values: ["Man", "Woman", "Other"],
     }),
   },
+  sexualOrientation: {
+    type: Sequelize.ENUM({
+      values: ["Straight", "Gay", "Bisexual"],
+    }),
+  },
   age: {
     type: Sequelize.INTEGER,
     validate: {

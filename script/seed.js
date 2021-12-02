@@ -25,6 +25,7 @@ async function seed() {
     password: "123",
     gender: "Cat",
     genderCategory: "Woman",
+    sexualOrientation: "Straight",
     age: 20,
     bio: `Just looking for the Pam to my Jim`,
     baselinePhoto: "https://pbs.twimg.com/media/E54a61HWEAI7EI4.jpg",
@@ -38,6 +39,9 @@ async function seed() {
 
     const genderCategory = ["Man", "Woman"]
     const randomGender = genderCategory[Math.floor(Math.random() * 2)]
+    const sexualOrientation = ["Straight", "Gay", "Bisexual"]
+    const randomSexualOrientation =
+      sexualOrientation[Math.floor(Math.random() * 3)]
 
     const user = await User.create({
       name: faker.name.findName(),
@@ -46,6 +50,7 @@ async function seed() {
       password: "Password12",
       gender: faker.name.gender(),
       genderCategory: randomGender,
+      sexualOrientation: randomSexualOrientation,
       age: randomAge,
       bio: `Just looking for the Pam to my Jim`,
       baselinePhoto:
