@@ -1,5 +1,4 @@
 import axios from "axios"
-import AsyncStorage from "@react-native-async-storage/async-storage"
 import { getToken } from "./headers"
 
 const ADD_REVIEW = "ADD_REVIEW"

@@ -1,7 +1,5 @@
 import axios from "axios"
 import AsyncStorage from "@react-native-async-storage/async-storage"
-//require('dotenv').config();
-const BASE_URL = process.env.REACT_APP_BASE_URL
 
 const TOKEN = "token"
 

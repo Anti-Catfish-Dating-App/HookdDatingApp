@@ -6,7 +6,6 @@ const { requireToken } = require("./middleware");
 
 router.get("/", requireToken, async (req, res, next) => {
   try {
-
     const userMatches = await Matches.findAll({
       where: {
         SwipedId: req.user.id,
