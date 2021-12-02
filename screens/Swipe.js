@@ -72,7 +72,7 @@ const Swipe = (props) => {
   const pond = props.users.users
 
   if (!pond.length) {
-    return <Text>...Loading</Text>
+    return <Text style={styles.loading}>...Gone fishin'</Text>
   }
 
   const Card = ({ card }) => {
@@ -259,4 +259,10 @@ const styles = StyleSheet.create({
   age: { color: "black", fontSize: 24, fontWeight: "500", textAlign: "left" },
   bio: { color: "black", fontSize: 20, fontWeight: "200" },
   gender: { color: "black", fontSize: 14, fontWeight: "200" },
+  loading: {
+    color: "#5389ed",
+    fontSize: 50,
+    fontWeight: "500",
+    alignContent: "center",
+  },
 })
