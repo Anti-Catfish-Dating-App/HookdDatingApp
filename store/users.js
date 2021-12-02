@@ -31,7 +31,6 @@ export const getPond = (userId) => async (dispatch) => {
     const res = await axios.get(
       `https://hookd-datingapp.herokuapp.com/api/users/pond/${userId}`
     )
-    console.log(res.data)
     dispatch(setPond(res.data))
   } catch (error) {
     console.log(error)

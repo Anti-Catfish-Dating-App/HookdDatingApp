@@ -7,26 +7,34 @@ import {
   Button,
   Image,
   ScrollView,
+  FlatList
 } from "react-native"
 import { connect } from "react-redux"
 import { useNavigation } from "@react-navigation/native"
 import { getUser } from "../store/singleUser"
+import { getReviews } from "../store/reviews"
 import { Divider } from "react-native-elements"
 
 const UserProfile = (props) => {
   const { id } = props.route.params
+  const navigation = useNavigation()
 
   const [profilePicture, setImage] = useState(props.user.user.profilePicture)
   const [age, setAge] = useState(props.user.user.age)
   const [bio, setBio] = useState(props.user.user.bio)
   const [gender, setGender] = useState(props.user.user.gender)
   const [name, setName] = useState(props.user.user.name)
-  const navigation = useNavigation()
+
   const [user, setUser] = useState(props.user)
+  const [avgRating, setAvgRating] = useState(props.avgRating)
+  const [allUserReviews, setAllUserReviews] = useState(props.allUserReviews)
+
+
 
   useEffect(async () => {
     const newUser = props.user.user
     setUser(newUser)
+    setAllUserReviews(await props.getReviews(newUser.id));
   }, [])
 
   return (
@@ -38,7 +46,17 @@ const UserProfile = (props) => {
             uri: profilePicture,
           }}
         />
+        <Text>{name}</Text>
       </View>
+      <FlatList
+          data={props.allUserReviews}
+          renderItem={({item}) =>
+          <View>
+            <Text>{item.reviewText} - {item.rating}</Text>
+          </View>
+          }
+          keyExtractor={(item, index) => index.toString()}
+        />
       <Text style={styles.name}>
         {name}, {age}
       </Text>
@@ -53,12 +71,15 @@ const UserProfile = (props) => {
 const mapState = (state) => {
   return {
     user: state.singleUser,
+    avgRating: state.reviews.avgRating,
+    allUserReviews: state.reviews.allUserReviews
   }
 }
 
 const mapDispatch = (dispatch) => {
   return {
     getUser: (userId) => dispatch(getUser(userId)),
+    getReviews: (userId) => dispatch(getReviews(userId))
   }
 }
 

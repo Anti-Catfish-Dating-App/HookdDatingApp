@@ -1,5 +1,6 @@
 import axios from "axios"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { getToken } from "./headers"
 
 const SET_MATCHES = "SET_MATCHES"
 const ADD_SWIPE = "ADD_SWIPE"
@@ -15,13 +16,13 @@ export const _addSwipe = () => ({
 
 export const getMatches = () => async (dispatch) => {
   try {
-    const token = await AsyncStorage.getItem("token")
+    const tokenHeader = await getToken();
 
     const res = await axios.get(
       `https://hookd-datingapp.herokuapp.com/api/matches`,
       {
         headers: {
-          authorization: token,
+          authorization: tokenHeader,
         },
       }
     )
@@ -33,10 +34,10 @@ export const getMatches = () => async (dispatch) => {
 
 export const addSwipe = (direction, id) => async (dispatch) => {
   try {
-    const token = await AsyncStorage.getItem("token");
+    const tokenHeader = await getToken();
     const res = await axios.post(`https://hookd-datingapp.herokuapp.com/api/matches`, {direction, id}, {
       headers: {
-        authorization: token
+        authorization: tokenHeader
       }
     })
     dispatch(_addSwipe(res.data));

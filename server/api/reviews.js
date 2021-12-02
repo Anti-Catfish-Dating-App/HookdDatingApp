@@ -1,7 +1,8 @@
 const router = require("express").Router()
 const {
-  models: { User, Reviews },
+  models: { Reviews },
 } = require("../db");
+const { requireToken } = require("./middleware");
 
 router.get("/:reviewedId", async (req, res, next) => {
   try {
@@ -28,9 +29,8 @@ router.get("/:reviewedId", async (req, res, next) => {
   }
 })
 
-router.post("/", async (req, res, next) => {
+router.post("/", requireToken, async (req, res, next) => {
   try {
-    const reviewer = await User.findByToken(req.headers);
     const { review, reviewedUser } = req.body.reviewInfo
     const rating = parseInt(req.body.reviewInfo.rating)
 
@@ -38,13 +38,13 @@ router.post("/", async (req, res, next) => {
     const createdReview = await Reviews.findOrCreate({
       where: {
         reviewedUser: reviewedUser,
-        reviewer: reviewer.id
+        reviewer: req.user.id
       },
       defaults: {
         rating: rating,
         reviewText: review,
         reviewedUser: reviewedUser,
-        reviewer: reviewer.id
+        reviewer: req.user.id
       }
     })
 
