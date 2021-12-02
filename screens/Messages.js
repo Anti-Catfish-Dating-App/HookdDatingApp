@@ -13,10 +13,9 @@ import { fetchMessages } from "../store/messages"
 
 const Messages = (props) => {
   const [message, setMessage] = React.useState(props.messages)
-  const { messages } = props
 
   React.useEffect(() => {
-    props.getMessages()
+    props.getMessages(props.route.params.match.id)
   }, [])
 
   const handleChange = (text) => {
@@ -25,12 +24,16 @@ const Messages = (props) => {
 
   console.log("props", props)
   console.log(props.messages)
+  console.log(props.messages.userId)
+  console.log("reciever", props.route.params)
+  //if the reciever id is equal to the userId then display the messages on the left side
 
   return (
     <View style={styles.container}>
       <FlatList
-        data={messages.messages}
+        data={props.messages}
         renderItem={({ item }) => <Text>{item.message}</Text>}
+        keyExtractor={(item, index) => index.toString()}
       />
     </View>
   )
@@ -48,12 +51,13 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   return {
     messages: state.messages,
+    auth: state.auth,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getMessages: () => dispatch(fetchMessages()),
+    getMessages: (id) => dispatch(fetchMessages(id)),
   }
 }
 

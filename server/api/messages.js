@@ -4,29 +4,33 @@ const {
 } = require("../db")
 const { Op } = require("sequelize")
 
-router.get("/", async (req, res, next) => {
+router.get("/:recieverId", async (req, res, next) => {
   try {
     const user = await User.findByToken(req.headers)
-
+    const recievingId = parseInt(req.params.recieverId)
     const { id } = user
-    const conversations = await Conversations.findAll({
+    const conversations = await Conversations.findOne({
       where: {
-        [Op.or]: [
+        [Op.and]: [
           {
             user1: id,
           },
           {
-            user2: id,
+            user2: recievingId,
           },
         ],
       },
     })
     const messages = await Messages.findAll({
       where: {
-        conversationId: conversations.map((conversation) => conversation.id),
+        [Op.and]: [
+          { conversationId: conversations.id },
+          // { userId: conversations.user1 },
+          // { userId: conversations.user2 },
+        ],
       },
     })
-
+    console.log(messages)
     res.json(messages)
   } catch (error) {
     next(error)

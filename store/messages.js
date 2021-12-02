@@ -13,15 +13,18 @@ export const setMessages = (messages) => {
 }
 
 //thunk creators
-export const fetchMessages = () => {
+export const fetchMessages = (id) => {
   return async (dispatch) => {
     try {
       const token = await AsyncStorage.getItem("token")
-      const res = await axios.get("http://192.168.39.131:8080/api/messages", {
-        headers: {
-          Authorization: token,
-        },
-      })
+      const res = await axios.get(
+        `http://192.168.39.131:8080/api/messages/${id}`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      )
       dispatch(setMessages(res.data))
     } catch (err) {
       console.log(err)
@@ -33,7 +36,7 @@ export const fetchMessages = () => {
 export default function (state = [], action) {
   switch (action.type) {
     case SET_MESSAGES:
-      return [state, ...action.messages]
+      return action.messages
     default:
       return state
   }

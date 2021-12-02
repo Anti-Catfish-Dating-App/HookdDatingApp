@@ -92,38 +92,16 @@ async function seed() {
       isRightSwipe: true,
     },
   })
-  //seed user 1 with a conversation with user 2 and a message
-  // const conversation = await Conversations.create({
-  //   user1Id: user1.id,
-  //   user2Id: user2.id,
-  // })
-  // const message = await Messages.create({
-  //   message: "Hi",
-  //   userId: user1.id,
-  //   conversationId: conversation.id,
-  // })
-  // //seed user 2 with a message to user 1
-  // const message2 = await Messages.create({
-  //   message: "Hello",
-  //   userId: user2.id,
-  //   conversationId: conversation.id,
-  // })
-  // //seed user 3 with a message to user 1
-  // const message3 = await Messages.create({
-  //   message: "Hey",
-  //   userId: user3.id,
-  //   conversationId: conversation.id,
-  // })
-  // const conversation2 = await Conversations.create({
-  //   user1Id: user3.id,
-  //   user2Id: user5.id,
-  // })
-  // const message4 = await Messages.create({
-  //   message: "Hi",
-  //   userId: user3.id,
-  //   conversationId: conversation2.id,
-  // })
-  //seed user 1 with a conversation to user 2 and a message
+  await user4.addSwiped(user1, {
+    through: {
+      isRightSwipe: true,
+    },
+  })
+  await user1.addSwiped(user4, {
+    through: {
+      isRightSwipe: true,
+    },
+  })
 
   const conversation3 = await Conversations.create({
     user1: user1.id,
