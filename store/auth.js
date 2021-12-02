@@ -26,7 +26,7 @@ export const me = () => async (dispatch) => {
   const token = await AsyncStorage.getItem(TOKEN)
   if (token) {
     const res = await axios.get(
-      "http://192.168.0.6:8080/auth/me",
+      "https://hookd-datingapp.herokuapp.com/auth/me",
       {
         headers: {
           authorization: token,
