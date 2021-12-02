@@ -25,6 +25,7 @@ async function seed() {
     password: "123",
     gender: "Cat",
     genderCategory: "Woman",
+    sexualOrientation: "Straight",
     age: 20,
     bio: `Just looking for the Pam to my Jim`,
     baselinePhoto: "https://pbs.twimg.com/media/E54a61HWEAI7EI4.jpg",
@@ -38,6 +39,9 @@ async function seed() {
 
     const genderCategory = ["Man", "Woman"]
     const randomGender = genderCategory[Math.floor(Math.random() * 2)]
+    const sexualOrientation = ["Straight", "Gay", "Bisexual"]
+    const randomSexualOrientation =
+      sexualOrientation[Math.floor(Math.random() * 3)]
 
     const user = await User.create({
       name: faker.name.findName(),
@@ -46,6 +50,7 @@ async function seed() {
       password: "Password12",
       gender: faker.name.gender(),
       genderCategory: randomGender,
+      sexualOrientation: randomSexualOrientation,
       age: randomAge,
       bio: `Just looking for the Pam to my Jim`,
       baselinePhoto:
@@ -55,7 +60,7 @@ async function seed() {
       isVerified: true,
     })
   }
-  /*   const user1 = await User.findByPk(1)
+  const user1 = await User.findByPk(1)
   const user2 = await User.findByPk(2)
   const user3 = await User.findByPk(3)
   const user4 = await User.findByPk(4)
@@ -103,9 +108,9 @@ async function seed() {
   })
   await user5.addSwiped(user1, {
     through: {
-      isRightSwipe: true}
-    })
-} */
+      isRightSwipe: true,
+    },
+  })
 }
 async function runSeed() {
   console.log("seeding...")

@@ -13,6 +13,7 @@ import { connect } from "react-redux"
 import { useNavigation } from "@react-navigation/native"
 import { getUser } from "../store/singleUser"
 import { getReviews } from "../store/reviews"
+import { Divider } from "react-native-elements"
 
 const UserProfile = (props) => {
   const { id } = props.route.params
@@ -30,25 +31,12 @@ const UserProfile = (props) => {
 
 
 
-  // const fetchUser = async (id) => {
-  //   await props.getUser(id)
-  //   setUser(id)
-  // }
-
-  // useEffect(() => {
-  //   //try to cleanup useEffect fn to avoid memory leaks
-  //   let isSubscribed = true
-  //   fetchUser(id)
-  //   return () => (isSubscribed = false)
-  // }, [user.id])
-
   useEffect(async () => {
     const newUser = props.user.user
     setUser(newUser)
     setAllUserReviews(await props.getReviews(newUser.id));
   }, [])
 
-  console.log("CORRECT", props.avgRating);
   return (
     <View style={styles.container}>
       <View style={styles.profilePictureContainer}>
@@ -58,7 +46,6 @@ const UserProfile = (props) => {
             uri: profilePicture,
           }}
         />
-
         <Text>{name}</Text>
       </View>
       <FlatList
@@ -70,6 +57,13 @@ const UserProfile = (props) => {
           }
           keyExtractor={(item, index) => index.toString()}
         />
+      <Text style={styles.name}>
+        {name}, {age}
+      </Text>
+      {/* <Text style={styles.age}>{age}</Text> */}
+      <Text style={styles.gender}>{gender}</Text>
+      <Divider style={styles.divider} orientation="horizontal" />
+      <Text style={styles.bio}>{bio}</Text>
     </View>
   )
 }
@@ -101,11 +95,42 @@ const styles = StyleSheet.create({
   profilePictureContainer: {
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 20,
+    margin: 50,
   },
   profilePicture: {
-    width: 200,
-    height: 200,
+    width: 300,
+    height: 300,
     borderRadius: 15,
+  },
+  name: {
+    color: "#5E5E5E",
+    alignSelf: "flex-start",
+    fontSize: 30,
+    marginLeft: 60,
+  },
+  age: {
+    color: "#5E5E5E",
+    alignSelf: "flex-start",
+    fontSize: 20,
+    marginLeft: 60,
+  },
+  gender: {
+    color: "#5E5E5E",
+    alignSelf: "flex-start",
+    fontSize: 17,
+    marginTop: 5,
+    marginLeft: 60,
+  },
+  bio: {
+    color: "#5E5E5E",
+    alignSelf: "flex-start",
+    marginTop: 5,
+    marginLeft: 60,
+    fontSize: 14,
+  },
+  divider: {
+    backgroundColor: "#2f3236",
+    margin: 20,
+    width: 300,
   },
 })

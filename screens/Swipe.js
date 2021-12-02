@@ -17,7 +17,7 @@ import Swiper from "react-native-deck-swiper"
 import { Transitioning, Transition } from "react-native-reanimated"
 import UserProfile from "./UserProfile"
 
-import { getUsers } from "../store/users"
+import { getPond } from "../store/users"
 import { addSwipe } from "../store/matches"
 import { getUser } from "../store/singleUser"
 
@@ -62,11 +62,11 @@ const Swipe = (props) => {
   }
 
   const userHasSwiped = (direction, id) => {
-    props.addSwipe(direction, id);
+    props.addSwipe(direction, id)
   }
 
   useEffect(async () => {
-    await props.getUsersToSwipe()
+    await props.getUsersToSwipe(props.user.id)
   }, [])
 
   const pond = props.users.users
@@ -188,12 +188,15 @@ const Swipe = (props) => {
 }
 
 const mapState = (state) => {
-  return { users: state.users }
+  return {
+    user: state.auth,
+    users: state.users,
+  }
 }
 
 const mapDispatch = (dispatch) => {
   return {
-    getUsersToSwipe: () => dispatch(getUsers()),
+    getUsersToSwipe: (userId) => dispatch(getPond(userId)),
     addSwipe: (direction, id) => dispatch(addSwipe(direction, id)),
     getUser: (userId) => dispatch(getUser(userId)),
   }
