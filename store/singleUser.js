@@ -55,7 +55,6 @@ export const checkForFace = (imageData) => async (dispatch) => {
     config
   )
 
-  console.log("FRONT END CONSOLE LOG", data)
 
   if (data.baselinePhoto === null) {
     return "No face found"
@@ -63,8 +62,6 @@ export const checkForFace = (imageData) => async (dispatch) => {
     dispatch(setBaseLine(data))
     return "Completed"
   }
-
-  // dispatch(setBaseLine(data))
 }
 
 export const _editProfilePic = (imageData, id) => async (dispatch) => {
@@ -75,7 +72,6 @@ export const _editProfilePic = (imageData, id) => async (dispatch) => {
     imageData,
     config
   )
-  console.log("FRONT END CONSOLE LOG", data)
   dispatch(editProfilePic(data))
 }
 

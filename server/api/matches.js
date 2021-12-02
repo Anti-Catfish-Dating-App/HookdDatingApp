@@ -36,4 +36,29 @@ router.get("/", async (req, res, next) => {
   }
 })
 
+router.post("/", async (req, res, next) => {
+  try {
+    const user = await User.findByToken(req.headers);
+    const direction = req.body.direction
+    const swipedUser = req.body.id
+
+    if(direction === "right"){
+      await user.addSwiped(swipedUser, {
+        through: {
+          isRightSwipe: true
+        }
+      })
+    } else if (direction === "left"){
+      await user.addSwiped(swipedUser, {
+        through: {
+          isRightSwipe: false
+        }
+      })
+    }
+    res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
+})
+
 module.exports = router
