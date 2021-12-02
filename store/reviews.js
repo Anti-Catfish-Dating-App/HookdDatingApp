@@ -1,5 +1,6 @@
 import axios from "axios"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { getToken } from "./headers"
 
 const ADD_REVIEW = "ADD_REVIEW"
 const GET_USER_REVIEWS = "GET_USER_REVIEWS"
@@ -16,10 +17,10 @@ export const _getReviews = (reviews) => ({
 
 export const addReview = (reviewInfo) => async (dispatch) => {
   try {
-    const token = await AsyncStorage.getItem("token");
+    const tokenHeader = await getToken();
     const res = await axios.post(`http://192.168.0.6:8080/api/reviews`, {reviewInfo}, {
       headers: {
-        authorization: token
+        authorization: tokenHeader
       }
     });
     dispatch(_addReview(res.data));
