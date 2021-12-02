@@ -15,6 +15,8 @@ import SignUpInfo from "../screens/SignUpInfo"
 import AddMatchReview from "../screens/AddMatchReview"
 import UserProfile from "../screens/UserProfile"
 import OtherGender from "../screens/OtherGender"
+import TabNavigator from "./TabNav"
+import { Tab } from "react-native-elements/dist/tab/Tab"
 
 const stack = createNativeStackNavigator()
 
@@ -25,6 +27,11 @@ const StackNavigator = (props) => {
       {user ? (
         <>
           <stack.Group>
+            <stack.Screen
+              name="TabNav"
+              component={TabNavigator}
+              options={{ headerShown: false }}
+            />
             <stack.Screen name="Home" component={Home} />
             <stack.Screen name="Matches" component={Matches} />
             <stack.Screen name="Swipe" component={Swipe} />
