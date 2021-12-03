@@ -3,6 +3,7 @@ const router = require("express").Router()
 const {
   models: { User, Matches },
 } = require("../db")
+const Conversations = require("../db/models/Conversations")
 const { requireToken } = require("./middleware")
 
 router.get("/", requireToken, async (req, res, next) => {
@@ -56,13 +57,18 @@ router.post("/", requireToken, async (req, res, next) => {
       const matchBool = await Matches.findOne({
         where: {
           userId: swipedUser.id,
-          swipedId: req.user.id,
+          SwipedId: req.user.id,
           isRightSwipe: true,
         },
       })
 
-      console.log("MATCH BOOL", matchBool)
-
+      console.log("MATCH BOOL", !!matchBool)
+      if (matchBool) {
+        await Conversations.create({
+          user1: swipedUser.id,
+          user2: req.user.id,
+        })
+      }
       //check opposite userId = swipedUser && swipedId=req.user && isRightSwipe === true
     } else if (direction === "left") {
       await req.user.addSwiped(swipedUser, {
