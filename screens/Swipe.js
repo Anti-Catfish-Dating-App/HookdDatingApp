@@ -16,6 +16,7 @@ import { useNavigation } from "@react-navigation/native"
 import Swiper from "react-native-deck-swiper"
 import { Transitioning, Transition } from "react-native-reanimated"
 import UserProfile from "./UserProfile"
+import Toast from "react-native-root-toast"
 
 import users, { getPond } from "../store/users"
 import { addSwipe } from "../store/matches"
@@ -61,8 +62,23 @@ const Swipe = (props) => {
     setIndex((index + 1) % pond.length)
   }
 
-  const userHasSwiped = (direction, id) => {
-    props.addSwipe(direction, id)
+  const userHasSwiped = async (direction, id) => {
+    const status = await props.addSwipe(direction, id)
+    if(status === 222){
+      let toast = Toast.show('ITS A MATCH!', {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.CENTER,
+        shadow: true,
+        animation: true,
+        hideOnPress: true,
+        backgroundColor: "pink",
+        delay: 0,
+        opacity: 1
+    });
+    setTimeout(function () {
+        Toast.hide(toast);
+    }, 1500);
+    }
   }
 
   useEffect(async () => {
@@ -190,12 +206,12 @@ const Swipe = (props) => {
             <Button
               title="<"
               color={"red"}
-              onPress={() => swiperRef.current.swipeLeft()}
+              onPress={() => userHasSwiped("left", pond[index].id)}
             />
             <Button
               title=">"
               color={"green"}
-              onPress={() => swiperRef.current.swipeRight()}
+              onPress={() => userHasSwiped("right", pond[index].id)}
             />
           </View>
           <Transitioning.View ref={transitionRef} transition={transition}>

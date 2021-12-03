@@ -42,9 +42,6 @@ router.post("/", requireToken, async (req, res, next) => {
     const swipedUser = await User.findByPk(req.body.id)
 
     const direction = req.body.direction
-    //const swipedUser = req.body.id
-
-    console.log("SWIPED USER---------------", swipedUser)
 
     if (direction === "right") {
       await req.user.addSwiped(swipedUser.id, {
@@ -68,6 +65,9 @@ router.post("/", requireToken, async (req, res, next) => {
           user1: swipedUser.id,
           user2: req.user.id,
         })
+        res.status(222).send("ITS A MATCH")
+      } else {
+        res.sendStatus(200)
       }
       //check opposite userId = swipedUser && swipedId=req.user && isRightSwipe === true
     } else if (direction === "left") {
@@ -76,9 +76,9 @@ router.post("/", requireToken, async (req, res, next) => {
           isRightSwipe: false,
         },
       })
+      res.sendStatus(200)
     }
 
-    res.sendStatus(200)
   } catch (error) {
     next(error)
   }
