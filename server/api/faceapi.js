@@ -131,7 +131,7 @@ router.post("/profilepic/:id", upload.any(), async (req, res, next) => {
       }
     )
 
-    if (verify.data.isIdentical) {
+    if (verify.data.isIdentical === true) {
       user.profilePicture = imageUrl.url
       user.isVerified = true
       user.lastTimeVerified = new Date()

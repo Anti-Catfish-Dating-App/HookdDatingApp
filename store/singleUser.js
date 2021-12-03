@@ -65,6 +65,8 @@ export const checkForFace = (imageData) => async (dispatch) => {
 
 export const _editProfilePic = (imageData, id) => async (dispatch) => {
   try {
+    console.log(id)
+
     const config = { headers: { "Content-Type": "multipart/form-data" } }
 
     const res = await axios.post(
@@ -78,12 +80,10 @@ export const _editProfilePic = (imageData, id) => async (dispatch) => {
     if (res.status === 200) {
       dispatch(setUser(res.data))
       return res.status
-    } else {
-      return 444
     }
   } catch (error) {
-    console.log(error)
-    return 444
+    console.log(error.data)
+    return error.status
   }
 }
 
