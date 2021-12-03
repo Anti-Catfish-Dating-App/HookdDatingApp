@@ -48,8 +48,9 @@ router.post("/", requireToken, async (req, res, next) => {
         }
       })
 
-      const matchBool = await swipedUser.getSwiped(req.user.id, {
-        through: {
+      const matchBool = await swipedUser.getSwiped({
+        where: {
+          swipedId: req.user.id,
           isRightSwipe: true
         }
       })
