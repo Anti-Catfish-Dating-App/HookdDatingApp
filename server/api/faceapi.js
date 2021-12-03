@@ -131,6 +131,7 @@ router.post("/profilepic/:id", upload.any(), async (req, res, next) => {
         },
       }
     )
+
     if (verify.data.isIdentical) {
       user.profilePicture = imageUrl.url
       user.isVerified = true
@@ -138,7 +139,7 @@ router.post("/profilepic/:id", upload.any(), async (req, res, next) => {
       await user.save()
       res.send(user)
     } else {
-      res.send(user)
+      res.status(400).send(user)
       return "Face not verified!"
     }
     console.log(verify)

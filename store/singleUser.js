@@ -66,12 +66,20 @@ export const checkForFace = (imageData) => async (dispatch) => {
 export const _editProfilePic = (imageData, id) => async (dispatch) => {
   const config = { headers: { "Content-Type": "multipart/form-data" } }
 
-  const { data } = await axios.post(
+  const res = await axios.post(
     `https://hookd-datingapp.herokuapp.com/api/faceapi/profilepic/${id}`,
     imageData,
     config
   )
-  dispatch(editProfilePic(data))
+
+  console.log(res)
+
+  if (res.status === 200) {
+    dispatch(setUser(res.data))
+    return res.status
+  } else {
+    return 400
+  }
 }
 
 //reducer

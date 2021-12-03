@@ -6,15 +6,18 @@ import {
   TouchableOpacity,
   Image,
   Button,
+  Alert,
+  Platform,
 } from "react-native"
 import * as ImagePicker from "expo-image-picker"
 import { useEffect, useState } from "react"
 import { connect } from "react-redux"
 import { _editProfilePic } from "../store/singleUser"
+import { useNavigation } from "@react-navigation/native"
 
 const ChangeProfilePic = (props) => {
+  const navigation = useNavigation()
   const [profilePicture, setImage] = useState(props.user.profilePicture)
-
   const { user } = props
 
   useEffect(() => {
@@ -38,22 +41,26 @@ const ChangeProfilePic = (props) => {
       quality: 1,
     })
 
-    console.log(result)
-
     if (!result.cancelled) {
       setImage(result.uri)
     }
   }
 
-  handleSubmit = () => {
+  const handleSubmit = async () => {
     const form = new FormData()
     form.append("file", {
       name: `${props.user.id}`,
       uri: profilePicture,
       type: "image/jpg",
     })
-    props.editProfilePic(form, props.user.id)
-    props.navigation.navigate("Home")
+    const res = await props.editProfilePic(form, props.user.id)
+    console.log(res)
+    if (res === 200) {
+      navigation.navigate("Settings")
+      Alert.alert("Photo Similarity Accepted")
+    } else {
+      Alert.alert(res)
+    }
   }
 
   return (
