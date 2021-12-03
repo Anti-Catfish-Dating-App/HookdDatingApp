@@ -26,7 +26,7 @@ export const fetchMessages = (id) => {
     try {
       const token = await AsyncStorage.getItem("token")
       const res = await axios.get(
-        `https://hookd-datingapp.herokuapp.com/api/messages/${id}`,
+        `http://192.168.1.161:8080/api/messages/${id}`,
         {
           headers: {
             Authorization: token,
@@ -45,7 +45,7 @@ export const sendMessageThunk = (id, message) => {
     try {
       const token = await AsyncStorage.getItem("token")
       const res = await axios.post(
-        "https://hookd-datingapp.herokuapp.com/api/messages",
+        "http://192.168.1.161:8080/api/messages",
         {
           message: message,
           receiverId: id,
