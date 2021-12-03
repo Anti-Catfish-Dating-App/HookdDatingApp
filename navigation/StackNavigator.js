@@ -18,6 +18,7 @@ import UserProfile from "../screens/UserProfile"
 import OtherGender from "../screens/OtherGender"
 import TabNavigator from "./TabNav"
 import { Tab } from "react-native-elements/dist/tab/Tab"
+import SexualOrientationForm from "../screens/SexualOrientationForm"
 
 const stack = createNativeStackNavigator()
 
@@ -54,6 +55,10 @@ const StackNavigator = (props) => {
           <stack.Screen name="Signup" component={Signup} />
           <stack.Screen name="SignUpInfo" component={SignUpInfo} />
           <stack.Screen name="OtherGender" component={OtherGender} />
+          <stack.Screen
+            name="SexualOrientationForm"
+            component={SexualOrientationForm}
+          />
           <stack.Screen name="UserConsent" component={UserConsent} />
           <stack.Screen name="BaselinePhoto" component={BaselinePhoto} />
         </>

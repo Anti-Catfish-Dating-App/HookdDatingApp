@@ -16,29 +16,18 @@ import { useNavigation } from "@react-navigation/native"
 import { editUser } from "../store/auth"
 import { Picker } from "@react-native-picker/picker"
 
-const SignUpInfo = (props) => {
+const SexualOrientationForm = (props) => {
   const navigation = useNavigation()
   const { control, handleSubmit } = useForm()
-  const [gender, setGender] = useState("")
-  const onSubmit = async (data) => {
-    if (gender === "Other") {
-      setGender(null)
-    }
-
+  const [orientation, setOrientation] = useState("")
+  const onSubmit = async () => {
     const resStatus = await props.editUser({
       id: props.auth.id,
-      age: data.Age,
-      gender: gender,
-      genderCategory: gender,
-      bio: data.Bio,
+      sexualOrientation: orientation,
     })
 
     if (resStatus === 200) {
-      if (gender === "Other") {
-        navigation.navigate("OtherGender")
-      } else {
-        navigation.navigate("SexualOrientationForm")
-      }
+      navigation.navigate("UserConsent")
     } else {
       Alert.alert("Error!")
     }
@@ -47,22 +36,18 @@ const SignUpInfo = (props) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Sign Up</Text>
-      <Text>Please enter your information</Text>
-
-      <InputForm name="Age" style={styles.input} control={control} />
-
-      <InputForm name="Bio" style={styles.input2} control={control} />
+      <Text>What is your sexual orientation?</Text>
 
       <Picker
-        selectedValue={gender}
-        onValueChange={(itemValue, itemIndex) => setGender(itemValue)}
+        selectedValue={orientation}
+        onValueChange={(itemValue, itemIndex) => setOrientation(itemValue)}
         style={styles.picker}
         mode={"dropdown"}
         numberOfLines={"1"}
       >
-        <Picker.Item label="Man" value="Man" />
-        <Picker.Item label="Woman" value="Woman" />
-        <Picker.Item label="Other" value="Other" />
+        <Picker.Item label="Straight" value="Straight" />
+        <Picker.Item label="Gay" value="Gay" />
+        <Picker.Item label="Bisexual" value="Bisexual" />
       </Picker>
 
       <Button title="Submit" onPress={handleSubmit(onSubmit)} />
@@ -81,20 +66,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 20,
-  },
-  input: {
-    height: 40,
-    margin: 12,
-    width: 250,
-    borderWidth: 2,
-    padding: 10,
-  },
-  input2: {
-    height: 200,
-    margin: 12,
-    width: 250,
-    borderWidth: 2,
-    padding: 10,
   },
   picker: {
     width: 250,
@@ -117,5 +88,8 @@ const mapDispatch = (dispatch) => {
   }
 }
 
-const connectedSignUpInfo = connect(mapSignup, mapDispatch)(SignUpInfo)
+const connectedSignUpInfo = connect(
+  mapSignup,
+  mapDispatch
+)(SexualOrientationForm)
 export default connectedSignUpInfo

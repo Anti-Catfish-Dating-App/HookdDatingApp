@@ -10,8 +10,9 @@ export const setMatches = (matches) => ({
   matches,
 })
 
-export const _addSwipe = () => ({
+export const _addSwipe = (id) => ({
   type: ADD_SWIPE,
+  id,
 })
 
 export const getMatches = () => async (dispatch) => {
@@ -49,7 +50,7 @@ export const addSwipe = (direction, id) => async (dispatch) => {
         },
       }
     )
-    dispatch(_addSwipe(res.data))
+    dispatch(_addSwipe(id))
   } catch (error) {
     console.log(error)
   }
