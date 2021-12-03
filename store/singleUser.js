@@ -55,7 +55,6 @@ export const checkForFace = (imageData) => async (dispatch) => {
     config
   )
 
-
   if (data.baselinePhoto === null) {
     return "No face found"
   } else {

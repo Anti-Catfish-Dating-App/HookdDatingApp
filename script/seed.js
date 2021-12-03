@@ -59,18 +59,14 @@ async function seed() {
       lastTimeVerified: 11 / 23 / 2040,
       isVerified: true,
     })
+    console.log(Object.keys(user.__proto__))
   }
-  const user1 = await User.findByPk(1)
-  const user2 = await User.findByPk(2)
-  const user3 = await User.findByPk(3)
+  const user1 = await User.findByPk(3)
+  const user2 = await User.findByPk(5)
+  const user3 = await User.findByPk(7)
   const user4 = await User.findByPk(4)
-  const user5 = await User.findByPk(5)
-  const user6 = await User.findByPk(6)
-  const user7 = await User.findByPk(7)
-  const user8 = await User.findByPk(8)
-  const user9 = await User.findByPk(9)
-  const user10 = await User.findByPk(10)
-
+  const user5 = await User.findByPk(6)
+  const user6 = await User.findByPk(8)
   await user1.addSwiped(user2, {
     through: {
       isRightSwipe: true,
@@ -88,20 +84,10 @@ async function seed() {
   })
   await user3.addSwiped(user1, {
     through: {
-      isRightSwipe: true,
+      isRightSwipe: false,
     },
   })
-  await user1.addSwiped(user4, {
-    through: {
-      isRightSwipe: true,
-    },
-  })
-  await user4.addSwiped(user1, {
-    through: {
-      isRightSwipe: true,
-    },
-  })
-  await user1.addSwiped(user5, {
+  await user6.addSwiped(user1, {
     through: {
       isRightSwipe: true,
     },
@@ -111,7 +97,39 @@ async function seed() {
       isRightSwipe: true,
     },
   })
+  await user1.addSwiped(user6, {
+    through: {
+      isRightSwipe: true,
+    },
+  })
+  await user4.addSwiped(user1, {
+    through: {
+      isRightSwipe: true,
+    },
+  })
+  await user1.addSwiped(user4, {
+    through: {
+      isRightSwipe: true,
+    },
+  })
+
+  const conversation3 = await Conversations.create({
+    user1: user1.id,
+    user2: user4.id,
+  })
+  const message5 = await Messages.create({
+    message: "Hi",
+    userId: user1.id,
+    conversationId: conversation3.id,
+  })
+  //seed user 2 with a message to user 1
+  const message6 = await Messages.create({
+    message: "Hello",
+    userId: user4.id,
+    conversationId: conversation3.id,
+  })
 }
+
 async function runSeed() {
   console.log("seeding...")
   try {

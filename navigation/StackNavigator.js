@@ -12,6 +12,7 @@ import Swipe from "../screens/Swipe"
 import Settings from "../screens/Settings"
 import ChangeProfilePic from "../screens/ChangeProfilePic"
 import SignUpInfo from "../screens/SignUpInfo"
+import Messages from "../screens/Messages"
 import AddMatchReview from "../screens/AddMatchReview"
 import UserProfile from "../screens/UserProfile"
 import OtherGender from "../screens/OtherGender"
@@ -35,6 +36,7 @@ const StackNavigator = (props) => {
             <stack.Screen name="Home" component={Home} />
             <stack.Screen name="Matches" component={Matches} />
             <stack.Screen name="Swipe" component={Swipe} />
+            <stack.Screen name="Messages" component={Messages} />
             <stack.Screen name="UserProfile" component={UserProfile} />
           </stack.Group>
           <stack.Group screenOptions={{ presentation: "modal" }}>

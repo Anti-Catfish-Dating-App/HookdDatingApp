@@ -13,26 +13,35 @@ const db = require("./db")
 // } = require("./models/")
 
 const Conversations = require("./models/Conversations")
-const Images = require("./models/Images")
+// const Images = require("./models/Images")
 const Matches = require("./models/Matches")
 const Messages = require("./models/Messages")
-const Preferences = require("./models/Preferences")
-const Reviews = require("./models/Reviews")
+// const Preferences = require("./models/Preferences")
+// const Reviews = require("./models/Reviews")
 const User = require("./models/User")
 
 //Associations
 User.belongsToMany(User, { as: "Swiped", through: Matches })
 
+User.hasMany(Conversations)
+Conversations.belongsTo(User, {
+  foriegnKey: "conversationId",
+})
+
+Messages.belongsTo(Conversations)
+// Conversations.hasMany(Messages)
+
+Messages.belongsTo(User)
 
 module.exports = {
   db,
   models: {
     Conversations,
-    Images,
+    // Images,
     Matches,
     Messages,
-    Preferences,
-    Reviews,
+    // Preferences,
+    // Reviews,
     User,
   },
 }
