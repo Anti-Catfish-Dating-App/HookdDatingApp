@@ -78,7 +78,7 @@ export const _editProfilePic = (imageData, id) => async (dispatch) => {
     console.log("THUNK RESPONSE", res)
 
     if (res.status === 200) {
-      dispatch(setUser(res.data))
+      dispatch(editProfilePic(res.data))
       return res.status
     } else return res.status
   } catch (error) {
