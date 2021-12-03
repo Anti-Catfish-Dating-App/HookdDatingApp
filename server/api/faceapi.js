@@ -111,7 +111,7 @@ router.post("/profilepic/:id", upload.any(), async (req, res, next) => {
     const user = await User.findByPk(req.params.id)
 
     if (firstImage.data.length < 1) {
-      res.send(user)
+      res.status(444).send(user)
       return "No face found!"
     }
 
@@ -139,7 +139,7 @@ router.post("/profilepic/:id", upload.any(), async (req, res, next) => {
       await user.save()
       res.send(user)
     } else {
-      res.status(400).send(user)
+      res.status(444).send(user)
       return "Face not verified!"
     }
     console.log(verify)
