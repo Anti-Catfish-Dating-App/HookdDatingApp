@@ -103,7 +103,9 @@ const Swipe = (props) => {
   return (
     <View style={styles.container}>
       {!pond || pond.length === 0 ? (
-        <Text style={styles.loading}>...Gone fishin'</Text>
+        <Text style={styles.loading}>
+          There are no people to match with at the moment, sorry!
+        </Text>
       ) : !pond[index] ? (
         <Text style={styles.noMatches}>
           There are no people to match with at the moment, sorry!
