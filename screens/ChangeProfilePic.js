@@ -58,8 +58,12 @@ const ChangeProfilePic = (props) => {
     if (res === 200) {
       navigation.navigate("Settings")
       Alert.alert("Photo Similarity Accepted")
-    } else {
-      Alert.alert(res)
+    }
+    if (res === 444) {
+      Alert.alert("Face not found")
+    }
+    if (res === 445) {
+      Alert.alert("No similarity found")
     }
   }
 

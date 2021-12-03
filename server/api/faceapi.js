@@ -112,7 +112,6 @@ router.post("/profilepic/:id", upload.any(), async (req, res, next) => {
 
     if (firstImage.data.length < 1) {
       res.status(444).send(user)
-      return "No face found!"
     }
 
     const profilePicFaceId = firstImage.data[0].faceId
@@ -139,8 +138,7 @@ router.post("/profilepic/:id", upload.any(), async (req, res, next) => {
       await user.save()
       res.send(user)
     } else {
-      res.status(444).send(user)
-      return "Face not verified!"
+      res.status(445).send(user)
     }
     console.log(verify)
   } catch (error) {
