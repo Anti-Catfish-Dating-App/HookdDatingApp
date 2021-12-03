@@ -131,16 +131,18 @@ router.post("/profilepic/:id", upload.any(), async (req, res, next) => {
       }
     )
 
+    console.log(verify)
+
     if (verify.data.isIdentical === true) {
       user.profilePicture = imageUrl.url
       user.isVerified = true
       user.lastTimeVerified = new Date()
       await user.save()
       res.send(user)
-    } else {
+    } else if (verify.data.isIdentical === false) {
+      console.log("HERE")
       res.status(445).send(user)
     }
-    console.log(verify)
   } catch (error) {
     next(error)
   }

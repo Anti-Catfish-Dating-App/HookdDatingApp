@@ -80,7 +80,7 @@ export const _editProfilePic = (imageData, id) => async (dispatch) => {
     if (res.status === 200) {
       dispatch(setUser(res.data))
       return res.status
-    }
+    } else return res.status
   } catch (error) {
     console.log(error.data)
     return error.status
