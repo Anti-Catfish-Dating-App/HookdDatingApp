@@ -17,7 +17,7 @@ import Swiper from "react-native-deck-swiper"
 import { Transitioning, Transition } from "react-native-reanimated"
 import UserProfile from "./UserProfile"
 
-import { getPond } from "../store/users"
+import users, { getPond } from "../store/users"
 import { addSwipe } from "../store/matches"
 import { getUser } from "../store/singleUser"
 
@@ -71,11 +71,11 @@ const Swipe = (props) => {
 
   const pond = props.users.users
 
-  if (!pond.length) {
-    return <Text style={styles.loading}>...Gone fishin'</Text>
-  }
-
   const Card = ({ card }) => {
+    if (!pond || pond.length === 0 || !card || !card.profilePicture) {
+      return <View />
+    }
+
     return (
       <View style={styles.currentCard}>
         <Image source={{ uri: card.profilePicture }} style={styles.cardImage} />
@@ -83,106 +83,126 @@ const Swipe = (props) => {
     )
   }
 
-  const CardDetails = ({ index }) => (
-    <View key={pond[index].id} style={{ alignItems: "center" }}>
-      <Text style={[styles.text, styles.heading]} numberOfLines={2}>
-        {pond[index].name}
-      </Text>
-      <Text style={[styles.text, styles.age]}>{pond[index].age}</Text>
-      <Text style={[styles.text, styles.gender]}>{pond[index].gender}</Text>
-      <Text style={[styles.text, styles.bio]}>{pond[index].bio}</Text>
-    </View>
-  )
+  const CardDetails = ({ index }) => {
+    if (!pond[index] || !pond || !pond[index].id || pond.length === 0) {
+      return <View />
+    }
+
+    return (
+      <View key={pond[index].id} style={{ alignItems: "center" }}>
+        <Text style={[styles.text, styles.heading]} numberOfLines={2}>
+          {pond[index].name}
+        </Text>
+        <Text style={[styles.text, styles.age]}>{pond[index].age}</Text>
+        <Text style={[styles.text, styles.gender]}>{pond[index].gender}</Text>
+        <Text style={[styles.text, styles.bio]}>{pond[index].bio}</Text>
+      </View>
+    )
+  }
 
   return (
     <View style={styles.container}>
-      <View style={styles.swiperContainer}>
-        <Swiper
-          ref={swiperRef}
-          cards={pond}
-          cardIndex={index}
-          renderCard={(fish) => <Card card={fish} />}
-          onTapCard={async () => {
-            await props.getUser(pond[index].id)
-            navigation.navigate("UserProfile", {
-              id: pond[index].id,
-              name: pond[index].name,
-            })
-          }}
-          onSwiped={onSwiped}
-          //Right swipe:
-          onSwipedRight={() => userHasSwiped("right", pond[index].id)}
-          //Left swipe:
-          onSwipedLeft={() => userHasSwiped("left", pond[index].id)}
-          //if we want stacking effect but this is giving me issues
-          showSecondCard
-          //can't make more than 1 for some reason, issue with JSON??
-          stackSize={1}
-          stackScale={10}
-          stackSeperation={10}
-          disableTopSwipe
-          disableBottomSwipe
-          animateOverlayLabelsOpacity
-          animateCardOpacity
-          infinite
-          backgroundColor={"transparent"}
-          overlayLabels={{
-            left: {
-              title: "RELEASE",
-              style: {
-                label: {
-                  backgroundColor: "red",
-                  color: "white",
-                  fontSize: 12,
-                },
-                wrapper: {
-                  flexDirection: "column",
-                  alignItems: "flex-end",
-                  justifyContent: "flex-start",
-                  marginTop: 20,
-                  marginLeft: -20,
-                },
-              },
-            },
-            right: {
-              title: "CATCH",
-              style: {
-                label: {
-                  backgroundColor: "green",
-                  color: "white",
-                  fontSize: 12,
-                },
-                wrapper: {
-                  flexDirection: "column",
-                  alignItems: "flex-start",
-                  justifyContent: "flex-start",
-                  marginTop: 20,
-                  marginLeft: 20,
+      {!pond || pond.length === 0 ? (
+        <Text style={styles.loading}>
+          There are no people to match with at the moment, sorry!
+        </Text>
+      ) : !pond[index] ? (
+        <Text style={styles.noMatches}>
+          There are no people to match with at the moment, sorry!
+        </Text>
+      ) : (
+        <View style={styles.swiperContainer}>
+          <Swiper
+            ref={swiperRef}
+            cards={pond}
+            cardIndex={index}
+            renderCard={(fish) => <Card card={fish} />}
+            onTapCard={async () => {
+              await props.getUser(pond[index].id)
+              navigation.navigate("UserProfile", {
+                id: pond[index].id,
+                name: pond[index].name,
+              })
+            }}
+            onSwiped={onSwiped}
+            //Right swipe:
+            onSwipedRight={() => userHasSwiped("right", pond[index].id)}
+            //Left swipe:
+            onSwipedLeft={() => userHasSwiped("left", pond[index].id)}
+            //if we want stacking effect but this is giving me issues
+            showSecondCard
+            //can't make more than 1 for some reason, issue with JSON??
+            stackSize={1}
+            stackScale={10}
+            stackSeperation={10}
+            disableTopSwipe
+            disableBottomSwipe
+            animateOverlayLabelsOpacity
+            animateCardOpacity
+            infinite
+            backgroundColor={"transparent"}
+            overlayLabels={{
+              left: {
+                title: "RELEASE",
+                style: {
+                  label: {
+                    backgroundColor: "red",
+                    color: "white",
+                    fontSize: 12,
+                  },
+                  wrapper: {
+                    flexDirection: "column",
+                    alignItems: "flex-end",
+                    justifyContent: "flex-start",
+                    marginTop: 20,
+                    marginLeft: -20,
+                  },
                 },
               },
-            },
-          }}
-        />
-      </View>
-
-      <View style={styles.bottomContainer}>
-        {/* swipe right and swip left buttons */}
-        <View style={styles.bottomContainerButtons}>
-          <Button
-            title="<"
-            color={"red"}
-            onPress={() => swiperRef.current.swipeLeft()}
-          />
-          <Button
-            title=">"
-            color={"green"}
-            onPress={() => swiperRef.current.swipeRight()}
+              right: {
+                title: "CATCH",
+                style: {
+                  label: {
+                    backgroundColor: "green",
+                    color: "white",
+                    fontSize: 12,
+                  },
+                  wrapper: {
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                    justifyContent: "flex-start",
+                    marginTop: 20,
+                    marginLeft: 20,
+                  },
+                },
+              },
+            }}
           />
         </View>
-        <Transitioning.View ref={transitionRef} transition={transition}>
-          <CardDetails index={index} />
-        </Transitioning.View>
-      </View>
+      )}
+
+      {!pond || pond.length === 0 || !pond[index] ? (
+        <View />
+      ) : (
+        <View style={styles.bottomContainer}>
+          {/* swipe right and swip left buttons */}
+          <View style={styles.bottomContainerButtons}>
+            <Button
+              title="<"
+              color={"red"}
+              onPress={() => swiperRef.current.swipeLeft()}
+            />
+            <Button
+              title=">"
+              color={"green"}
+              onPress={() => swiperRef.current.swipeRight()}
+            />
+          </View>
+          <Transitioning.View ref={transitionRef} transition={transition}>
+            <CardDetails index={index} />
+          </Transitioning.View>
+        </View>
+      )}
     </View>
   )
 }
@@ -264,5 +284,11 @@ const styles = StyleSheet.create({
     fontSize: 50,
     fontWeight: "500",
     alignContent: "center",
+  },
+  noMatches: {
+    color: "#5389ed",
+    fontSize: 50,
+    fontWeight: "500",
+    textAlign: "center",
   },
 })

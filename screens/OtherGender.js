@@ -29,7 +29,7 @@ const OtherGender = (props) => {
     })
 
     if (resStatus === 200) {
-      navigation.navigate("UserConsent")
+      navigation.navigate("SexualOrientationForm")
     } else {
       Alert.alert("Error!")
     }
