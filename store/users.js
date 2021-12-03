@@ -64,7 +64,6 @@ export default function (state = initialState, action) {
     case SET_POND:
       return { ...state, users: action.users }
     case ADD_SWIPE: {
-      console.log(action)
       const users = { ...state }
       const usersArray = users.users
       const filteredArray = usersArray.map((user) => {
@@ -72,7 +71,6 @@ export default function (state = initialState, action) {
           return user
         }
       })
-      console.log(filteredArray)
       return { ...state, users: filteredArray }
     }
     default:
