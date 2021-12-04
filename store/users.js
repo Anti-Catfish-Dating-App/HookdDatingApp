@@ -64,7 +64,7 @@ export default function (state = initialState, action) {
     case ADD_SWIPE: {
       const users = { ...state }
       const usersArray = users.users
-      const filteredArray = usersArray.map((user) => {
+      const filteredArray = usersArray.filter((user) => {
         if (user.id !== action.id) {
           return user
         }
