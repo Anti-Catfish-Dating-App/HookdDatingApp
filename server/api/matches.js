@@ -8,26 +8,7 @@ const { requireToken } = require("./middleware")
 
 router.get("/", requireToken, async (req, res, next) => {
   try {
-    const userMatches = await Matches.findAll({
-      where: {
-        SwipedId: req.user.id,
-        isRightSwipe: true,
-      },
-    })
-    const userSwipedMatchesIds = userMatches.map((x) => x.userId)
-
-    const otherUserSwipedMatchesIds = await Matches.findAll({
-      where: {
-        userId: req.user.id,
-        isRightSwipe: true,
-      },
-    })
-    const swipedUserMatches = otherUserSwipedMatchesIds.map((x) => x.SwipedId)
-
-    const data = userSwipedMatchesIds.filter((item) =>
-      swipedUserMatches.includes(item)
-    )
-
+    const data = await matchReducer(req.user.id);
     const matchData = await data.map(async (x) => await User.findByPk(x))
     const matchedUsers = await Promise.all(matchData)
 
@@ -59,7 +40,6 @@ router.post("/", requireToken, async (req, res, next) => {
         },
       })
 
-      console.log("MATCH BOOL", !!matchBool)
       if (matchBool) {
         await Conversations.create({
           user1: swipedUser.id,
@@ -69,7 +49,6 @@ router.post("/", requireToken, async (req, res, next) => {
       } else {
         res.sendStatus(200)
       }
-      //check opposite userId = swipedUser && swipedId=req.user && isRightSwipe === true
     } else if (direction === "left") {
       await req.user.addSwiped(swipedUser, {
         through: {
@@ -85,3 +64,26 @@ router.post("/", requireToken, async (req, res, next) => {
 })
 
 module.exports = router
+
+
+//Match reducer function (to find all matches for logged in user):
+const matchReducer = async (loggedInUserId) => {
+  const userMatches = await Matches.findAll({
+    where: {
+      SwipedId: loggedInUserId,
+      isRightSwipe: true,
+    },
+  })
+  const userSwipedMatchesIds = userMatches.map((x) => x.userId)
+
+  const otherUserSwipedMatchesIds = await Matches.findAll({
+    where: {
+      userId: loggedInUserId,
+      isRightSwipe: true,
+    },
+  })
+  const swipedUserMatches = otherUserSwipedMatchesIds.map((x) => x.SwipedId)
+
+  return userSwipedMatchesIds.filter((item) =>
+  swipedUserMatches.includes(item))
+}

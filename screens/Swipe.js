@@ -65,7 +65,7 @@ const Swipe = (props) => {
   const userHasSwiped = async (direction, id) => {
     const status = await props.addSwipe(direction, id)
     if(status === 222){
-      let toast = Toast.show('ITS A MATCH!', {
+      let toast = Toast.show("IT'S A MATCH!", {
         duration: Toast.durations.LONG,
         position: Toast.positions.CENTER,
         shadow: true,
@@ -77,7 +77,7 @@ const Swipe = (props) => {
     });
     setTimeout(function () {
         Toast.hide(toast);
-    }, 1500);
+    }, 1750);
     }
   }
 
