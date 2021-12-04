@@ -31,8 +31,23 @@ const Messages = (props) => {
   return (
     <View style={styles.container}>
       <FlatList
+        style={styles.messages}
         data={props.messages}
-        renderItem={({ item }) => <Text>{item.message}</Text>}
+        renderItem={({ item }) => {
+          if (item.userId === props.route.params.match.id) {
+            return (
+              <View style={styles.sender}>
+                <Text style={styles.message}>{item.message}</Text>
+              </View>
+            )
+          } else {
+            return (
+              <View style={styles.receiver}>
+                <Text style={styles.message}>{item.message}</Text>
+              </View>
+            )
+          }
+        }}
         keyExtractor={(item, index) => index.toString()}
       />
       <View style={styles.inputContainer}>
@@ -61,14 +76,43 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  input: {
+  messages: {
+    flex: 1,
     width: "100%",
-    borderColor: "black",
-    borderWidth: 1,
-    padding: 10,
+    height: "100%",
+  },
+  sender: {
+    backgroundColor: "#00bfff",
+    borderRadius: 10,
     margin: 10,
-    paddingBottom: 40,
-    justifyContent: "center",
+    padding: 10,
+    alignSelf: "flex-end",
+  },
+  receiver: {
+    backgroundColor: "purple",
+    borderRadius: 10,
+    margin: 10,
+    padding: 10,
+    alignSelf: "flex-start",
+  },
+  message: {
+    fontSize: 20,
+  },
+  inputContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+    height: 50,
+    backgroundColor: "white",
+    borderRadius: 10,
+    margin: 10,
+  },
+  input: {
+    width: "80%",
+    height: "100%",
+    borderRadius: 10,
+    padding: 10,
   },
 })
 
