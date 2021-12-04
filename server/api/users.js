@@ -57,7 +57,10 @@ router.get("/:id", async (req, res, next) => {
 router.get("/pond/:id", async (req, res, next) => {
   try {
     const { id } = req.params
-    const matchData = await matchReducer(id);
+    const userMatches = await Matches.findAll({
+      attributes: ['SwipedId'],
+      where: { userId: id },
+    }).then(matchArr => matchArr.map(x => x.SwipedId))
 
     const allUsers = await User.findAll({
       where: {
@@ -68,7 +71,7 @@ router.get("/pond/:id", async (req, res, next) => {
     })
 
     const matchFilteredUsers = allUsers.filter((user) => {
-      if(!matchData.includes(user.id)){
+      if(!userMatches.includes(user.id)){
         return user
       }
     })
@@ -115,11 +118,11 @@ router.get("/pond/:id", async (req, res, next) => {
 
     const orientationFilter = matchFilteredUsers.filter((user) => {
       if (userGender === "Woman" && userSexualOrientation === "Bisexual") {
-        if((user.genderCategory === "Man" && user.sexualOrientation !== "Gay") || (user.genderCategory === "Woman" && user.sexualOrientation === "Gay")){
+        if((user.genderCategory === "Man" && user.sexualOrientation !== "Gay") || (user.genderCategory === "Woman" && user.sexualOrientation !== "Straight")){
           return user;
         }
       } else if (userGender === "Man" && userSexualOrientation === "Bisexual") {
-        if((user.genderCategory === "Woman" && user.sexualOrientation !== "Gay") || (user.genderCategory === "Man" && user.sexualOrientation === "Gay")){
+        if((user.genderCategory === "Woman" && user.sexualOrientation !== "Gay") || (user.genderCategory === "Man" && user.sexualOrientation !== "Straight")){
           return user;
         }
       } else if (userGender === "Woman" && userSexualOrientation === "Straight"){
@@ -140,7 +143,6 @@ router.get("/pond/:id", async (req, res, next) => {
         }
       }
     });
-
     res.send(orientationFilter)
   } catch (error) {
     next(error)

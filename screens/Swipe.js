@@ -82,7 +82,6 @@ const Swipe = (props) => {
   }
 
   useEffect(async () => {
-    console.log(props.user.id);
     await props.getUsersToSwipe(props.user.id)
   }, [])
 
