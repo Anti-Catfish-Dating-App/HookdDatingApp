@@ -23,7 +23,7 @@ export const _addSwipe = (userId) => ({
 //thunk creators
 export const getUsers = () => async (dispatch) => {
   try {
-    const res = await axios.get(`http://192.168.0.6:8080/api/users`)
+    const res = await axios.get(`https://hookd-datingapp.herokuapp.com/api/users`)
     dispatch(setUsers(res.data))
   } catch (error) {
     console.log(error)
@@ -33,9 +33,8 @@ export const getUsers = () => async (dispatch) => {
 export const getPond = (userId) => async (dispatch) => {
   try {
     const res = await axios.get(
-      `http://192.168.0.6:8080/api/users/pond/${userId}`
+      `https://hookd-datingapp.herokuapp.com/api/users/pond/${userId}`
     )
-    console.log("SEND TO POND: ", res.data);
     dispatch(setPond(res.data))
   } catch (error) {
     console.log(error)
@@ -60,8 +59,9 @@ export default function (state = initialState, action) {
   switch (action.type) {
     case SET_USERS:
       return { ...state, users: action.users }
-    case SET_POND:
+    case SET_POND: {
       return { ...state, users: action.users }
+    }
     case ADD_SWIPE: {
       const users = { ...state }
       const usersArray = users.users
@@ -70,7 +70,6 @@ export default function (state = initialState, action) {
           return user
         }
       })
-      console.log("FILTERED USERS: ", filteredArray.length)
       return { ...state, users: filteredArray }
     }
     default:

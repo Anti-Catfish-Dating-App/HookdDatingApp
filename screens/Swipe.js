@@ -53,7 +53,7 @@ const transitionRef = React.createRef()
 const Swipe = (props) => {
   const navigation = useNavigation()
   //set initial index
-  const [index, setIndex] = React.useState(1)
+  const [index, setIndex] = React.useState(0)
   //Swiper gives this method.
   const onSwiped = () => {
     //carddetails pop in animatedly

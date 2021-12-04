@@ -66,5 +66,3 @@ router.post("/", requireToken, async (req, res, next) => {
 
 module.exports = router
 
-
-//Match reducer function (to find all matches for logged in user):
