@@ -17,14 +17,6 @@ export const _addSwipe = (id) => ({
 
 export const getMatches = () => async (dispatch) => {
   try {
-    // const token = await AsyncStorage.getItem("token")
-
-    // const res = await axios.get(`http://192.168.1.161:8080/api/matches`, {
-    //   headers: {
-    //     authorization: token,
-    //   },
-    // })
-    // dispatch(setMatches(res.data))
     const tokenHeader = await getToken()
 
     const res = await axios.get(`http://192.168.0.6:8080/api/matches`, {
@@ -40,7 +32,6 @@ export const getMatches = () => async (dispatch) => {
 
 export const addSwipe = (direction, id) => async (dispatch) => {
   try {
-    console.log("IN THE MATCHES STORE");
     const tokenHeader = await getToken()
     const res = await axios.post(
       `http://192.168.0.6:8080/api/matches`,
@@ -51,7 +42,6 @@ export const addSwipe = (direction, id) => async (dispatch) => {
         },
       }
     )
-    console.log("IN THE MATCHES STORE: ", res.status);
     dispatch(_addSwipe(id))
     return res.status
   } catch (error) {

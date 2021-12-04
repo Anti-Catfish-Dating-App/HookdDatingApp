@@ -2,6 +2,8 @@ const router = require("express").Router()
 const {
   models: { User, Matches },
 } = require("../db")
+const matchReducer = require("./findAllMatches");
+const { Op } = require("sequelize");
 
 const axios = require("axios")
 const multer = require("multer") // Middleware to upload and save files
@@ -55,24 +57,31 @@ router.get("/:id", async (req, res, next) => {
 router.get("/pond/:id", async (req, res, next) => {
   try {
     const { id } = req.params
-    const userMatches = await Matches.findAll({
-      where: { userId: id },
+    const matchData = await matchReducer(id);
+
+    const allUsers = await User.findAll({
+      where: {
+        id: {
+          [Op.not]: id
+        }
+      }
     })
 
-    const allUsers = await User.findAll({})
+    const matchFilteredUsers = allUsers.filter((user) => {
+      if(!matchData.includes(user.id)){
+        return user
+      }
+    })
 
-    const matchFilteredUsers = allUsers.filter(
-      (user) => !userMatches.some((match) => match.SwipedId === user.id)
-    )
-
-    const user = await User.findByPk(id)
-    const userSexualOrientation = user.sexualOrientation
-    const userGender = user.genderCategory
-
-    const orientationFilter = matchFilteredUsers.filter((user) => {
+    const loggedInUser = await User.findByPk(id)
+    const userSexualOrientation = loggedInUser.sexualOrientation
+    const userGender = loggedInUser.genderCategory
+    /* const orientationFilter = matchFilteredUsers.filter((user) => {
       if (userSexualOrientation === "Bisexual") {
         return user
-      } else if (userSexualOrientation === "Straight") {
+      }
+
+      else if (userSexualOrientation === "Straight") {
         if (userGender === "Woman") {
           return (
             user.genderCategory === "Man" &&
@@ -86,7 +95,9 @@ router.get("/pond/:id", async (req, res, next) => {
               (user.sexualOrientation === "Straight" ||
                 user.sexualOrientation === "Bisexual"))
           )
-      } else if (userSexualOrientation === "Gay") {
+      }
+
+      else if (userSexualOrientation === "Gay") {
         if (userGender === "Man") {
           return (
             user.genderCategory === "Man" &&
@@ -100,7 +111,35 @@ router.get("/pond/:id", async (req, res, next) => {
               user.sexualOrientation === "Bisexual")
           )
       }
-    })
+    }) */
+
+    const orientationFilter = matchFilteredUsers.filter((user) => {
+      if (userGender === "Woman" && userSexualOrientation === "Bisexual") {
+        if((user.genderCategory === "Man" && user.sexualOrientation !== "Gay") || (user.genderCategory === "Woman" && user.sexualOrientation === "Gay")){
+          return user;
+        }
+      } else if (userGender === "Man" && userSexualOrientation === "Bisexual") {
+        if((user.genderCategory === "Woman" && user.sexualOrientation !== "Gay") || (user.genderCategory === "Man" && user.sexualOrientation === "Gay")){
+          return user;
+        }
+      } else if (userGender === "Woman" && userSexualOrientation === "Straight"){
+        if(user.genderCategory === "Man" && user.sexualOrientation !== "Gay"){
+          return user;
+        }
+      } else if (userGender === "Man" && userSexualOrientation === "Straight"){
+        if(user.genderCategory === "Woman" && user.sexualOrientation !== "Gay"){
+          return user;
+        }
+      } else if (userGender === "Woman" && userSexualOrientation === "Gay"){
+        if(user.genderCategory === "Woman" && user.sexualOrientation !== "Straight"){
+          return user;
+        }
+      } else if (userGender === "Man" && userSexualOrientation === "Gay"){
+        if(user.genderCategory === "Man" && user.sexualOrientation !== "Straight"){
+          return user;
+        }
+      }
+    });
 
     res.send(orientationFilter)
   } catch (error) {

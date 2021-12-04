@@ -5,6 +5,7 @@ const {
 } = require("../db")
 const Conversations = require("../db/models/Conversations")
 const { requireToken } = require("./middleware")
+const matchReducer = require("./findAllMatches");
 
 router.get("/", requireToken, async (req, res, next) => {
   try {
@@ -67,23 +68,3 @@ module.exports = router
 
 
 //Match reducer function (to find all matches for logged in user):
-const matchReducer = async (loggedInUserId) => {
-  const userMatches = await Matches.findAll({
-    where: {
-      SwipedId: loggedInUserId,
-      isRightSwipe: true,
-    },
-  })
-  const userSwipedMatchesIds = userMatches.map((x) => x.userId)
-
-  const otherUserSwipedMatchesIds = await Matches.findAll({
-    where: {
-      userId: loggedInUserId,
-      isRightSwipe: true,
-    },
-  })
-  const swipedUserMatches = otherUserSwipedMatchesIds.map((x) => x.SwipedId)
-
-  return userSwipedMatchesIds.filter((item) =>
-  swipedUserMatches.includes(item))
-}

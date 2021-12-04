@@ -35,6 +35,7 @@ export const getPond = (userId) => async (dispatch) => {
     const res = await axios.get(
       `http://192.168.0.6:8080/api/users/pond/${userId}`
     )
+    console.log("SEND TO POND: ", res.data);
     dispatch(setPond(res.data))
   } catch (error) {
     console.log(error)
@@ -69,6 +70,7 @@ export default function (state = initialState, action) {
           return user
         }
       })
+      console.log("FILTERED USERS: ", filteredArray.length)
       return { ...state, users: filteredArray }
     }
     default:
