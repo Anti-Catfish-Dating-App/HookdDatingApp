@@ -5,11 +5,11 @@ const {
 } = require("../db")
 const Conversations = require("../db/models/Conversations")
 const { requireToken } = require("./middleware")
-const matchReducer = require("./findAllMatches");
+const matchReducer = require("./findAllMatches")
 
 router.get("/", requireToken, async (req, res, next) => {
   try {
-    const data = await matchReducer(req.user.id);
+    const data = await matchReducer(req.user.id)
     const matchData = await data.map(async (x) => await User.findByPk(x))
     const matchedUsers = await Promise.all(matchData)
 
@@ -58,11 +58,9 @@ router.post("/", requireToken, async (req, res, next) => {
       })
       res.sendStatus(200)
     }
-
   } catch (error) {
     next(error)
   }
 })
 
 module.exports = router
-

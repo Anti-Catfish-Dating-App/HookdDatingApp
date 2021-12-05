@@ -24,7 +24,6 @@ router.get("/:recieverId", async (req, res, next) => {
         // { userId: conversations.user2 },
       },
     })
-    console.log(messages)
     res.json(messages)
   } catch (error) {
     next(error)
