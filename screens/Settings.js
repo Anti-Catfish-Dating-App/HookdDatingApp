@@ -19,7 +19,6 @@ import { useNavigation } from "@react-navigation/native"
 import { logout } from "../store"
 
 const Settings = (props) => {
-  const [profilePicture, setImage] = useState(props.user.profilePicture)
   const [age, setAge] = useState(props.user.age)
   const [bio, setBio] = useState(props.user.bio)
 
@@ -29,7 +28,6 @@ const Settings = (props) => {
   const handleSubmit = () => {
     props.editUser({
       id: user.id,
-      profilePicture,
       age,
       bio,
     })
@@ -53,7 +51,7 @@ const Settings = (props) => {
               <Image
                 style={styles.profilePicture}
                 source={{
-                  uri: profilePicture || user.profilePicture,
+                  uri: props.user.profilePicture,
                 }}
               />
               <Text style={styles.changeProfilePicture}>
@@ -107,7 +105,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     editUser: (user) => dispatch(editUser(user)),
-    logout: () => dispatch(logout())
+    logout: () => dispatch(logout()),
   }
 }
 

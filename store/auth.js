@@ -5,6 +5,7 @@ const TOKEN = "token"
 
 const SET_AUTH = "SET_AUTH"
 const EDIT_PROFILE = "EDIT_PROFILE"
+const EDIT_PROFILE_PIC = "EDIT_PROFILE_PIC"
 
 const setAuth = (auth) => ({ type: SET_AUTH, auth })
 const editProfile = (user) => ({ type: EDIT_PROFILE, user })
@@ -71,6 +72,8 @@ export default function (state = {}, action) {
       return action.auth
     case EDIT_PROFILE:
       return { ...state, ...action.user }
+    case EDIT_PROFILE_PIC:
+      return action.user
     default:
       return state
   }

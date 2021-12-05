@@ -64,14 +64,27 @@ export const checkForFace = (imageData) => async (dispatch) => {
 }
 
 export const _editProfilePic = (imageData, id) => async (dispatch) => {
-  const config = { headers: { "Content-Type": "multipart/form-data" } }
+  try {
+    console.log(id)
 
-  const { data } = await axios.post(
-    `https://hookd-datingapp.herokuapp.com/api/faceapi/profilepic/${id}`,
-    imageData,
-    config
-  )
-  dispatch(editProfilePic(data))
+    const config = { headers: { "Content-Type": "multipart/form-data" } }
+
+    const res = await axios.post(
+      `https://hookd-datingapp.herokuapp.com/api/faceapi/profilepic/${id}`,
+      imageData,
+      config
+    )
+
+    console.log("THUNK RESPONSE", res)
+
+    if (res.status === 200) {
+      dispatch(editProfilePic(res.data))
+      return res.status
+    } else return res.status
+  } catch (error) {
+    console.log(error.data)
+    return error.status
+  }
 }
 
 //reducer

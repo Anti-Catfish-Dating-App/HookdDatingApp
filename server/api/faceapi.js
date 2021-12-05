@@ -111,8 +111,7 @@ router.post("/profilepic/:id", upload.any(), async (req, res, next) => {
     const user = await User.findByPk(req.params.id)
 
     if (firstImage.data.length < 1) {
-      res.send(user)
-      return "No face found!"
+      res.status(444).send(user)
     }
 
     const profilePicFaceId = firstImage.data[0].faceId
@@ -131,17 +130,19 @@ router.post("/profilepic/:id", upload.any(), async (req, res, next) => {
         },
       }
     )
-    if (verify.data.isIdentical) {
+
+    console.log(verify)
+
+    if (verify.data.isIdentical === true) {
       user.profilePicture = imageUrl.url
       user.isVerified = true
       user.lastTimeVerified = new Date()
       await user.save()
       res.send(user)
-    } else {
-      res.send(user)
-      return "Face not verified!"
+    } else if (verify.data.isIdentical === false) {
+      console.log("HERE")
+      res.status(445).send(user)
     }
-    console.log(verify)
   } catch (error) {
     next(error)
   }

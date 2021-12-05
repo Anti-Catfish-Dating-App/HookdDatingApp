@@ -1,7 +1,8 @@
-import React from "react"
+import React, { useLayoutEffect } from "react"
 import {
   Button,
   FlatList,
+  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -10,9 +11,18 @@ import {
 } from "react-native"
 import { connect } from "react-redux"
 import { fetchMessages, sendMessageThunk } from "../store/messages"
+import { useNavigation } from "@react-navigation/native"
+import Header from "../components.js/Header"
 
 const Messages = (props) => {
-  const [message, setMessage] = React.useState(props.messages)
+  const [message, setMessage] = React.useState("")
+  const navigation = useNavigation()
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: false,
+    })
+  }, [])
 
   React.useEffect(() => {
     props.getMessages(props.route.params.match.id)
@@ -29,7 +39,8 @@ const Messages = (props) => {
   //if the reciever id is equal to the userId then display the messages on the left side
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <Header title="Messages" />
       <FlatList
         style={styles.messages}
         data={props.messages}
@@ -56,6 +67,10 @@ const Messages = (props) => {
           onChangeText={handleChange}
           value={props.message}
           placeholder="Type a message"
+          onSubmitEditing={() => {
+            props.sendMessage(props.route.params.match.id, message)
+            setMessage("")
+          }}
         />
         <Button
           title="Send"
@@ -65,14 +80,14 @@ const Messages = (props) => {
           }}
         />
       </View>
-    </View>
+    </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+
     alignItems: "center",
     justifyContent: "center",
   },
@@ -82,18 +97,18 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   sender: {
-    backgroundColor: "#00bfff",
-    borderRadius: 10,
-    margin: 10,
-    padding: 10,
-    alignSelf: "flex-end",
-  },
-  receiver: {
-    backgroundColor: "purple",
+    backgroundColor: "#f3bae5",
     borderRadius: 10,
     margin: 10,
     padding: 10,
     alignSelf: "flex-start",
+  },
+  receiver: {
+    backgroundColor: "#288cd7",
+    borderRadius: 10,
+    margin: 10,
+    padding: 10,
+    alignSelf: "flex-end",
   },
   message: {
     fontSize: 20,

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useLayoutEffect } from "react"
 import {
   StyleSheet,
   Text,
@@ -12,46 +12,57 @@ import {
 import { connect } from "react-redux"
 import { getMatches } from "../store/matches"
 import { useNavigation } from "@react-navigation/native"
+import { SafeAreaView } from "react-native-safe-area-context"
+import Header from "../components.js/Header"
 
 const Matches = (props) => {
   const navigation = useNavigation()
 
   const [matches, setMatches] = useState(props.matches)
 
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: false,
+    })
+  }, [])
+
   useEffect(() => {
     setMatches(props.getMatches())
   }, [])
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={props.matches.matches}
-        renderItem={({ item }) => (
-          <ScrollView>
-            <View style={styles.item}>
-              <TouchableOpacity
+    <SafeAreaView style={styles.container}>
+      <Header title={"Chat"} />
+      <View style={styles.container}>
+        <FlatList
+          data={props.matches.matches}
+          renderItem={({ item }) => (
+            <ScrollView>
+              <View style={styles.item}>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("AddMatchReview", { matchId: item.id })
+                  }
+                >
+                  <Image
+                    style={styles.tinyImage}
+                    source={{ uri: item.profilePicture }}
+                  />
+                </TouchableOpacity>
+                <Text style={styles.title}>{item.name}</Text>
+              </View>
+              <Button
+                title="Chat"
                 onPress={() =>
-                  navigation.navigate("AddMatchReview", { matchId: item.id })
+                  props.navigation.navigate("Messages", { match: item })
                 }
-              >
-                <Image
-                  style={styles.tinyImage}
-                  source={{ uri: item.profilePicture }}
-                />
-              </TouchableOpacity>
-              <Text style={styles.title}>{item.name}</Text>
-            </View>
-            <Button
-              title="Chat"
-              onPress={() =>
-                props.navigation.navigate("Messages", { match: item })
-              }
-            />
-            <View style={styles.separator} />
-          </ScrollView>
-        )}
-      />
-    </View>
+              />
+              <View style={styles.separator} />
+            </ScrollView>
+          )}
+        />
+      </View>
+    </SafeAreaView>
   )
 }
 
@@ -72,7 +83,6 @@ export default connect(mapState, mapDispatch)(Matches)
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "row",
     justifyContent: "space-between",
     backgroundColor: "#fff",
   },
