@@ -40,13 +40,9 @@ router.post("/", async (req, res, next) => {
     console.log(id)
     const conversations = await Conversations.findOne({
       where: {
-        [Op.and]: [
-          {
-            user1: id,
-          },
-          {
-            user2: receiverId,
-          },
+        [Op.or]: [
+          { [Op.and]: [{ user1: id }, { user2: receiverId }] },
+          { [Op.and]: [{ user1: receiverId }, { user2: id }] },
         ],
       },
     })

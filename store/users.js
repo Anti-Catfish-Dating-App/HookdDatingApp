@@ -23,9 +23,7 @@ export const _addSwipe = (userId) => ({
 //thunk creators
 export const getUsers = () => async (dispatch) => {
   try {
-    const res = await axios.get(
-      `https://hookd-datingapp.herokuapp.com/api/users`
-    )
+    const res = await axios.get(`https://hookd-datingapp.herokuapp.com/api/users`)
     dispatch(setUsers(res.data))
   } catch (error) {
     console.log(error)
@@ -61,12 +59,13 @@ export default function (state = initialState, action) {
   switch (action.type) {
     case SET_USERS:
       return { ...state, users: action.users }
-    case SET_POND:
+    case SET_POND: {
       return { ...state, users: action.users }
+    }
     case ADD_SWIPE: {
       const users = { ...state }
       const usersArray = users.users
-      const filteredArray = usersArray.map((user) => {
+      const filteredArray = usersArray.filter((user) => {
         if (user.id !== action.id) {
           return user
         }
