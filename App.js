@@ -5,14 +5,17 @@ import StackNavigator from "./navigation/StackNavigator"
 import { NavigationContainer } from "@react-navigation/native"
 import { Provider } from "react-redux"
 import store from "./store"
+import { RootSiblingParent } from "react-native-root-siblings"
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Provider store={store}>
-        <StackNavigator />
-      </Provider>
-    </NavigationContainer>
+    <RootSiblingParent>
+      <NavigationContainer>
+        <Provider store={store}>
+          <StackNavigator />
+        </Provider>
+      </NavigationContainer>
+    </RootSiblingParent>
   )
 }
 
