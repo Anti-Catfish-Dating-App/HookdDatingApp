@@ -243,10 +243,10 @@ export default connect(mapState, mapDispatch)(Swipe)
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
   },
   swiperContainer: {
-    flex: 30,
+    flex: 2,
+    backgroundColor: "transparent",
   },
   bottomContainer: {
     flex: 0.45,
