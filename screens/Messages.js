@@ -2,6 +2,7 @@ import React, { useLayoutEffect } from "react"
 import {
   Button,
   FlatList,
+  KeyboardAvoidingView,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -15,7 +16,7 @@ import { useNavigation } from "@react-navigation/native"
 import Header from "../components.js/Header"
 
 const Messages = (props) => {
-  const [message, setMessage] = React.useState("")
+  const [input, setInput] = React.useState("")
   const navigation = useNavigation()
 
   useLayoutEffect(() => {
@@ -24,13 +25,14 @@ const Messages = (props) => {
     })
   }, [])
 
+  const sendMessage = () => {
+    props.sendMessage(props.route.params.match.id, input)
+    setInput("")
+  }
+
   React.useEffect(() => {
     props.getMessages(props.route.params.match.id)
   }, [])
-
-  const handleChange = (text) => {
-    setMessage(text)
-  }
 
   // console.log("props", props)
   // console.log(props.messages)
@@ -40,59 +42,68 @@ const Messages = (props) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header title="Messages" />
-      <FlatList
-        style={styles.messages}
-        data={props.messages}
-        renderItem={({ item }) => {
-          if (item.userId === props.route.params.match.id) {
-            return (
-              <View style={styles.sender}>
-                <Text style={styles.message}>{item.message}</Text>
-              </View>
-            )
-          } else {
-            return (
-              <View style={styles.receiver}>
-                <Text style={styles.message}>{item.message}</Text>
-              </View>
-            )
-          }
-        }}
-        keyExtractor={(item, index) => index.toString()}
+      <Header
+        title={props.route.params.match.name}
+        image={props.route.params.match.profilePicture}
       />
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          onChangeText={handleChange}
-          value={props.message}
-          placeholder="Type a message"
-          onSubmitEditing={() => {
-            props.sendMessage(props.route.params.match.id, message)
-            setMessage("")
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.mainContainer}
+        keyboardVerticalOffset={10}
+      >
+        <FlatList
+          style={styles.messages}
+          data={props.messages}
+          renderItem={({ item }) => {
+            if (item.userId === props.route.params.match.id) {
+              return (
+                <View style={styles.sender}>
+                  <Text style={styles.message}>{item.message}</Text>
+                </View>
+              )
+            } else {
+              return (
+                <View style={styles.receiver}>
+                  <Text style={styles.message}>{item.message}</Text>
+                </View>
+              )
+            }
           }}
+          keyExtractor={(item, index) => index.toString()}
         />
-        <Button
-          title="Send"
-          onPress={() => {
-            props.sendMessage(props.route.params.match.id, message)
-            setMessage("")
-          }}
-        />
-      </View>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            onChangeText={setInput}
+            value={input}
+            placeholder="Type a message"
+            onSubmitEditing={() => {
+              sendMessage()
+            }}
+          />
+          <Button
+            title="Send"
+            color="#288cd7"
+            onPress={() => {
+              sendMessage()
+            }}
+          />
+        </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+  },
   container: {
     flex: 1,
-
-    alignItems: "center",
-    justifyContent: "center",
+    // alignItems: "center",
+    // justifyContent: "center",
   },
   messages: {
-    flex: 1,
     width: "100%",
     height: "100%",
   },
@@ -114,20 +125,16 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   inputContainer: {
+    color: "white",
     flexDirection: "row",
+    padding: 10,
     justifyContent: "space-between",
-    alignItems: "center",
-    width: "100%",
-    height: 50,
-    backgroundColor: "white",
+    height: 60,
     borderRadius: 10,
-    margin: 10,
   },
   input: {
-    width: "80%",
-    height: "100%",
-    borderRadius: 10,
-    padding: 10,
+    flex: 1,
+    fontSize: 18,
   },
 })
 
