@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useLayoutEffect } from "react"
 import { useController, useForm } from "react-hook-form"
 import {
   StyleSheet,
@@ -8,6 +8,9 @@ import {
   TextInput,
   Alert,
   Button,
+  Image,
+  ImageBackground,
+  TouchableOpacity,
 } from "react-native"
 import { StatusBar } from "expo-status-bar"
 import { InputForm } from "./Input"
@@ -18,17 +21,52 @@ import { useNavigation } from "@react-navigation/native"
 const Login = (props) => {
   const navigation = useNavigation()
   const { control, handleSubmit } = useForm()
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: false,
+    })
+  }, [navigation])
+
   const onSubmit = (data) =>
     props.submitForm(data.Email, data.Password, data.Name === "null")
 
   return (
     <View style={styles.container}>
-      <StatusBar style="dark-content" />
-      <Text style={styles.title}>Login</Text>
-      <InputForm name="Email" style={styles.input} control={control} />
-      <InputForm name="Password" style={styles.input} control={control} />
-      <Button title="Login" onPress={handleSubmit(onSubmit)} />
-      <Button title="Sign Up" onPress={() => navigation.navigate("Signup")} />
+      <View style={styles.backgroundImage}>
+        <View style={styles.logoContainer}>
+          <Image
+            source={require("../hookd-logos_transparent.png")}
+            style={styles.logo}
+          />
+        </View>
+        <View style={styles.formContainer}>
+          <InputForm
+            control={control}
+            name="Email"
+            placeholder="Email"
+            type="email-address"
+          />
+          <InputForm
+            control={control}
+            name="Password"
+            placeholder="Password"
+            type="password"
+          />
+          <TouchableOpacity
+            style={styles.button}
+            onPress={handleSubmit(onSubmit)}
+          >
+            <Text style={styles.buttonText}>Login</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate("SignUp")}
+          >
+            <Text style={styles.buttonText}>Sign Up</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </View>
   )
 }
@@ -36,22 +74,38 @@ const Login = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#288cd7",
     alignItems: "center",
     justifyContent: "center",
   },
-  title: {
-    fontSize: 20,
-    fontWeight: "600",
-    alignSelf: "center",
-    paddingBottom: 24,
+  backgroundImage: {
+    flex: 0.6,
+    width: "100%",
+    height: "100%",
+    backgroundColor: "#288cd7",
   },
-  input: {
-    height: 40,
-    margin: 12,
-    width: 250,
-    borderWidth: 2,
+  logoContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  logo: {
+    width: 200,
+    height: 200,
+  },
+  formContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  button: {
+    backgroundColor: "#288cd7",
     padding: 10,
+    margin: 10,
+    borderRadius: 10,
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 20,
+    textAlign: "center",
   },
 })
 

@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   swiperContainer: {
-    flex: 0.55,
+    flex: 30,
   },
   bottomContainer: {
     flex: 0.45,
@@ -260,7 +260,6 @@ const styles = StyleSheet.create({
   cardImage: {
     width: "100%",
     height: "100%",
-    resizeMode: "contain",
   },
   currentCard: {
     flex: 0.7,
