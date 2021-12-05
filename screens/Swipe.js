@@ -242,8 +242,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
   },
   cardImage: {
-    width: 160,
-    flex: 1,
+    width: "100%",
+    height: "100%",
     resizeMode: "contain",
   },
   currentCard: {
