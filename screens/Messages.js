@@ -2,13 +2,16 @@ import React, { useLayoutEffect } from "react"
 import {
   Button,
   FlatList,
+  Image,
   KeyboardAvoidingView,
   SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
+  TouchableWithoutFeedback,
   View,
+  Keyboard,
 } from "react-native"
 import { connect } from "react-redux"
 import { fetchMessages, sendMessageThunk } from "../store/messages"
@@ -34,12 +37,6 @@ const Messages = (props) => {
     props.getMessages(props.route.params.match.id)
   }, [])
 
-  // console.log("props", props)
-  // console.log(props.messages)
-  // console.log(props.messages.userId)
-  // console.log("reciever", props.route.params)
-  //if the reciever id is equal to the userId then display the messages on the left side
-
   return (
     <SafeAreaView style={styles.container}>
       <Header
@@ -51,44 +48,55 @@ const Messages = (props) => {
         style={styles.mainContainer}
         keyboardVerticalOffset={10}
       >
-        <FlatList
-          style={styles.messages}
-          data={props.messages}
-          renderItem={({ item }) => {
-            if (item.userId === props.route.params.match.id) {
-              return (
-                <View style={styles.sender}>
-                  <Text style={styles.message}>{item.message}</Text>
-                </View>
-              )
-            } else {
-              return (
-                <View style={styles.receiver}>
-                  <Text style={styles.message}>{item.message}</Text>
-                </View>
-              )
-            }
-          }}
-          keyExtractor={(item, index) => index.toString()}
-        />
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            onChangeText={setInput}
-            value={input}
-            placeholder="Type a message"
-            onSubmitEditing={() => {
-              sendMessage()
-            }}
-          />
-          <Button
-            title="Send"
-            color="#288cd7"
-            onPress={() => {
-              sendMessage()
-            }}
-          />
-        </View>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={styles.messages}>
+            <FlatList
+              data={props.messages}
+              renderItem={({ item }) => {
+                if (item.userId === props.route.params.match.id) {
+                  return (
+                    <View style={styles.messageContainer}>
+                      <Image
+                        style={styles.profilePicture}
+                        source={{
+                          uri: props.route.params.match.profilePicture,
+                        }}
+                      />
+                      <View style={styles.sender}>
+                        <Text style={styles.message}>{item.message}</Text>
+                      </View>
+                    </View>
+                  )
+                } else {
+                  return (
+                    <View style={styles.receiver}>
+                      <Text style={styles.message}>{item.message}</Text>
+                    </View>
+                  )
+                }
+              }}
+              keyExtractor={(item, index) => index.toString()}
+            />
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.input}
+                onChangeText={setInput}
+                value={input}
+                placeholder="Type a message"
+                onSubmitEditing={() => {
+                  sendMessage()
+                }}
+              />
+              <Button
+                title="Send"
+                color="#288cd7"
+                onPress={() => {
+                  sendMessage()
+                }}
+              />
+            </View>
+          </View>
+        </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
     </SafeAreaView>
   )
@@ -100,8 +108,11 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    // alignItems: "center",
-    // justifyContent: "center",
+  },
+  messageContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
   },
   messages: {
     width: "100%",
@@ -121,6 +132,12 @@ const styles = StyleSheet.create({
     padding: 10,
     alignSelf: "flex-end",
   },
+  profilePicture: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    marginLeft: 10,
+  },
   message: {
     fontSize: 20,
   },
@@ -129,8 +146,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     padding: 10,
     justifyContent: "space-between",
-    height: 60,
-    borderRadius: 10,
   },
   input: {
     flex: 1,
