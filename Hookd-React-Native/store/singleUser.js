@@ -38,11 +38,7 @@ export const editProfilePic = (user) => ({
 export const getUser = (userId) => async (dispatch) => {
   try {
     const res = await axios.get(
-<<<<<<< HEAD
-      `http://192.168.39.131:8080/api/users/${userId}`
-=======
       `https://hookd-datingapp.herokuapp.com/api/users/${userId}`
->>>>>>> main
     )
     dispatch(setUser(res.data))
   } catch (error) {
@@ -54,7 +50,7 @@ export const checkForFace = (imageData) => async (dispatch) => {
   const config = { headers: { "Content-Type": "multipart/form-data" } }
 
   const { data } = await axios.post(
-    "http://192.168.39.131:8080/api/faceapi/",
+    "https://hookd-datingapp.herokuapp.com/api/faceapi/",
     imageData,
     config
   )
@@ -74,7 +70,7 @@ export const _editProfilePic = (imageData, id) => async (dispatch) => {
     const config = { headers: { "Content-Type": "multipart/form-data" } }
 
     const res = await axios.post(
-      `http://192.168.39.131:8080/api/faceapi/profilepic/${id}`,
+      `https://hookd-datingapp.herokuapp.com/api/faceapi/profilepic/${id}`,
       imageData,
       config
     )
