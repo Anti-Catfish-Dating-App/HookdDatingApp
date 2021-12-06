@@ -14,11 +14,8 @@ import { connect } from "react-redux"
 import { useEffect } from "react"
 import Swipe from "./Swipe"
 import { me } from "../store/auth"
-<<<<<<< HEAD
 import { getMatches } from "../store/matches"
-=======
 import Unverified from "./Unverified"
->>>>>>> main
 
 const Home = (props) => {
   const navigation = useNavigation()
@@ -49,23 +46,6 @@ const Home = (props) => {
             style={styles.logo}
           />
         </View>
-<<<<<<< HEAD
-        <View style={styles.headerRight}>
-          <TouchableOpacity
-            onPress={async () => {
-              await props.getMatches()
-              navigation.navigate("Matches")
-            }}
-          >
-            <Ionicons
-              name="chatbubble-ellipses-outline"
-              size={48}
-              color="#288cd7"
-            />
-          </TouchableOpacity>
-        </View>
-=======
->>>>>>> main
       </View>
       {/* header end */}
       {/* body start */}
