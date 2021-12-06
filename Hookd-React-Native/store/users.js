@@ -66,7 +66,7 @@ export default function (state = initialState, action) {
       const users = { ...state }
       const usersArray = users.users
       const filteredArray = usersArray.filter((user) => {
-        if (user.id !== action.id) {
+        if (user.id !== action.user.id) {
           return user
         }
       })

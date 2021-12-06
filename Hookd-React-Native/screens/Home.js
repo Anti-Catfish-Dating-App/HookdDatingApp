@@ -14,10 +14,12 @@ import { connect } from "react-redux"
 import { useEffect } from "react"
 import Swipe from "./Swipe"
 import { me } from "../store/auth"
+import Unverified from "./Unverified"
 
 const Home = (props) => {
   const navigation = useNavigation()
   const { user } = props
+  const isVerified = props.isVerified
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -43,25 +45,12 @@ const Home = (props) => {
             style={styles.logo}
           />
         </View>
-        <View style={styles.headerRight}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("Matches")
-            }}
-          >
-            <Ionicons
-              name="chatbubble-ellipses-outline"
-              size={48}
-              color="#288cd7"
-            />
-          </TouchableOpacity>
-        </View>
       </View>
       {/* header end */}
       {/* body start */}
       <View style={styles.body}>
         <View style={styles.bodyRight}>
-          <Swipe />
+          {isVerified ? <Swipe /> : <Unverified />}
         </View>
       </View>
       {/* body end */}
@@ -72,6 +61,7 @@ const Home = (props) => {
 const mapState = (state) => {
   return {
     user: state.auth,
+    isVerified: state.auth.isVerified,
   }
 }
 
