@@ -14,6 +14,7 @@ import { connect } from "react-redux"
 import { useEffect } from "react"
 import Swipe from "./Swipe"
 import { me } from "../store/auth"
+import { getMatches } from "../store/matches"
 
 const Home = (props) => {
   const navigation = useNavigation()
@@ -45,7 +46,8 @@ const Home = (props) => {
         </View>
         <View style={styles.headerRight}>
           <TouchableOpacity
-            onPress={() => {
+            onPress={async () => {
+              await props.getMatches()
               navigation.navigate("Matches")
             }}
           >
@@ -75,7 +77,13 @@ const mapState = (state) => {
   }
 }
 
-export default connect(mapState)(Home)
+const mapDispatch = (dispatch) => {
+  return {
+    getMatches: () => dispatch(getMatches()),
+  }
+}
+
+export default connect(mapState, mapDispatch)(Home)
 
 const styles = StyleSheet.create({
   container: {

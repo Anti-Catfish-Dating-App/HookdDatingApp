@@ -46,6 +46,7 @@ router.post("/", async (req, res, next) => {
         ],
       },
     })
+    console.log(conversations)
     const messages = await Messages.create({
       conversationId: conversations.id,
       userId: id,
