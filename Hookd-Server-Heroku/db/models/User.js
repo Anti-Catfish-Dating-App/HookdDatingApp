@@ -70,6 +70,10 @@ const Users = db.define("user", {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
   },
+  swipeCounter: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
+  }
 })
 
 module.exports = Users

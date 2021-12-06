@@ -14,11 +14,16 @@ import { connect } from "react-redux"
 import { useEffect } from "react"
 import Swipe from "./Swipe"
 import { me } from "../store/auth"
+<<<<<<< HEAD
 import { getMatches } from "../store/matches"
+=======
+import Unverified from "./Unverified"
+>>>>>>> main
 
 const Home = (props) => {
   const navigation = useNavigation()
   const { user } = props
+  const isVerified = props.isVerified
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -44,6 +49,7 @@ const Home = (props) => {
             style={styles.logo}
           />
         </View>
+<<<<<<< HEAD
         <View style={styles.headerRight}>
           <TouchableOpacity
             onPress={async () => {
@@ -58,12 +64,14 @@ const Home = (props) => {
             />
           </TouchableOpacity>
         </View>
+=======
+>>>>>>> main
       </View>
       {/* header end */}
       {/* body start */}
       <View style={styles.body}>
         <View style={styles.bodyRight}>
-          <Swipe />
+          {isVerified ? <Swipe /> : <Unverified />}
         </View>
       </View>
       {/* body end */}
@@ -74,6 +82,7 @@ const Home = (props) => {
 const mapState = (state) => {
   return {
     user: state.auth,
+    isVerified: state.auth.isVerified,
   }
 }
 
