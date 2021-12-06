@@ -38,7 +38,19 @@ const Header = ({ title, image, match, messages, user }) => {
                 })
               }}
             >
-              <Text>Add a review</Text>
+              <Text
+                style={{
+                  alignItems: "flex-end",
+                  fontSize: 18,
+                  fontWeight: "bold",
+                  color: "#f3bae5",
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                  marginTop: 10,
+                }}
+              >
+                Add a review
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
