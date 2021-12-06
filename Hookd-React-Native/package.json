@@ -10,10 +10,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject",
-    "start:server": "nodemon server",
-    "start:heroku": "JWT=tomato node server",
-    "seed": "node script/seed"
+    "eject": "expo eject"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.11",
