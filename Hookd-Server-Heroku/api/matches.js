@@ -22,8 +22,8 @@ router.get("/", requireToken, async (req, res, next) => {
 router.post("/", requireToken, async (req, res, next) => {
   try {
     const swipedUser = await User.findByPk(req.body.id)
-
     const direction = req.body.direction
+    await req.user.increment('swipeCounter', { by: 1})
 
     if (direction === "right") {
       await req.user.addSwiped(swipedUser.id, {
@@ -31,6 +31,7 @@ router.post("/", requireToken, async (req, res, next) => {
           isRightSwipe: true,
         },
       })
+
 
       //user doesn't hae access to swipedId
       const matchBool = await Matches.findOne({
