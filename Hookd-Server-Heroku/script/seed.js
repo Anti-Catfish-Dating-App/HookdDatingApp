@@ -59,9 +59,9 @@ async function seed() {
       lastTimeVerified: 11 / 23 / 2040,
       isVerified: true,
     });
-    console.log(Object.keys(user.__proto__));
+    //console.log(Object.keys(user.__proto__));
   }
-  const user1 = await User.findByPk(3);
+  const user1 = await User.findByPk(1);
   const user2 = await User.findByPk(5);
   const user3 = await User.findByPk(7);
   const user4 = await User.findByPk(4);
@@ -113,6 +113,21 @@ async function seed() {
     },
   });
 
+  const rating = 4;
+  const reviewText = "This is a review"
+  await user1.addReviewedUser(user4, {
+    through: {
+      rating: rating,
+      reviewText: reviewText
+    }
+  })
+
+  await Reviews.findOrCreate({
+    rating: rating,
+    reviewText: reviewText,
+    userId: 2,
+    reviewedUserId: 5
+  })
   const conversation3 = await Conversations.create({
     user1: user1.id,
     user2: user4.id,
