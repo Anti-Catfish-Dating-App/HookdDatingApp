@@ -28,8 +28,10 @@ const Login = (props) => {
     })
   }, [navigation])
 
-  const onSubmit = (data) =>
+  const onSubmit = (data) => {
+    console.log(data)
     props.submitForm(data.Email, data.Password, data.Name === "null")
+  }
 
   return (
     <View style={styles.container}>
@@ -48,10 +50,10 @@ const Login = (props) => {
             type="email-address"
           />
           <InputForm
-            control={control}
             name="Password"
             placeholder="Password"
             type="password"
+            control={control}
           />
           <TouchableOpacity
             style={styles.button}
