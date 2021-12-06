@@ -18,12 +18,14 @@ import { me } from "../store/auth"
 const Home = (props) => {
   const navigation = useNavigation()
   const { user } = props
+  const isVerified = props.isVerified
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,
     })
   }, [])
+
 
   return (
     // header start
@@ -61,7 +63,9 @@ const Home = (props) => {
       {/* body start */}
       <View style={styles.body}>
         <View style={styles.bodyRight}>
-          <Swipe />
+          {
+            isVerified ? <Swipe /> : <Text>You must reverify!</Text>
+          }
         </View>
       </View>
       {/* body end */}
@@ -72,6 +76,7 @@ const Home = (props) => {
 const mapState = (state) => {
   return {
     user: state.auth,
+    isVerified: state.auth.isVerified
   }
 }
 
