@@ -79,43 +79,8 @@ router.get("/pond/:id", async (req, res, next) => {
     const loggedInUser = await User.findByPk(id)
     const userSexualOrientation = loggedInUser.sexualOrientation
     const userGender = loggedInUser.genderCategory
-    /* const orientationFilter = matchFilteredUsers.filter((user) => {
-      if (userSexualOrientation === "Bisexual") {
-        return user
-      }
 
-      else if (userSexualOrientation === "Straight") {
-        if (userGender === "Woman") {
-          return (
-            user.genderCategory === "Man" &&
-            (user.sexualOrientation === "Straight" ||
-              user.sexualOrientation === "Bisexual")
-          )
-        } else
-          return (
-            user.genderCategory ===
-            (user.genderCategory === "Woman" &&
-              (user.sexualOrientation === "Straight" ||
-                user.sexualOrientation === "Bisexual"))
-          )
-      }
-
-      else if (userSexualOrientation === "Gay") {
-        if (userGender === "Man") {
-          return (
-            user.genderCategory === "Man" &&
-            (user.sexualOrientation === "Gay" ||
-              user.sexualOrientation === "Bisexual")
-          )
-        } else
-          return (
-            user.genderCategory === "Woman" &&
-            (user.sexualOrientation === "Gay" ||
-              user.sexualOrientation === "Bisexual")
-          )
-      }
-    }) */
-
+    //Refactor to query this info from the database vs current implementation
     const orientationFilter = matchFilteredUsers.filter((user) => {
       if (userGender === "Woman" && userSexualOrientation === "Bisexual") {
         if((user.genderCategory === "Man" && user.sexualOrientation !== "Gay") || (user.genderCategory === "Woman" && user.sexualOrientation !== "Straight")){
