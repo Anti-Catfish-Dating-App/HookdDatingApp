@@ -6,6 +6,7 @@ const TOKEN = "token"
 const SET_AUTH = "SET_AUTH"
 const EDIT_PROFILE = "EDIT_PROFILE"
 const EDIT_PROFILE_PIC = "EDIT_PROFILE_PIC"
+const ADD_SWIPE = "ADD_SWIPE"
 
 const setAuth = (auth) => ({ type: SET_AUTH, auth })
 const editProfile = (user) => ({ type: EDIT_PROFILE, user })
@@ -13,7 +14,7 @@ const editProfile = (user) => ({ type: EDIT_PROFILE, user })
 export const editUser = (user) => async (dispatch) => {
   try {
     const res = await axios.put(
-      `https://hookd-datingapp.herokuapp.com/api/users/${user.id}`,
+      `http://192.168.0.6:8080/api/users/${user.id}`,
       user
     )
     dispatch(editProfile(res.data))
@@ -26,7 +27,7 @@ export const editUser = (user) => async (dispatch) => {
 export const me = () => async (dispatch) => {
   const token = await AsyncStorage.getItem(TOKEN)
   if (token) {
-    const res = await axios.get("https://hookd-datingapp.herokuapp.com/auth/me", {
+    const res = await axios.get("http://192.168.0.6:8080/auth/me", {
       headers: {
         authorization: token,
       },
@@ -39,7 +40,7 @@ export const authenticate =
   (email, password, name, method) => async (dispatch) => {
     try {
       console.log("AUTH", email, password, name)
-      const res = await axios.post(`https://hookd-datingapp.herokuapp.com/auth/${method}`, {
+      const res = await axios.post(`http://192.168.0.6:8080/auth/${method}`, {
         email,
         password,
         name,
@@ -67,6 +68,8 @@ export default function (state = {}, action) {
     case EDIT_PROFILE:
       return { ...state, ...action.user }
     case EDIT_PROFILE_PIC:
+      return action.user
+    case ADD_SWIPE:
       return action.user
     default:
       return state

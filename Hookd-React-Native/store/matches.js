@@ -10,16 +10,16 @@ export const setMatches = (matches) => ({
   matches,
 })
 
-export const _addSwipe = (id) => ({
+export const _addSwipe = (user) => ({
   type: ADD_SWIPE,
-  id,
+  user,
 })
 
 export const getMatches = () => async (dispatch) => {
   try {
     const tokenHeader = await getToken()
 
-    const res = await axios.get(`https://hookd-datingapp.herokuapp.com/api/matches`, {
+    const res = await axios.get(`http://192.168.0.6:8080/api/matches`, {
       headers: {
         authorization: tokenHeader,
       },
@@ -34,7 +34,7 @@ export const addSwipe = (direction, id) => async (dispatch) => {
   try {
     const tokenHeader = await getToken()
     const res = await axios.post(
-      `https://hookd-datingapp.herokuapp.com/api/matches`,
+      `http://192.168.0.6:8080/api/matches`,
       { direction, id },
       {
         headers: {
@@ -42,7 +42,7 @@ export const addSwipe = (direction, id) => async (dispatch) => {
         },
       }
     )
-    dispatch(_addSwipe(id))
+    dispatch(_addSwipe(res.data))
     return res.status
   } catch (error) {
     console.log(error)
