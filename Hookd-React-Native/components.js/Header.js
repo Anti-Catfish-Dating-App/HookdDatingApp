@@ -4,20 +4,57 @@ import { Foundation } from "@expo/vector-icons"
 import { Ionicons } from "@expo/vector-icons"
 import { useNavigation } from "@react-navigation/native"
 
-const Header = ({ title, image }) => {
+const Header = ({ title, image, match, messages, user }) => {
   const navigation = useNavigation()
+
   return (
     <View style={styles.container}>
-      <View>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={styles.goBack}
-        >
-          <Ionicons name="chevron-back-outline" size={34} color="#f3bae5" />
-          <Text style={styles.goBackText}>{title}</Text>
-          {/* <Image source={image} style={styles.image} /> */}
-        </TouchableOpacity>
-      </View>
+      {!messages || messages.length < 10 ? (
+        <View>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={styles.goBack}
+          >
+            <Ionicons name="chevron-back-outline" size={34} color="#f3bae5" />
+            <Text style={styles.goBackText}>{title}</Text>
+            {/* <Image source={image} style={styles.image} /> */}
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <View style={styles.container}>
+          <View>
+            <TouchableOpacity
+              onPress={() => navigation.goBack()}
+              style={styles.goBack}
+            >
+              <Ionicons name="chevron-back-outline" size={34} color="#f3bae5" />
+              <Text style={styles.goBackText}>{title}</Text>
+              {/* <Image source={image} style={styles.image} /> */}
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("AddMatchReview", {
+                  match: match.id,
+                })
+              }}
+            >
+              <Text
+                style={{
+                  alignItems: "flex-end",
+                  fontSize: 18,
+                  fontWeight: "bold",
+                  color: "#f3bae5",
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                  marginTop: 10,
+                }}
+              >
+                Add a review
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )}
     </View>
   )
 }

@@ -26,9 +26,11 @@ const Matches = (props) => {
     })
   }, [])
 
-  useEffect(() => {
-    setMatches(props.getMatches())
-  }, [])
+  console.log(props)
+
+  // useEffect(() => {
+  //   setMatches(props.getMatches())
+  // }, [])
 
   return (
     <SafeAreaView style={styles.container}>
@@ -40,23 +42,18 @@ const Matches = (props) => {
             <ScrollView>
               <View style={styles.item}>
                 <TouchableOpacity
+                  style={styles.itemBox}
                   onPress={() =>
-                    navigation.navigate("AddMatchReview", { matchId: item.id })
+                    props.navigation.navigate("Messages", { match: item })
                   }
                 >
                   <Image
                     style={styles.tinyImage}
                     source={{ uri: item.profilePicture }}
                   />
+                  <Text style={styles.title}>{item.name}</Text>
                 </TouchableOpacity>
-                <Text style={styles.title}>{item.name}</Text>
               </View>
-              <Button
-                title="Chat"
-                onPress={() =>
-                  props.navigation.navigate("Messages", { match: item })
-                }
-              />
               <View style={styles.separator} />
             </ScrollView>
           )}
@@ -83,29 +80,31 @@ export default connect(mapState, mapDispatch)(Matches)
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "space-between",
   },
   item: {
-    flexDirection: "row",
-    paddingVertical: 10,
-    alignItems: "center",
-    paddingHorizontal: 20,
+    backgroundColor: "#f9c2ff",
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
+    borderRadius: 10,
   },
-  separator: {
-    height: 1,
-    width: "100%",
-    backgroundColor: "#808080",
+  itemBox: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   title: {
-    fontSize: 20,
-    color: "#288cd7",
-    fontWeight: "600",
+    fontSize: 25,
+    fontFamily: "Avenir",
+  },
+  separator: {
+    marginVertical: 8,
+    borderBottomColor: "#737373",
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   tinyImage: {
     width: 50,
     height: 50,
-    marginRight: 10,
-    borderRadius: 75,
-    overflow: "hidden",
+    borderRadius: 25,
   },
 })

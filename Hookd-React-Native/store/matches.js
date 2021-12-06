@@ -19,11 +19,14 @@ export const getMatches = () => async (dispatch) => {
   try {
     const tokenHeader = await getToken()
 
-    const res = await axios.get(`https://hookd-datingapp.herokuapp.com/api/matches`, {
-      headers: {
-        authorization: tokenHeader,
-      },
-    })
+    const res = await axios.get(
+      `https://hookd-datingapp.herokuapp.com/api/matches`,
+      {
+        headers: {
+          authorization: tokenHeader,
+        },
+      }
+    )
     dispatch(setMatches(res.data))
   } catch (error) {
     console.log(error)

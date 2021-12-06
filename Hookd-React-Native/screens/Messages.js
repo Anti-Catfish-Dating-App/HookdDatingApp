@@ -12,6 +12,7 @@ import {
   TouchableWithoutFeedback,
   View,
   Keyboard,
+  TouchableOpacity,
 } from "react-native"
 import { connect } from "react-redux"
 import { fetchMessages, sendMessageThunk } from "../store/messages"
@@ -38,10 +39,14 @@ const Messages = (props) => {
   }, [])
 
   return (
+    // {props.messages.length} > 2 ? (
     <SafeAreaView style={styles.container}>
       <Header
         title={props.route.params.match.name}
         image={props.route.params.match.profilePicture}
+        match={props.route.params.match.id}
+        messages={props.messages}
+        user={props.auth}
       />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}

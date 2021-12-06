@@ -23,7 +23,9 @@ export const _addSwipe = (userId) => ({
 //thunk creators
 export const getUsers = () => async (dispatch) => {
   try {
-    const res = await axios.get(`https://hookd-datingapp.herokuapp.com/api/users`)
+    const res = await axios.get(
+      `https://hookd-datingapp.herokuapp.com/api/users`
+    )
     dispatch(setUsers(res.data))
   } catch (error) {
     console.log(error)

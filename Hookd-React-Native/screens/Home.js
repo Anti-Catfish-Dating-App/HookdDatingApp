@@ -14,6 +14,7 @@ import { connect } from "react-redux"
 import { useEffect } from "react"
 import Swipe from "./Swipe"
 import { me } from "../store/auth"
+import { getMatches } from "../store/matches"
 import Unverified from "./Unverified"
 
 const Home = (props) => {
@@ -65,7 +66,13 @@ const mapState = (state) => {
   }
 }
 
-export default connect(mapState)(Home)
+const mapDispatch = (dispatch) => {
+  return {
+    getMatches: () => dispatch(getMatches()),
+  }
+}
+
+export default connect(mapState, mapDispatch)(Home)
 
 const styles = StyleSheet.create({
   container: {

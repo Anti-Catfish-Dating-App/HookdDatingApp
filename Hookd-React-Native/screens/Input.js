@@ -1,6 +1,6 @@
 import React from "react"
 import { useController, useForm } from "react-hook-form"
-import { StyleSheet, TextInput } from "react-native"
+import { StyleSheet, TextInput, View } from "react-native"
 
 export const InputForm = ({ name, control }) => {
   const { field } = useController({
@@ -10,12 +10,24 @@ export const InputForm = ({ name, control }) => {
   })
 
   return (
-    <TextInput
-      value={field.value}
-      onChangeText={field.onChange}
-      style={styles.input}
-      placeholder={`Enter your ${field.name}`}
-    />
+    <View>
+      {name === "Password" ? (
+        <TextInput
+          value={field.value}
+          onChangeText={field.onChange}
+          style={styles.input}
+          placeholder={`Enter your ${field.name}`}
+          secureTextEntry={true}
+        />
+      ) : (
+        <TextInput
+          value={field.value}
+          onChangeText={field.onChange}
+          style={styles.input}
+          placeholder={`Enter your ${field.name}`}
+        />
+      )}
+    </View>
   )
 }
 
