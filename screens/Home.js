@@ -80,7 +80,6 @@ export default connect(mapState)(Home)
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "flex-start",
   },
@@ -133,6 +132,5 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "50%",
     height: "100%",
-    backgroundColor: "#8cdbd3",
   },
 })

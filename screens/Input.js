@@ -37,6 +37,6 @@ const styles = StyleSheet.create({
     width: 250,
     borderWidth: 2,
     padding: 10,
-    backgroundColor: 'white'
+    backgroundColor: "white",
   },
 })

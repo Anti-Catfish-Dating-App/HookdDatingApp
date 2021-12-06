@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useLayoutEffect, useState } from "react"
 import { useController, useForm } from "react-hook-form"
 import {
   StyleSheet,
@@ -18,6 +18,12 @@ import { useNavigation } from "@react-navigation/native"
 const Signup = (props) => {
   const navigation = useNavigation()
   const { control, handleSubmit } = useForm()
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: false,
+    })
+  }, [navigation])
 
   const onSubmit = async (data) => {
     const resStatus = await props.submitForm(
@@ -58,7 +64,7 @@ const Signup = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#f3bae5",
     alignItems: "center",
     justifyContent: "center",
   },
