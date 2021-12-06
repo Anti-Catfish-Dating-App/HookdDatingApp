@@ -25,6 +25,12 @@ router.post("/", requireToken, async (req, res, next) => {
     const direction = req.body.direction
     await req.user.increment('swipeCounter', { by: 1})
 
+    if(req.user.swipeCounter % 25 === 0){
+      await req.user.update({
+        isVerified: false
+      })
+    }
+
     if (direction === "right") {
       await req.user.addSwiped(swipedUser.id, {
         through: {
@@ -47,9 +53,9 @@ router.post("/", requireToken, async (req, res, next) => {
           user1: swipedUser.id,
           user2: req.user.id,
         })
-        res.status(222).send("ITS A MATCH")
+        res.status(222).send(req.user)
       } else {
-        res.sendStatus(200)
+        res.status(200).send(req.user)
       }
     } else if (direction === "left") {
       await req.user.addSwiped(swipedUser, {
@@ -57,7 +63,7 @@ router.post("/", requireToken, async (req, res, next) => {
           isRightSwipe: false,
         },
       })
-      res.sendStatus(200)
+      res.status(200).send(req.user)
     }
   } catch (error) {
     next(error)
