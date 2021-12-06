@@ -66,7 +66,8 @@ router.get("/pond/:id", async (req, res, next) => {
       where: {
         id: {
           [Op.not]: id
-        }
+        },
+        isVerified: true
       }
     })
 
