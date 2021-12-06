@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize")
-const pkg = require("../../package.json")
+const pkg = require("../package.json")
 
-const databaseName = pkg.name + (process.env.NODE_ENV === "test" ? "-test" : "")
+const databaseName = "hookd" + (process.env.NODE_ENV === "test" ? "-test" : "")
 
 const config = {
   logging: false,
