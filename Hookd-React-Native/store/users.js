@@ -23,7 +23,7 @@ export const _addSwipe = (userId) => ({
 //thunk creators
 export const getUsers = () => async (dispatch) => {
   try {
-    const res = await axios.get(`https://hookd-datingapp.herokuapp.com/api/users`)
+    const res = await axios.get(`http://192.168.0.6:8080/api/users`)
     dispatch(setUsers(res.data))
   } catch (error) {
     console.log(error)
@@ -33,7 +33,7 @@ export const getUsers = () => async (dispatch) => {
 export const getPond = (userId) => async (dispatch) => {
   try {
     const res = await axios.get(
-      `https://hookd-datingapp.herokuapp.com/api/users/pond/${userId}`
+      `http://192.168.0.6:8080/api/users/pond/${userId}`
     )
     dispatch(setPond(res.data))
   } catch (error) {

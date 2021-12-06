@@ -13,6 +13,7 @@ import { connect } from "react-redux"
 import { getMatches } from "../store/matches"
 import { useNavigation } from "@react-navigation/native"
 import { SafeAreaView } from "react-native-safe-area-context"
+import StarRatingBar from "react-native-star-view"
 import Header from "../components.js/Header"
 
 const Matches = (props) => {
@@ -29,6 +30,7 @@ const Matches = (props) => {
   useEffect(() => {
     setMatches(props.getMatches())
   }, [])
+
 
   return (
     <SafeAreaView style={styles.container}>
