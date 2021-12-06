@@ -59,17 +59,7 @@ const Settings = (props) => {
               </Text>
             </TouchableOpacity>
           </View>
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputAgeLabel}>Age</Text>
-            <TextInput
-              style={styles.inputAge}
-              placeholder={user.age.toString()}
-              onChangeText={(text) => setAge(text)}
-              value={age.toString()}
-              keyboardType="numeric"
-              maxLength={2}
-            />
-          </View>
+
           <View style={styles.inputContainer}>
             <Text style={styles.inputBioLabel}>Bio</Text>
             <TextInput

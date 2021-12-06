@@ -64,7 +64,7 @@ const Swipe = (props) => {
 
   const userHasSwiped = async (direction, id) => {
     const status = await props.addSwipe(direction, id)
-    if(status === 222){
+    if (status === 222) {
       let toast = Toast.show("YOU HAVE A NEW MATCH!", {
         duration: Toast.durations.LONG,
         position: Toast.positions.CENTER,
@@ -73,11 +73,11 @@ const Swipe = (props) => {
         hideOnPress: true,
         backgroundColor: "pink",
         delay: 0,
-        opacity: 1
-    });
-    setTimeout(function () {
-        Toast.hide(toast);
-    }, 1750);
+        opacity: 1,
+      })
+      setTimeout(function () {
+        Toast.hide(toast)
+      }, 1750)
     }
   }
 
@@ -243,10 +243,10 @@ export default connect(mapState, mapDispatch)(Swipe)
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
   },
   swiperContainer: {
-    flex: 0.55,
+    flex: 2,
+    backgroundColor: "transparent",
   },
   bottomContainer: {
     flex: 0.45,
@@ -258,9 +258,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
   },
   cardImage: {
-    width: 160,
-    flex: 1,
-    resizeMode: "contain",
+    width: "100%",
+    height: "100%",
   },
   currentCard: {
     flex: 0.7,

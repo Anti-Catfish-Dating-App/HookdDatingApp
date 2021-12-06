@@ -3,6 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 
 //action types
 const SET_MESSAGES = "SET_MESSAGES"
+const EMPTY_MESSAGES = "EMPTY_MESSAGES"
 const SEND_MESSAGE = "SEND_MESSAGE"
 
 //action creators
@@ -17,6 +18,12 @@ export const sendMessage = (message) => {
   return {
     type: SEND_MESSAGE,
     message,
+  }
+}
+
+export const emptyMessages = () => {
+  return {
+    type: EMPTY_MESSAGES,
   }
 }
 
@@ -35,6 +42,7 @@ export const fetchMessages = (id) => {
       )
       dispatch(setMessages(res.data))
     } catch (err) {
+      dispatch(emptyMessages())
       console.log(err)
     }
   }
@@ -71,6 +79,8 @@ export default function (state = [], action) {
       return action.messages
     case SEND_MESSAGE:
       return [...state, action.message]
+    case EMPTY_MESSAGES:
+      return []
     default:
       return state
   }
