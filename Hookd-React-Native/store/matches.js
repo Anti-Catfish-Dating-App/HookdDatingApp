@@ -20,7 +20,7 @@ export const getMatches = () => async (dispatch) => {
   try {
     const tokenHeader = await getToken()
 
-    const res = await axios.get(`http://10.0.0.64:8080/api/matches`, {
+    const res = await axios.get(`https://hookd-datingapp.herokuapp.com/api/matches`, {
       headers: {
         authorization: tokenHeader,
       },
@@ -35,7 +35,7 @@ export const addSwipe = (direction, id) => async (dispatch) => {
   try {
     const tokenHeader = await getToken()
     const res = await axios.post(
-      `http://10.0.0.64:8080/api/matches`,
+      `https://hookd-datingapp.herokuapp.com/api/matches`,
       { direction, id },
       {
         headers: {

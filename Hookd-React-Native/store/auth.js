@@ -17,7 +17,7 @@ export const editUser = (user) => async (dispatch) => {
     const tokenHeader = await getToken()
 
     const res = await axios.put(
-      `http://10.0.0.64:8080/api/users/${user.id}`,
+      `https://hookd-datingapp.herokuapp.com/api/users/${user.id}`,
       user,
       {
         headers: {
@@ -35,7 +35,7 @@ export const editUser = (user) => async (dispatch) => {
 export const me = () => async (dispatch) => {
   const token = await AsyncStorage.getItem(TOKEN)
   if (token) {
-    const res = await axios.get("http://10.0.0.64:8080/auth/me", {
+    const res = await axios.get("https://hookd-datingapp.herokuapp.com/auth/me", {
       headers: {
         authorization: token,
       },
@@ -48,7 +48,7 @@ export const authenticate =
   (email, password, name, method) => async (dispatch) => {
     try {
       console.log("AUTH", email, password, name)
-      const res = await axios.post(`http://10.0.0.64:8080/auth/${method}`, {
+      const res = await axios.post(`https://hookd-datingapp.herokuapp.com/auth/${method}`, {
         email,
         password,
         name,
