@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     height: "100%",
-    paddingBottom: 180,
+    paddingBottom: 155,
   },
   bodyRight: {
     flex: 1,

@@ -13,6 +13,7 @@ import {
 } from "react-native"
 import { connect } from "react-redux"
 import { useNavigation } from "@react-navigation/native"
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Swiper from "react-native-deck-swiper"
 import { Transitioning, Transition } from "react-native-reanimated"
 import UserProfile from "./UserProfile"
@@ -63,6 +64,7 @@ const Swipe = (props) => {
   }
 
   const userHasSwiped = async (direction, id) => {
+    console.log("SWIPE")
     const status = await props.addSwipe(direction, id)
     if (status === 222) {
       let toast = Toast.show("YOU HAVE A NEW MATCH!", {
@@ -95,6 +97,13 @@ const Swipe = (props) => {
     return (
       <View style={styles.currentCard}>
         <Image source={{ uri: card.profilePicture }} style={styles.cardImage} />
+        <View style={styles.text}>
+          <Text style={styles.heading} numberOfLines={2}>
+            {card.name}
+          </Text>
+          <Text style={styles.age}>{card.age} - {card.gender}</Text>
+          <Text style={styles.bio}>{card.bio}</Text>
+        </View>
       </View>
     )
   }
@@ -103,20 +112,12 @@ const Swipe = (props) => {
     if (!pond[index] || !pond || !pond[index].id || pond.length === 0) {
       return <View />
     }
-
     return (
       <View key={pond[index].id} style={{ alignItems: "center" }}>
-        <Text style={[styles.text, styles.heading]} numberOfLines={2}>
-          {pond[index].name}
-        </Text>
-        <Text style={[styles.text, styles.age]}>{pond[index].age}</Text>
-        <Text style={[styles.text, styles.gender]}>{pond[index].gender}</Text>
-        <Text style={[styles.text, styles.bio]}>{pond[index].bio}</Text>
+
       </View>
     )
   }
-
-  console.log(pond)
 
   return (
     <View style={styles.container}>
@@ -205,19 +206,16 @@ const Swipe = (props) => {
         <View style={styles.bottomContainer}>
           {/* swipe right and swip left buttons */}
           <View style={styles.bottomContainerButtons}>
-            <Button
-              title="<"
-              color={"red"}
-              onPress={() => userHasSwiped("left", pond[index].id)}
-            />
-            <Button
-              title=">"
-              color={"green"}
-              onPress={() => userHasSwiped("right", pond[index].id)}
-            />
+            <TouchableOpacity
+            onPress={() => swiperRef.current.swipeLeft()}>
+            <MaterialCommunityIcons name="fish-off" size={55} color="red" />
+            </TouchableOpacity>
+            <TouchableOpacity
+            onPress={() => swiperRef.current.swipeRight()}>
+            <MaterialCommunityIcons name="fish" size={55} color="green" />
+            </TouchableOpacity>
           </View>
           <Transitioning.View ref={transitionRef} transition={transition}>
-            <CardDetails index={index} />
           </Transitioning.View>
         </View>
       )}
@@ -247,14 +245,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   swiperContainer: {
-    flex: 2,
+    flex: 1,
     backgroundColor: "transparent",
   },
   bottomContainer: {
-    flex: 0.45,
     justifyContent: "space-evenly",
   },
-  bottomContainerMeta: { alignContent: "flex-end", alignItems: "center" },
   bottomContainerButtons: {
     flexDirection: "row",
     justifyContent: "space-evenly",
@@ -264,6 +260,8 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   currentCard: {
+    position: "relative",
+    top: -20,
     flex: 0.7,
     borderRadius: 8,
     shadowRadius: 25,
@@ -275,8 +273,13 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   text: {
+    position: "absolute",
+    bottom: 10,
+    padding: 8,
     fontSize: 50,
-    backgroundColor: "transparent",
+    borderRadius: 10,
+    backgroundColor: 'white',
+    opacity: 0.7,
     fontFamily: "Helvetica",
   },
   done: {
@@ -293,9 +296,8 @@ const styles = StyleSheet.create({
     textAlign: "left",
     fontWeight: "600",
   },
-  age: { color: "black", fontSize: 24, fontWeight: "500", textAlign: "left" },
-  bio: { color: "black", fontSize: 20, fontWeight: "200" },
-  gender: { color: "black", fontSize: 14, fontWeight: "200" },
+  age: { color: "black", fontSize: 20, fontWeight: "500", textAlign: "left" },
+  bio: { color: "black", fontSize: 16, fontWeight: "400" },
   loading: {
     color: "#5389ed",
     fontSize: 50,

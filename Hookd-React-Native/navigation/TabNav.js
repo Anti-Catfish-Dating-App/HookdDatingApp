@@ -35,12 +35,11 @@ const TabNavigator = () => {
         tabBarInactiveTintColor: "gray",
         //Tab bar styles can be added here
         tabBarStyle: {
-          paddingVertical: 5,
           borderTopLeftRadius: 15,
           borderTopRightRadius: 15,
           backgroundColor: "white",
           position: "absolute",
-          height: 100,
+          height: 70,
         },
         tabBarLabelStyle: { paddingBottom: 6 },
       })}
