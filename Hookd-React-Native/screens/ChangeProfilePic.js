@@ -62,7 +62,7 @@ const ChangeProfilePic = (props) => {
     if (res === 444) {
       Alert.alert("Face not found")
     }
-    if (res === undefined) {
+    if (res === 445) {
       Alert.alert("No similarity found")
     }
   }

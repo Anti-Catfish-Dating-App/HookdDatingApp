@@ -112,6 +112,7 @@ router.post("/profilepic/:id", upload.any(), async (req, res, next) => {
 
     if (firstImage.data.length < 1) {
       res.status(444).send(user)
+      return
     }
 
     const profilePicFaceId = firstImage.data[0].faceId

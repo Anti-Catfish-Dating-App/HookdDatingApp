@@ -39,14 +39,6 @@ export const getPond = (userId) => async (dispatch) => {
   }
 }
 
-export const addSwipe = (direction, id) => async (dispatch) => {
-  try {
-    dispatch(_addSwipe(id))
-  } catch (error) {
-    console.log(error)
-  }
-}
-
 //reducer
 //because of the way state declared props.users.users will give you corrct rendrings
 const initialState = {
