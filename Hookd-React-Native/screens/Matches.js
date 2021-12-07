@@ -26,11 +26,9 @@ const Matches = (props) => {
     })
   }, [])
 
-  console.log(props)
-
-  // useEffect(() => {
-  //   setMatches(props.getMatches())
-  // }, [])
+  useEffect(() => {
+    setMatches(props.getMatches())
+  }, [])
 
   return (
     <SafeAreaView style={styles.container}>

@@ -28,9 +28,13 @@ const Login = (props) => {
     })
   }, [navigation])
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log(data)
-    props.submitForm(data.Email, data.Password, data.Name === "null")
+    const status = await props.submitForm(
+      data.Email,
+      data.Password,
+      data.Name === "null"
+    )
   }
 
   return (
