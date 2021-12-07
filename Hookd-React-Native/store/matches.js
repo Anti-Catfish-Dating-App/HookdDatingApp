@@ -10,9 +10,10 @@ export const setMatches = (matches) => ({
   matches,
 })
 
-export const _addSwipe = (user) => ({
+export const _addSwipe = (user, id) => ({
   type: ADD_SWIPE,
   user,
+  id,
 })
 
 export const getMatches = () => async (dispatch) => {
@@ -42,7 +43,7 @@ export const addSwipe = (direction, id) => async (dispatch) => {
         },
       }
     )
-    dispatch(_addSwipe(res.data))
+    dispatch(_addSwipe(res.data, id))
     return res.status
   } catch (error) {
     console.log(error)

@@ -32,62 +32,57 @@ const Matches = (props) => {
   }, [])
 
   const displayStarRating = (avgRating) => {
-    if(avgRating > 0){
-      return (
-        <StarRatingBar
-          score={avgRating}
-          dontShowScore={false}
-          allowsHalfStars={true}
-          accurateHalfStars={true}
-        />
-      )
+      if(avgRating > 0){
+        return (
+          <StarRatingBar
+            score={avgRating}
+            dontShowScore={false}
+            allowsHalfStars={true}
+            accurateHalfStars={true}
+          />
+        )
+      }
     }
-  }
 
   if(props.matches.matches.length > 1){
-    return (
-      <SafeAreaView style={styles.container}>
-        <Header title={"Chat"} />
-        <View style={styles.container}>
-          <FlatList
-            data={props.matches.matches}
-            renderItem={({ item }) => (
-              <ScrollView>
-                <View style={styles.item}>
-                  <TouchableOpacity
-                    onPress={() =>
-                      navigation.navigate("AddMatchReview", { matchId: item.id })
-                    }
-                  >
-                    <Image
-                      style={styles.tinyImage}
-                      source={{ uri: item.profilePicture }}
-                    />
-                  </TouchableOpacity>
-                  <Text style={styles.title}>{item.name}</Text>
-                </View>
-                <Button
-                  title="Chat"
+  return (
+    <SafeAreaView style={styles.container}>
+      <Header title={"Chat"} />
+      <View style={styles.container}>
+        <FlatList
+          data={props.matches.matches}
+          renderItem={({ item }) => (
+            <ScrollView>
+              <View style={styles.item}>
+                <TouchableOpacity
+                  style={styles.itemBox}
                   onPress={() =>
                     props.navigation.navigate("Messages", { match: item })
                   }
-                />
-                {displayStarRating(item.avgRating)}
-                <View style={styles.separator} />
-              </ScrollView>
-            )}
-            keyExtractor={(item, index) => index.toString()}
-          />
-        </View>
-      </SafeAreaView>
-  )} else {
-    return (
-    <SafeAreaView style={styles.container}>
-      <Text>NO MATCHES!</Text>
+                >
+                  <Image
+                    style={styles.tinyImage}
+                    source={{ uri: item.profilePicture }}
+                  />
+                  <Text style={styles.title}>{item.name}</Text>
+                </TouchableOpacity>
+              </View>
+              {displayStarRating(item.avgRating)}
+              <View style={styles.separator} />
+            </ScrollView>
+          )}
+          keyExtractor={(item, index) => index.toString()}
+        />
+      </View>
     </SafeAreaView>
-    )
+    )} else {
+      return (
+        <SafeAreaView style={styles.container}>
+          <Text>No Matches!</Text>
+        </SafeAreaView>
+      )
+    }
   }
-}
 
 const mapState = (state) => {
   return {
@@ -106,29 +101,31 @@ export default connect(mapState, mapDispatch)(Matches)
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "space-between",
   },
   item: {
-    flexDirection: "row",
-    paddingVertical: 10,
-    alignItems: "center",
-    paddingHorizontal: 20,
+    backgroundColor: "#f9c2ff",
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
+    borderRadius: 10,
   },
-  separator: {
-    height: 1,
-    width: "100%",
-    backgroundColor: "#808080",
+  itemBox: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   title: {
-    fontSize: 20,
-    color: "#288cd7",
-    fontWeight: "600",
+    fontSize: 25,
+    fontFamily: "Avenir",
+  },
+  separator: {
+    marginVertical: 8,
+    borderBottomColor: "#737373",
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   tinyImage: {
     width: 50,
     height: 50,
-    marginRight: 10,
-    borderRadius: 75,
-    overflow: "hidden",
+    borderRadius: 25,
   },
 })

@@ -1,5 +1,6 @@
 import axios from "axios"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { getToken } from "./headers"
 
 const TOKEN = "token"
 
@@ -13,9 +14,16 @@ const editProfile = (user) => ({ type: EDIT_PROFILE, user })
 
 export const editUser = (user) => async (dispatch) => {
   try {
+    const tokenHeader = await getToken()
+
     const res = await axios.put(
       `https://hookd-datingapp.herokuapp.com/api/users/${user.id}`,
-      user
+      user,
+      {
+        headers: {
+          authorization: tokenHeader,
+        },
+      }
     )
     dispatch(editProfile(res.data))
     return res.status

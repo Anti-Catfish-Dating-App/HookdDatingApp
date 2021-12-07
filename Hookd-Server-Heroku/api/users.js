@@ -2,26 +2,18 @@ const router = require("express").Router()
 const {
   models: { User, Matches },
 } = require("../db")
-const matchReducer = require("./findAllMatches");
-const { Op } = require("sequelize");
-
-const axios = require("axios")
-const multer = require("multer") // Middleware to upload and save files
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "./server/tempStorage")
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + ".jpg") //Appending .jpg
-  },
-})
-const upload = multer({ storage: storage })
-const cloudinary = require("cloudinary").v2
+const { Op } = require("sequelize")
 require("dotenv").config()
+const { requireToken, checkId } = require("./middleware")
 
 // route to edit user profile
-router.put("/:id", async (req, res, next) => {
+router.put("/:id", requireToken, async (req, res, next) => {
   try {
+    if (!checkId(req.user.id, req.params.id)) {
+      res.send("You're not authorized to view this")
+      return
+    }
+
     const { id } = req.params
     const { profilePicture, age, bio, gender } = req.body
     const user = await User.findByPk(id)
@@ -54,25 +46,40 @@ router.get("/:id", async (req, res, next) => {
 })
 
 // route to get user pond
-router.get("/pond/:id", async (req, res, next) => {
+router.get("/pond/:id", requireToken, async (req, res, next) => {
   try {
+    if (!checkId(req.user.id, req.params.id)) {
+      res.send("You're not authorized to view this")
+      return
+    }
+
     const { id } = req.params
     const userMatches = await Matches.findAll({
-      attributes: ['SwipedId'],
+      attributes: ["SwipedId"],
       where: { userId: id },
-    }).then(matchArr => matchArr.map(x => x.SwipedId))
+    }).then((matchArr) => matchArr.map((x) => x.SwipedId))
 
     const allUsers = await User.findAll({
       where: {
         id: {
-          [Op.not]: id
+          [Op.not]: id,
         },
-        isVerified: true
-      }
+        isVerified: true,
+      },
+      attributes: [
+        "id",
+        "name",
+        "profilePicture",
+        "gender",
+        "genderCategory",
+        "sexualOrientation",
+        "age",
+        "bio",
+      ],
     })
 
     const matchFilteredUsers = allUsers.filter((user) => {
-      if(!userMatches.includes(user.id)){
+      if (!userMatches.includes(user.id)) {
         return user
       }
     })
@@ -84,50 +91,71 @@ router.get("/pond/:id", async (req, res, next) => {
     //Refactor to query this info from the database vs current implementation
     const orientationFilter = matchFilteredUsers.filter((user) => {
       if (userGender === "Woman" && userSexualOrientation === "Bisexual") {
-        if((user.genderCategory === "Man" && user.sexualOrientation !== "Gay") || (user.genderCategory === "Woman" && user.sexualOrientation !== "Straight")){
-          return user;
+        if (
+          (user.genderCategory === "Man" && user.sexualOrientation !== "Gay") ||
+          (user.genderCategory === "Woman" &&
+            user.sexualOrientation !== "Straight")
+        ) {
+          return user
         }
       } else if (userGender === "Man" && userSexualOrientation === "Bisexual") {
-        if((user.genderCategory === "Woman" && user.sexualOrientation !== "Gay") || (user.genderCategory === "Man" && user.sexualOrientation !== "Straight")){
-          return user;
+        if (
+          (user.genderCategory === "Woman" &&
+            user.sexualOrientation !== "Gay") ||
+          (user.genderCategory === "Man" &&
+            user.sexualOrientation !== "Straight")
+        ) {
+          return user
         }
-      } else if (userGender === "Woman" && userSexualOrientation === "Straight"){
-        if(user.genderCategory === "Man" && user.sexualOrientation !== "Gay"){
-          return user;
+      } else if (
+        userGender === "Woman" &&
+        userSexualOrientation === "Straight"
+      ) {
+        if (user.genderCategory === "Man" && user.sexualOrientation !== "Gay") {
+          return user
         }
-      } else if (userGender === "Man" && userSexualOrientation === "Straight"){
-        if(user.genderCategory === "Woman" && user.sexualOrientation !== "Gay"){
-          return user;
+      } else if (userGender === "Man" && userSexualOrientation === "Straight") {
+        if (
+          user.genderCategory === "Woman" &&
+          user.sexualOrientation !== "Gay"
+        ) {
+          return user
         }
-      } else if (userGender === "Woman" && userSexualOrientation === "Gay"){
-        if(user.genderCategory === "Woman" && user.sexualOrientation !== "Straight"){
-          return user;
+      } else if (userGender === "Woman" && userSexualOrientation === "Gay") {
+        if (
+          user.genderCategory === "Woman" &&
+          user.sexualOrientation !== "Straight"
+        ) {
+          return user
         }
-      } else if (userGender === "Man" && userSexualOrientation === "Gay"){
-        if(user.genderCategory === "Man" && user.sexualOrientation !== "Straight"){
-          return user;
+      } else if (userGender === "Man" && userSexualOrientation === "Gay") {
+        if (
+          user.genderCategory === "Man" &&
+          user.sexualOrientation !== "Straight"
+        ) {
+          return user
         }
       }
-    });
+    })
+
+    // if (!checkId(req.user.id, req.params.id)) {
+    //   res.send("You're not authorized to view this")
+    //   return
+    // }
+
     res.send(orientationFilter)
   } catch (error) {
     next(error)
   }
 })
 
-// route to get all users
-router.get("/", async (req, res, next) => {
-  try {
-    const users = await User.findAll()
-    res.send(users)
-  } catch (error) {
-    next(error)
-  }
-})
-
 // route to delete user
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", requireToken, async (req, res, next) => {
   try {
+    if (!checkId(req.user.id, req.params.id)) {
+      res.status(400).send("You're not authoized to view this")
+    }
+
     const { id } = req.params
     const user = await User.findByPk(id)
     if (!user) {
@@ -136,34 +164,6 @@ router.delete("/:id", async (req, res, next) => {
       throw error
     }
     await user.destroy()
-    res.send(user)
-  } catch (error) {
-    next(error)
-  }
-})
-
-// route to create user
-router.post("/", async (req, res, next) => {
-  try {
-    const user = await User.create(req.body)
-    res.send(user)
-  } catch (error) {
-    next(error)
-  }
-})
-
-// route to get user by gender
-router.get("/gender/:gender", async (req, res, next) => {
-  try {
-    const { email } = req.params
-    const user = await User.findAll({
-      where: { gender },
-    })
-    if (!user) {
-      const error = Error("User not found")
-      error.status = 404
-      throw error
-    }
     res.send(user)
   } catch (error) {
     next(error)
