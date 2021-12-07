@@ -31,7 +31,20 @@ const Matches = (props) => {
     setMatches(props.getMatches())
   }, [])
 
-  if(props.matches.matches.length < 1){
+  const displayStarRating = (avgRating) => {
+    if(avgRating > 0){
+      return (
+        <StarRatingBar
+          score={avgRating}
+          dontShowScore={false}
+          allowsHalfStars={true}
+          accurateHalfStars={true}
+        />
+      )
+    }
+  }
+
+  if(props.matches.matches.length > 1){
     return (
       <SafeAreaView style={styles.container}>
         <Header title={"Chat"} />
@@ -59,12 +72,7 @@ const Matches = (props) => {
                     props.navigation.navigate("Messages", { match: item })
                   }
                 />
-                <StarRatingBar
-                  score={item.avgRating}
-                  dontShowScore={false}
-                  allowsHalfStars={true}
-                  accurateHalfStars={true}
-                />
+                {displayStarRating(item.avgRating)}
                 <View style={styles.separator} />
               </ScrollView>
             )}
@@ -74,9 +82,9 @@ const Matches = (props) => {
       </SafeAreaView>
   )} else {
     return (
-    <View>
+    <SafeAreaView style={styles.container}>
       <Text>NO MATCHES!</Text>
-    </View>
+    </SafeAreaView>
     )
   }
 }
