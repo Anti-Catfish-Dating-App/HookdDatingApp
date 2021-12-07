@@ -3,21 +3,15 @@ const db = require('../db');
 
 const Reviews = db.define('review', {
   rating: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.DECIMAL(10,2),
     validate: {
-      min: 1,
+      min: 0,
       max: 5,
     }
   },
   reviewText: {
     type: Sequelize.STRING
   },
-  reviewer: {
-    type: Sequelize.INTEGER
-  },
-  reviewedUser: {
-    type: Sequelize.INTEGER
-  }
 })
 
 module.exports = Reviews

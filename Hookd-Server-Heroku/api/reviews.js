@@ -3,12 +3,13 @@ const {
   models: { Reviews },
 } = require("../db");
 const { requireToken } = require("./middleware");
+const matchReducer = require("./findAllMatches")
 
 router.get("/:reviewedId", async (req, res, next) => {
   try {
     const allUserReviewInfo = await Reviews.findAll({
       where: {
-        reviewedUser: req.params.reviewedId
+        reviewedUserId: req.params.reviewedId
       }
     })
     const avgRating = (allUserReviewInfo.reduce((prev, curr) => {
@@ -33,21 +34,18 @@ router.post("/", requireToken, async (req, res, next) => {
   try {
     const { review, reviewedUser } = req.body.reviewInfo
     const rating = parseInt(req.body.reviewInfo.rating)
-
-
     const createdReview = await Reviews.findOrCreate({
       where: {
-        reviewedUser: reviewedUser,
-        reviewer: req.user.id
+        reviewerId: req.user.id,
+        userId: reviewedUser
       },
       defaults: {
         rating: rating,
         reviewText: review,
-        reviewedUser: reviewedUser,
-        reviewer: req.user.id
+        reviewerId: req.user.id,
+        userId: reviewedUser
       }
     })
-
     res.send(createdReview);
 
   } catch (error) {

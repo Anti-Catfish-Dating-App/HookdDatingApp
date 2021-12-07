@@ -75,7 +75,7 @@ export const _editProfilePic = (imageData, id) => async (dispatch) => {
       config
     )
 
-    console.log("THUNK RESPONSE", res)
+
 
     if (res.status === 200) {
       dispatch(editProfilePic(res.data))

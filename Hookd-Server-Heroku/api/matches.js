@@ -1,17 +1,39 @@
 const router = require("express").Router()
 
 const {
-  models: { User, Matches },
+  models: { User, Matches, Reviews },
 } = require("../db")
 const Conversations = require("../db/models/Conversations")
+const Sequelize = require("sequelize")
 const { requireToken } = require("./middleware")
 const matchReducer = require("./findAllMatches")
 
 router.get("/", requireToken, async (req, res, next) => {
   try {
     const data = await matchReducer(req.user.id)
-    const matchData = await data.map(async (x) => await User.findByPk(x))
-    const matchedUsers = await Promise.all(matchData)
+    const matchData = await data.map(async (x) => await User.findOne({
+      where: {
+        id: x
+      },
+      attributes: ["id", "name", "profilePicture",
+        [Sequelize.fn("avg", Sequelize.col('reviews.rating')), "avgRating"]
+      ],
+      include: [
+        {
+          model: Reviews,
+          as: 'reviews',
+          attributes:['userId']
+        }
+      ],
+      raw: true,
+      group: ['userId', 'user.id']
+    }))
+    const awaitedMatchData = await Promise.all(matchData)
+
+    const matchedUsers = awaitedMatchData.map((x) => {
+      x.avgRating = parseFloat(x.avgRating);
+      return x;
+    })
 
     res.send(matchedUsers)
   } catch (error) {

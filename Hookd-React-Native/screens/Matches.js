@@ -13,6 +13,7 @@ import { connect } from "react-redux"
 import { getMatches } from "../store/matches"
 import { useNavigation } from "@react-navigation/native"
 import { SafeAreaView } from "react-native-safe-area-context"
+import StarRatingBar from "react-native-star-view"
 import Header from "../components.js/Header"
 
 const Matches = (props) => {
@@ -30,6 +31,20 @@ const Matches = (props) => {
     setMatches(props.getMatches())
   }, [])
 
+  const displayStarRating = (avgRating) => {
+      if(avgRating > 0){
+        return (
+          <StarRatingBar
+            score={avgRating}
+            dontShowScore={false}
+            allowsHalfStars={true}
+            accurateHalfStars={true}
+          />
+        )
+      }
+    }
+
+  if(props.matches.matches.length > 1){
   return (
     <SafeAreaView style={styles.container}>
       <Header title={"Chat"} />
@@ -51,15 +66,23 @@ const Matches = (props) => {
                   />
                   <Text style={styles.title}>{item.name}</Text>
                 </TouchableOpacity>
+                {displayStarRating(item.avgRating)}
               </View>
               <View style={styles.separator} />
             </ScrollView>
           )}
+          keyExtractor={(item, index) => index.toString()}
         />
       </View>
     </SafeAreaView>
-  )
-}
+    )} else {
+      return (
+        <SafeAreaView style={styles.container}>
+          <Text>No Matches!</Text>
+        </SafeAreaView>
+      )
+    }
+  }
 
 const mapState = (state) => {
   return {

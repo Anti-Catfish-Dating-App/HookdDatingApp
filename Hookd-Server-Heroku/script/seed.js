@@ -59,9 +59,9 @@ async function seed() {
       lastTimeVerified: 11 / 23 / 2040,
       isVerified: true,
     });
-    console.log(Object.keys(user.__proto__));
+    //console.log(Object.keys(user.__proto__));
   }
-  const user1 = await User.findByPk(3);
+  const user1 = await User.findByPk(1);
   const user2 = await User.findByPk(5);
   const user3 = await User.findByPk(7);
   const user4 = await User.findByPk(4);
@@ -112,6 +112,33 @@ async function seed() {
       isRightSwipe: true,
     },
   });
+
+  const rating = 4;
+  const reviewText = "This is a review"
+  /* await user1.addReviewedUser(user4, {
+    through: {
+      rating: rating,
+      reviewText: reviewText
+    }
+  }) */
+
+  for(let i = 1; i < 10; i++){
+    if(i !== 5 && i !== 8){
+      await Reviews.create({
+        rating: 4,
+        reviewText: reviewText,
+        userId: 5,
+        reviewerId: i
+      })
+      await Reviews.create({
+        rating: 4,
+        reviewText: reviewText,
+        userId: i,
+        reviewerId: 8
+      })
+    }
+  }
+
 
   const conversation3 = await Conversations.create({
     user1: user1.id,
