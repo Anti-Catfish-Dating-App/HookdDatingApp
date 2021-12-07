@@ -115,19 +115,31 @@ async function seed() {
 
   const rating = 4;
   const reviewText = "This is a review"
-  await user1.addReviewedUser(user4, {
+  /* await user1.addReviewedUser(user4, {
     through: {
       rating: rating,
       reviewText: reviewText
     }
-  })
+  }) */
 
-  await Reviews.findOrCreate({
-    rating: rating,
-    reviewText: reviewText,
-    userId: 2,
-    reviewedUserId: 5
-  })
+  for(let i = 1; i < 10; i++){
+    if(i !== 5 && i !== 8){
+      await Reviews.create({
+        rating: 4,
+        reviewText: reviewText,
+        userId: 5,
+        reviewerId: i
+      })
+      await Reviews.create({
+        rating: 4,
+        reviewText: reviewText,
+        userId: i,
+        reviewerId: 8
+      })
+    }
+  }
+
+
   const conversation3 = await Conversations.create({
     user1: user1.id,
     user2: user4.id,

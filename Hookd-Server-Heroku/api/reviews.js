@@ -36,14 +36,14 @@ router.post("/", requireToken, async (req, res, next) => {
     const rating = parseInt(req.body.reviewInfo.rating)
     const createdReview = await Reviews.findOrCreate({
       where: {
-        reviewedUserId: reviewedUser,
-        userId: req.user.id
+        reviewerId: req.user.id,
+        userId: reviewedUser
       },
       defaults: {
         rating: rating,
         reviewText: review,
-        reviewedUserId: reviewedUser,
-        userId: req.user.id
+        reviewerId: req.user.id,
+        userId: reviewedUser
       }
     })
     res.send(createdReview);

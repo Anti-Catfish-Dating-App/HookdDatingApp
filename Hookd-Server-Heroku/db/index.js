@@ -11,7 +11,9 @@ const User = require("./models/User")
 
 //Associations
 User.belongsToMany(User, { as: "Swiped", through: Matches })
-User.belongsToMany(User, { as: "reviewedUser", through: Reviews})
+
+Reviews.belongsTo(User, {as: "reviewer"});
+User.hasMany(Reviews);
 
 User.hasMany(Conversations)
 Conversations.belongsTo(User, {
