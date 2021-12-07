@@ -59,7 +59,7 @@ const Swipe = (props) => {
     //carddetails pop in animatedly
     transitionRef.current.animateNextTransition()
     //infinitely go through stack
-    setIndex(0)
+    setIndex(index + 1)
   }
 
   const userHasSwiped = async (direction, id) => {
