@@ -14,4 +14,7 @@ export default {
     CloudinarySecret: process.env.CLOUDSECRET,
     localhost: process.env.LOCALHOST,
   },
+  ios: {
+    bundleIdentifier: "com.Hookd.datingApp",
+  },
 }
