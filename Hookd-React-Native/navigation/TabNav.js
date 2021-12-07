@@ -31,7 +31,7 @@ const TabNavigator = () => {
           // You can return any component that you like here!
           return <Ionicons name={iconName} size={15} color={"black"} />
         },
-        tabBarActiveTintColor: "#58ceb2",
+        tabBarActiveTintColor: "#f3bae5",
         tabBarInactiveTintColor: "gray",
         //Tab bar styles can be added here
         tabBarStyle: {

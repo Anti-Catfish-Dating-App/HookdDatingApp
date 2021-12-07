@@ -43,7 +43,7 @@ const Settings = (props) => {
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
-          <Button title="LOGOUT (TEMP)" onPress={() => props.logout()} />
+          <Button title="LOGOUT" onPress={() => props.logout()} />
           <View style={styles.profilePictureContainer}>
             <TouchableOpacity
               onPress={() => navigation.navigate("ChangeProfilePic")}

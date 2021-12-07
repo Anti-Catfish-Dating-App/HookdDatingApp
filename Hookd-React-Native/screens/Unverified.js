@@ -17,15 +17,20 @@ const Verification = (props) => {
 
   return (
     <View style={styles.container}>
-      <Text>You're unverified.</Text>
-      <Text>Please confirm your identity to continue using the app.</Text>
+      <View style={styles.unverified}>
+        <Text style={styles.title}>You're unverified.</Text>
+        <Text style={styles.subTitle}>
+          Please confirm your identity to continue using the app.
+        </Text>
+      </View>
 
       <TouchableOpacity
+        style={styles.button}
         onPress={() => {
           navigation.navigate("ReverificationForm")
         }}
       >
-        <Text> CLICK ME </Text>
+        <Text style={styles.buttonText}> CLICK ME </Text>
       </TouchableOpacity>
     </View>
   )
@@ -36,11 +41,33 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
+    justifyContent: "center",
+  },
+  unverified: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
   },
   title: {
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 20,
+    color: "red",
+  },
+  button: {
+    backgroundColor: "#288cd7",
+    padding: 10,
+    marginTop: 20,
+    borderRadius: 5,
+    alignSelf: "center",
+    alignContent: "center",
+    justifyContent: "center",
+    marginBottom: 100,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 20,
+    fontWeight: "bold",
   },
 })
 
