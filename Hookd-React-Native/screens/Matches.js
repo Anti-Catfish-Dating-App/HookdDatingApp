@@ -66,8 +66,8 @@ const Matches = (props) => {
                   />
                   <Text style={styles.title}>{item.name}</Text>
                 </TouchableOpacity>
+                {displayStarRating(item.avgRating)}
               </View>
-              {displayStarRating(item.avgRating)}
               <View style={styles.separator} />
             </ScrollView>
           )}
