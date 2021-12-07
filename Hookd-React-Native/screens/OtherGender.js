@@ -50,8 +50,8 @@ const OtherGender = (props) => {
         onValueChange={(itemValue, itemIndex) => setGender(itemValue)}
         style={styles.picker}
         mode={"dropdown"}
-        numberOfLines={"1"}
       >
+        <Picker.Item label="What is your catergory preference?" />
         <Picker.Item label="Man" value="Man" />
         <Picker.Item label="Woman" value="Woman" />
       </Picker>

@@ -43,8 +43,8 @@ const SexualOrientationForm = (props) => {
         onValueChange={(itemValue, itemIndex) => setOrientation(itemValue)}
         style={styles.picker}
         mode={"dropdown"}
-        numberOfLines={"1"}
       >
+        <Picker.Item label="What is your sexual orientation?" />
         <Picker.Item label="Straight" value="Straight" />
         <Picker.Item label="Gay" value="Gay" />
         <Picker.Item label="Bisexual" value="Bisexual" />

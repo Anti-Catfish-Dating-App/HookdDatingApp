@@ -58,8 +58,8 @@ const SignUpInfo = (props) => {
         onValueChange={(itemValue, itemIndex) => setGender(itemValue)}
         style={styles.picker}
         mode={"dropdown"}
-        numberOfLines={"1"}
       >
+        <Picker.Item label="What is your gender?" />
         <Picker.Item label="Man" value="Man" />
         <Picker.Item label="Woman" value="Woman" />
         <Picker.Item label="Other" value="Other" />
