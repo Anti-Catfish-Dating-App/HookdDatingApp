@@ -126,7 +126,6 @@ const Swipe = (props) => {
             There are no more people to match with at the moment, sorry!
           </Text>
           <Entypo name="emoji-sad" size={75} color="#288cd7" style={{alignSelf: "center"}} />
-
       </View>
     )
   }

@@ -38,17 +38,24 @@ const UserProfile = (props) => {
   }, [])
 
   return (
-    <View style={styles.container}>
-      <View style={styles.profilePictureContainer}>
-        <Image
+    <ScrollView style={styles.container}>
+      <FlatList
+          ListHeaderComponent={
+            <View style={styles.profilePictureContainer}>
+              <Image
           style={styles.profilePicture}
           source={{
             uri: profilePicture,
           }}
         />
-        <Text>{name}</Text>
+        <Text style={styles.name}>
+        {name}, {age}
+      </Text>
+      <Text style={styles.gender}>{gender}</Text>
+      <Text style={styles.bio}>{bio}</Text>
+      <Divider style={styles.divider} orientation="horizontal" />
       </View>
-      <FlatList
+      }
           data={props.allUserReviews}
           renderItem={({item}) =>
           <View>
@@ -57,14 +64,7 @@ const UserProfile = (props) => {
           }
           keyExtractor={(item, index) => index.toString()}
         />
-      <Text style={styles.name}>
-        {name}, {age}
-      </Text>
-      {/* <Text style={styles.age}>{age}</Text> */}
-      <Text style={styles.gender}>{gender}</Text>
-      <Divider style={styles.divider} orientation="horizontal" />
-      <Text style={styles.bio}>{bio}</Text>
-    </View>
+    </ScrollView>
   )
 }
 
@@ -89,43 +89,33 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "flex-start",
   },
   profilePictureContainer: {
+    flex: 1,
     alignItems: "center",
-    justifyContent: "center",
-    margin: 50,
+    textAlign: "center",
   },
   profilePicture: {
     width: 300,
     height: 300,
     borderRadius: 15,
+    position: "relative",
+    alignItems: "center",
   },
   name: {
     color: "#5E5E5E",
-    alignSelf: "flex-start",
     fontSize: 30,
-    marginLeft: 60,
   },
   age: {
     color: "#5E5E5E",
-    alignSelf: "flex-start",
     fontSize: 20,
-    marginLeft: 60,
   },
   gender: {
     color: "#5E5E5E",
-    alignSelf: "flex-start",
     fontSize: 17,
-    marginTop: 5,
-    marginLeft: 60,
   },
   bio: {
     color: "#5E5E5E",
-    alignSelf: "flex-start",
-    marginTop: 5,
-    marginLeft: 60,
     fontSize: 14,
   },
   divider: {
