@@ -14,6 +14,7 @@ import {
 import { connect } from "react-redux"
 import { useNavigation } from "@react-navigation/native"
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
 import Swiper from "react-native-deck-swiper"
 import { Transitioning, Transition } from "react-native-reanimated"
 import UserProfile from "./UserProfile"
@@ -64,7 +65,6 @@ const Swipe = (props) => {
   }
 
   const userHasSwiped = async (direction, id) => {
-    console.log("SWIPE")
     const status = await props.addSwipe(direction, id)
     if (status === 222) {
       let toast = Toast.show("YOU HAVE A NEW MATCH!", {
@@ -119,16 +119,24 @@ const Swipe = (props) => {
     )
   }
 
+  const endOfFeedCard = () => {
+    return (
+        <View style={styles.endOfFeedCard}>
+          <Text style={styles.endOfFeedText} numberOfLines={4}>
+            There are no more people to match with at the moment, sorry!
+          </Text>
+          <Entypo name="emoji-sad" size={75} color="#288cd7" style={{alignSelf: "center"}} />
+
+      </View>
+    )
+  }
+
   return (
     <View style={styles.container}>
       {!pond || pond.length === 0 ? (
-        <Text style={styles.loading}>
-          There are no people to match with at the moment, sorry!
-        </Text>
+        endOfFeedCard()
       ) : !pond[index] ? (
-        <Text style={styles.noMatches}>
-          There are no people to match with at the moment, sorry!
-        </Text>
+        endOfFeedCard()
       ) : (
         <View style={styles.swiperContainer}>
           <Swiper
@@ -310,4 +318,24 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     textAlign: "center",
   },
+  endOfFeedCard: {
+    position: "relative",
+    top: 75,
+    height: 350,
+    fontSize: 50,
+    alignContent: "center",
+    borderRadius: 10,
+    backgroundColor: 'white',
+    opacity: 0.7,
+    fontFamily: "Helvetica",
+    margin: 15
+  },
+  endOfFeedText: {
+    fontSize: 32,
+    color: "#288cd7",
+    textAlign: "center",
+    fontWeight: "600",
+    margin: 20,
+    marginTop: 50
+  }
 })
