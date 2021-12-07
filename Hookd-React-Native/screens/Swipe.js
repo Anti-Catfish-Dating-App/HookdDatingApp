@@ -13,6 +13,7 @@ import {
 } from "react-native"
 import { connect } from "react-redux"
 import { useNavigation } from "@react-navigation/native"
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Swiper from "react-native-deck-swiper"
 import { Transitioning, Transition } from "react-native-reanimated"
 import UserProfile from "./UserProfile"
@@ -63,6 +64,7 @@ const Swipe = (props) => {
   }
 
   const userHasSwiped = async (direction, id) => {
+    console.log("SWIPE")
     const status = await props.addSwipe(direction, id)
     if (status === 222) {
       let toast = Toast.show("YOU HAVE A NEW MATCH!", {
@@ -204,16 +206,14 @@ const Swipe = (props) => {
         <View style={styles.bottomContainer}>
           {/* swipe right and swip left buttons */}
           <View style={styles.bottomContainerButtons}>
-            <Button
-              title="<"
-              color={"red"}
-              onPress={() => userHasSwiped("left", pond[index].id)}
-            />
-            <Button
-              title=">"
-              color={"green"}
-              onPress={() => userHasSwiped("right", pond[index].id)}
-            />
+            <TouchableOpacity
+            onPress={() => swiperRef.current.swipeLeft()}>
+            <MaterialCommunityIcons name="fish-off" size={36} color="red" />
+            </TouchableOpacity>
+            <TouchableOpacity
+            onPress={() => swiperRef.current.swipeRight()}>
+            <MaterialCommunityIcons name="fish" size={36} color="green" />
+            </TouchableOpacity>
           </View>
           <Transitioning.View ref={transitionRef} transition={transition}>
           </Transitioning.View>
@@ -245,14 +245,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   swiperContainer: {
-    flex: 2,
+    flex: 1,
     backgroundColor: "transparent",
   },
   bottomContainer: {
-    flex: 0.45,
     justifyContent: "space-evenly",
   },
-  bottomContainerMeta: { alignContent: "flex-end", alignItems: "center" },
   bottomContainerButtons: {
     flexDirection: "row",
     justifyContent: "space-evenly",
