@@ -59,7 +59,7 @@ const Swipe = (props) => {
     //carddetails pop in animatedly
     transitionRef.current.animateNextTransition()
     //infinitely go through stack
-    setIndex((index + 1) % pond.length)
+    setIndex(0)
   }
 
   const userHasSwiped = async (direction, id) => {
@@ -115,6 +115,8 @@ const Swipe = (props) => {
       </View>
     )
   }
+
+  console.log(pond)
 
   return (
     <View style={styles.container}>

@@ -1,4 +1,5 @@
 import axios from "axios"
+import { getToken } from "./headers"
 
 //action types
 const SET_USERS = "SET_USERS"
@@ -21,21 +22,17 @@ export const _addSwipe = (userId) => ({
 })
 
 //thunk creators
-export const getUsers = () => async (dispatch) => {
-  try {
-    const res = await axios.get(
-      `https://hookd-datingapp.herokuapp.com/api/users`
-    )
-    dispatch(setUsers(res.data))
-  } catch (error) {
-    console.log(error)
-  }
-}
-
 export const getPond = (userId) => async (dispatch) => {
   try {
+    const tokenHeader = await getToken()
+
     const res = await axios.get(
-      `https://hookd-datingapp.herokuapp.com/api/users/pond/${userId}`
+      `http://10.0.0.64:8080/api/users/pond/${userId}`,
+      {
+        headers: {
+          authorization: tokenHeader,
+        },
+      }
     )
     dispatch(setPond(res.data))
   } catch (error) {
@@ -68,7 +65,7 @@ export default function (state = initialState, action) {
       const users = { ...state }
       const usersArray = users.users
       const filteredArray = usersArray.filter((user) => {
-        if (user.id !== action.user.id) {
+        if (user.id !== action.id) {
           return user
         }
       })
