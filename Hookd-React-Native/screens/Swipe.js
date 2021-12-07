@@ -208,11 +208,11 @@ const Swipe = (props) => {
           <View style={styles.bottomContainerButtons}>
             <TouchableOpacity
             onPress={() => swiperRef.current.swipeLeft()}>
-            <MaterialCommunityIcons name="fish-off" size={36} color="red" />
+            <MaterialCommunityIcons name="fish-off" size={55} color="red" />
             </TouchableOpacity>
             <TouchableOpacity
             onPress={() => swiperRef.current.swipeRight()}>
-            <MaterialCommunityIcons name="fish" size={36} color="green" />
+            <MaterialCommunityIcons name="fish" size={55} color="green" />
             </TouchableOpacity>
           </View>
           <Transitioning.View ref={transitionRef} transition={transition}>
@@ -260,6 +260,8 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   currentCard: {
+    position: "relative",
+    top: -20,
     flex: 0.7,
     borderRadius: 8,
     shadowRadius: 25,
