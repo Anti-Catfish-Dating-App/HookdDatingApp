@@ -95,6 +95,13 @@ const Swipe = (props) => {
     return (
       <View style={styles.currentCard}>
         <Image source={{ uri: card.profilePicture }} style={styles.cardImage} />
+        <View style={styles.text}>
+          <Text style={styles.heading} numberOfLines={2}>
+            {card.name}
+          </Text>
+          <Text style={styles.age}>{card.age} - {card.gender}</Text>
+          <Text style={styles.bio}>{card.bio}</Text>
+        </View>
       </View>
     )
   }
@@ -103,20 +110,12 @@ const Swipe = (props) => {
     if (!pond[index] || !pond || !pond[index].id || pond.length === 0) {
       return <View />
     }
-
     return (
       <View key={pond[index].id} style={{ alignItems: "center" }}>
-        <Text style={[styles.text, styles.heading]} numberOfLines={2}>
-          {pond[index].name}
-        </Text>
-        <Text style={[styles.text, styles.age]}>{pond[index].age}</Text>
-        <Text style={[styles.text, styles.gender]}>{pond[index].gender}</Text>
-        <Text style={[styles.text, styles.bio]}>{pond[index].bio}</Text>
+
       </View>
     )
   }
-
-  console.log(pond)
 
   return (
     <View style={styles.container}>
@@ -217,7 +216,6 @@ const Swipe = (props) => {
             />
           </View>
           <Transitioning.View ref={transitionRef} transition={transition}>
-            <CardDetails index={index} />
           </Transitioning.View>
         </View>
       )}
@@ -275,8 +273,13 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   text: {
+    position: "absolute",
+    bottom: 10,
+    padding: 8,
     fontSize: 50,
-    backgroundColor: "transparent",
+    borderRadius: 10,
+    backgroundColor: 'white',
+    opacity: 0.7,
     fontFamily: "Helvetica",
   },
   done: {
@@ -293,9 +296,8 @@ const styles = StyleSheet.create({
     textAlign: "left",
     fontWeight: "600",
   },
-  age: { color: "black", fontSize: 24, fontWeight: "500", textAlign: "left" },
-  bio: { color: "black", fontSize: 20, fontWeight: "200" },
-  gender: { color: "black", fontSize: 14, fontWeight: "200" },
+  age: { color: "black", fontSize: 20, fontWeight: "500", textAlign: "left" },
+  bio: { color: "black", fontSize: 16, fontWeight: "400" },
   loading: {
     color: "#5389ed",
     fontSize: 50,
