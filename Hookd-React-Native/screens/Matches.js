@@ -31,41 +31,54 @@ const Matches = (props) => {
     setMatches(props.getMatches())
   }, [])
 
-
-  return (
-    <SafeAreaView style={styles.container}>
-      <Header title={"Chat"} />
-      <View style={styles.container}>
-        <FlatList
-          data={props.matches.matches}
-          renderItem={({ item }) => (
-            <ScrollView>
-              <View style={styles.item}>
-                <TouchableOpacity
+  if(props.matches.matches.length < 1){
+    return (
+      <SafeAreaView style={styles.container}>
+        <Header title={"Chat"} />
+        <View style={styles.container}>
+          <FlatList
+            data={props.matches.matches}
+            renderItem={({ item }) => (
+              <ScrollView>
+                <View style={styles.item}>
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate("AddMatchReview", { matchId: item.id })
+                    }
+                  >
+                    <Image
+                      style={styles.tinyImage}
+                      source={{ uri: item.profilePicture }}
+                    />
+                  </TouchableOpacity>
+                  <Text style={styles.title}>{item.name}</Text>
+                </View>
+                <Button
+                  title="Chat"
                   onPress={() =>
-                    navigation.navigate("AddMatchReview", { matchId: item.id })
+                    props.navigation.navigate("Messages", { match: item })
                   }
-                >
-                  <Image
-                    style={styles.tinyImage}
-                    source={{ uri: item.profilePicture }}
-                  />
-                </TouchableOpacity>
-                <Text style={styles.title}>{item.name}</Text>
-              </View>
-              <Button
-                title="Chat"
-                onPress={() =>
-                  props.navigation.navigate("Messages", { match: item })
-                }
-              />
-              <View style={styles.separator} />
-            </ScrollView>
-          )}
-        />
-      </View>
-    </SafeAreaView>
-  )
+                />
+                <StarRatingBar
+                  score={item.avgRating}
+                  dontShowScore={false}
+                  allowsHalfStars={true}
+                  accurateHalfStars={true}
+                />
+                <View style={styles.separator} />
+              </ScrollView>
+            )}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        </View>
+      </SafeAreaView>
+  )} else {
+    return (
+    <View>
+      <Text>NO MATCHES!</Text>
+    </View>
+    )
+  }
 }
 
 const mapState = (state) => {
