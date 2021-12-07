@@ -43,7 +43,6 @@ const Settings = (props) => {
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
-          <Button title="LOGOUT (TEMP)" onPress={() => props.logout()} />
           <View style={styles.profilePictureContainer}>
             <TouchableOpacity
               onPress={() => navigation.navigate("ChangeProfilePic")}
@@ -79,6 +78,13 @@ const Settings = (props) => {
             >
               <Text style={styles.buttonText}>Save</Text>
             </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.buttonLogout}
+              onPress={() => props.logout()}
+              // disabled={incompleteProfile()}
+            >
+              <Text style={styles.buttonTextLogout}>Logout</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </TouchableWithoutFeedback>
@@ -104,7 +110,6 @@ export default connect(mapState, mapDispatch)(Settings)
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "flex-start",
   },
@@ -170,5 +175,17 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 20,
     color: "#f45ca5",
+  },
+  buttonLogout: {
+    backgroundColor: "#f45ca5",
+    padding: 10,
+    margin: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 5,
+  },
+  buttonTextLogout: {
+    fontSize: 20,
+    color: "#288cd7",
   },
 })
