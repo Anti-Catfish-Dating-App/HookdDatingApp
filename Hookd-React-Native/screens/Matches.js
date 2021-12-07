@@ -15,6 +15,8 @@ import { useNavigation } from "@react-navigation/native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import StarRatingBar from "react-native-star-view"
 import Header from "../components.js/Header"
+import { Ionicons } from "@expo/vector-icons"
+import { Entypo } from "@expo/vector-icons"
 
 const Matches = (props) => {
   const navigation = useNavigation()
@@ -32,57 +34,64 @@ const Matches = (props) => {
   }, [])
 
   const displayStarRating = (avgRating) => {
-      if(avgRating > 0){
-        return (
-          <StarRatingBar
-            score={avgRating}
-            dontShowScore={false}
-            allowsHalfStars={true}
-            accurateHalfStars={true}
-          />
-        )
-      }
-    }
-
-  if(props.matches.matches.length > 1){
-  return (
-    <SafeAreaView style={styles.container}>
-      <Header title={"Chat"} />
-      <View style={styles.container}>
-        <FlatList
-          data={props.matches.matches}
-          renderItem={({ item }) => (
-            <ScrollView>
-              <View style={styles.item}>
-                <TouchableOpacity
-                  style={styles.itemBox}
-                  onPress={() =>
-                    props.navigation.navigate("Messages", { match: item })
-                  }
-                >
-                  <Image
-                    style={styles.tinyImage}
-                    source={{ uri: item.profilePicture }}
-                  />
-                  <Text style={styles.title}>{item.name}</Text>
-                </TouchableOpacity>
-                {displayStarRating(item.avgRating)}
-              </View>
-              <View style={styles.separator} />
-            </ScrollView>
-          )}
-          keyExtractor={(item, index) => index.toString()}
-        />
-      </View>
-    </SafeAreaView>
-    )} else {
+    if (avgRating > 0) {
       return (
-        <SafeAreaView style={styles.container}>
-          <Text>No Matches!</Text>
-        </SafeAreaView>
+        <StarRatingBar
+          score={avgRating}
+          dontShowScore={false}
+          allowsHalfStars={true}
+          accurateHalfStars={true}
+        />
       )
     }
   }
+
+  if (props.matches.matches.length > 1) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <Header title={"Chat"} />
+        <View style={styles.container}>
+          <FlatList
+            data={props.matches.matches}
+            renderItem={({ item }) => (
+              <ScrollView>
+                <View style={styles.item}>
+                  <TouchableOpacity
+                    style={styles.itemBox}
+                    onPress={() =>
+                      props.navigation.navigate("Messages", { match: item })
+                    }
+                  >
+                    <Image
+                      style={styles.tinyImage}
+                      source={{ uri: item.profilePicture }}
+                    />
+                    <Text style={styles.title}>{item.name}</Text>
+                  </TouchableOpacity>
+                  {displayStarRating(item.avgRating)}
+                </View>
+                <View style={styles.separator} />
+              </ScrollView>
+            )}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        </View>
+      </SafeAreaView>
+    )
+  } else {
+    return (
+      <SafeAreaView style={styles.container}>
+        <Text style={styles.noMatches}>No Matches!</Text>
+        <Entypo
+          style={styles.noMatchesIcon}
+          name="emoji-sad"
+          size={100}
+          color="#288cd7"
+        />
+      </SafeAreaView>
+    )
+  }
+}
 
 const mapState = (state) => {
   return {
@@ -101,6 +110,16 @@ export default connect(mapState, mapDispatch)(Matches)
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  noMatches: {
+    fontSize: 30,
+    textAlign: "center",
+    marginTop: "50%",
+  },
+  noMatchesIcon: {
+    marginTop: "10%",
+    alignContent: "center",
+    alignSelf: "center",
   },
   item: {
     backgroundColor: "#f9c2ff",
