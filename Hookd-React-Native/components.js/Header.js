@@ -34,7 +34,7 @@ const Header = ({ title, image, match, messages, user }) => {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("AddMatchReview", {
-                match: match.id,
+                match: match,
               })
             }}
           >
