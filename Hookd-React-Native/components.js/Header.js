@@ -3,6 +3,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { Foundation } from "@expo/vector-icons"
 import { Ionicons } from "@expo/vector-icons"
 import { useNavigation } from "@react-navigation/native"
+import UserProfile from "../screens/UserProfile"
 
 const Header = ({ title, image, match, messages, user }) => {
   const navigation = useNavigation()
@@ -17,7 +18,12 @@ const Header = ({ title, image, match, messages, user }) => {
           >
             <Ionicons name="chevron-back-outline" size={34} color="#f3bae5" />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("UserProfile", {
+              id: match,
+              name: title,
+            })}
+            >
             <Text style={styles.goBackText}>{title}</Text>
             {/* <Image source={image} style={styles.image} /> */}
           </TouchableOpacity>

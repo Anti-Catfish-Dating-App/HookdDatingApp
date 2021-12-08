@@ -18,6 +18,7 @@ import { connect } from "react-redux"
 import { fetchMessages, sendMessageThunk } from "../store/messages"
 import { useNavigation } from "@react-navigation/native"
 import Header from "../components.js/Header"
+import { getUser } from "../store/singleUser"
 
 const Messages = (props) => {
   const [input, setInput] = React.useState("")
@@ -34,17 +35,19 @@ const Messages = (props) => {
     setInput("")
   }
 
-  React.useEffect(() => {
+  React.useEffect(async () => {
+    await props.getUser(props.route.params.match.id)
     props.getMessages(props.route.params.match.id)
   }, [])
+
 
   return (
     // {props.messages.length} > 2 ? (
     <SafeAreaView style={styles.container}>
       <Header
-        title={props.route.params.match.name}
-        image={props.route.params.match.profilePicture}
-        match={props.route.params.match.id}
+        title={props.user.user.name}
+        image={props.user.user.profilePicture}
+        match={props.user.user.id}
         messages={props.messages}
         user={props.auth}
       />
@@ -162,6 +165,7 @@ const mapStateToProps = (state) => {
   return {
     messages: state.messages,
     auth: state.auth,
+    user: state.singleUser
   }
 }
 
@@ -169,6 +173,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getMessages: (id) => dispatch(fetchMessages(id)),
     sendMessage: (id, message) => dispatch(sendMessageThunk(id, message)),
+    getUser: (userId) => dispatch(getUser(userId)),
   }
 }
 

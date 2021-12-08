@@ -29,9 +29,9 @@ const UserProfile = (props) => {
   const [avgRating, setAvgRating] = useState(props.avgRating)
   const [allUserReviews, setAllUserReviews] = useState(props.allUserReviews)
 
-
-
   useEffect(async () => {
+    await props.getUser(props.route.params.id)
+
     const newUser = props.user.user
     setUser(newUser)
     setAllUserReviews(await props.getReviews(newUser.id));

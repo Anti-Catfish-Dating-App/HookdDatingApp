@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
   },
   header: {
     padding: 2,
-    height: 60,
+    height: 57,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
