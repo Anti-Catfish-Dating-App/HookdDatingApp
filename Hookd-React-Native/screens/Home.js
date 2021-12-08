@@ -16,6 +16,7 @@ import Swipe from "./Swipe"
 import { me } from "../store/auth"
 import { getMatches } from "../store/matches"
 import Unverified from "./Unverified"
+import ChangeProfilePic from "./ChangeProfilePic"
 
 const Home = (props) => {
   const navigation = useNavigation()

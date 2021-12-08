@@ -2,7 +2,7 @@ import React from "react"
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { Foundation } from "@expo/vector-icons"
 import { Ionicons } from "@expo/vector-icons"
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons } from "@expo/vector-icons"
 import { useNavigation } from "@react-navigation/native"
 import UserProfile from "../screens/UserProfile"
 
@@ -18,45 +18,33 @@ const Header = ({ title, image, match, messages, user }) => {
             style={styles.goBack}
           >
             <Ionicons name="chevron-back-outline" size={34} color="#f3bae5" />
-          </TouchableOpacity>
-          <Image source={{ uri: image}} style={styles.image} />
-          <TouchableOpacity
-            onPress={() => navigation.navigate("UserProfile", {
-              id: match,
-              name: title,
-            })}
-            >
+
             <Text style={styles.goBackText}>{title}</Text>
           </TouchableOpacity>
-
         </View>
       ) : (
         <View style={styles.headContainer}>
-            <TouchableOpacity
+          <TouchableOpacity
             onPress={() => navigation.goBack()}
             style={styles.goBack}
           >
             <Ionicons name="chevron-back-outline" size={34} color="#f3bae5" />
-          </TouchableOpacity>
-          <Image source={{ uri: image}} style={styles.image} />
-          <TouchableOpacity
-            onPress={() => navigation.navigate("UserProfile", {
-              id: match,
-              name: title,
-            })}
-            >
             <Text style={styles.goBackText}>{title}</Text>
-
           </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate("AddMatchReview", {
-                  match: match.id,
-                })
-              }}
-            >
-            <MaterialIcons style={styles.reviewButton} name="rate-review" size={36} color="black" />
-            </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("AddMatchReview", {
+                match: match.id,
+              })
+            }}
+          >
+            <MaterialIcons
+              style={styles.reviewButton}
+              name="rate-review"
+              size={36}
+              color="black"
+            />
+          </TouchableOpacity>
         </View>
       )}
     </View>
@@ -96,7 +84,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 20,
     marginLeft: 10,
-    marginRight: 5
+    marginRight: 5,
   },
   reviewButton: {
     alignItems: "flex-end",
@@ -104,5 +92,5 @@ const styles = StyleSheet.create({
     marginLeft: 35,
     color: "#f3bae5",
     marginTop: 10,
-  }
+  },
 })

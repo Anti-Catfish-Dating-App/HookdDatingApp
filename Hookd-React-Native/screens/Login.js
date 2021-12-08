@@ -17,6 +17,7 @@ import { InputForm } from "./Input"
 import { connect } from "react-redux"
 import { authenticate } from "../store"
 import { useNavigation } from "@react-navigation/native"
+import DismissKeyboard from "../helperFunctions.js/DismissKeyboard"
 
 const Login = (props) => {
   const navigation = useNavigation()
@@ -34,42 +35,44 @@ const Login = (props) => {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.backgroundImage}>
-        <View style={styles.logoContainer}>
-          <Image
-            source={require("../hookd-logos_transparent.png")}
-            style={styles.logo}
-          />
-        </View>
-        <View style={styles.formContainer}>
-          <InputForm
-            control={control}
-            name="Email"
-            placeholder="Email"
-            type="email-address"
-          />
-          <InputForm
-            name="Password"
-            placeholder="Password"
-            type="password"
-            control={control}
-          />
-          <TouchableOpacity
-            style={styles.button}
-            onPress={handleSubmit(onSubmit)}
-          >
-            <Text style={styles.buttonText}>Login</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.navigate("Signup")}
-          >
-            <Text style={styles.buttonText}>Sign Up</Text>
-          </TouchableOpacity>
+    <DismissKeyboard>
+      <View style={styles.container}>
+        <View style={styles.backgroundImage}>
+          <View style={styles.logoContainer}>
+            <Image
+              source={require("../hookd-logos_transparent.png")}
+              style={styles.logo}
+            />
+          </View>
+          <View style={styles.formContainer}>
+            <InputForm
+              control={control}
+              name="Email"
+              placeholder="Email"
+              type="email-address"
+            />
+            <InputForm
+              name="Password"
+              placeholder="Password"
+              type="password"
+              control={control}
+            />
+            <TouchableOpacity
+              style={styles.button}
+              onPress={handleSubmit(onSubmit)}
+            >
+              <Text style={styles.buttonText}>Login</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.buttonSignUp}
+              onPress={() => navigation.navigate("Signup")}
+            >
+              <Text style={styles.buttonTextSignUp}>Sign Up</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
-    </View>
+    </DismissKeyboard>
   )
 }
 
@@ -108,6 +111,17 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 20,
     textAlign: "center",
+  },
+  buttonSignUp: {
+    backgroundColor: "#f3bae5",
+    padding: 10,
+    marginTop: 20,
+    width: "30%",
+  },
+  buttonTextSignUp: {
+    color: "#fff",
+    textAlign: "center",
+    fontSize: 20,
   },
 })
 
