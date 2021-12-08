@@ -5,7 +5,6 @@ const {
     Images,
     Matches,
     Messages,
-    NotMatches,
     Preferences,
     Reviews,
     User,
