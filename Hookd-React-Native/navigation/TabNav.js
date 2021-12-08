@@ -11,7 +11,7 @@ import Matches from "../screens/Matches"
 const TabIcon = (props) => (
   <Ionicons
     name={"md-home"}
-    size={30}
+    size={20}
     color={props.focused ? "grey" : "darkgrey"}
   />
 )
@@ -33,7 +33,7 @@ const TabNavigator = (props) => {
           }
 
           // You can return any component that you like here!
-          return <Ionicons name={iconName} size={30} color={"black"} />
+          return <Ionicons name={iconName} size={20} color={"black"} />
         },
         tabBarActiveTintColor: "#58ceb2",
         tabBarInactiveTintColor: "gray",
@@ -43,7 +43,7 @@ const TabNavigator = (props) => {
           borderTopRightRadius: 15,
           backgroundColor: "white",
           position: "absolute",
-          height: 70,
+          height: "10%",
         },
         tabBarLabelStyle: { paddingBottom: 6 },
       })}

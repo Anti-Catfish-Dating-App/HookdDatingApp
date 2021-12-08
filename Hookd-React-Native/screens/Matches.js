@@ -52,7 +52,7 @@ const Matches = (props) => {
         <View style={styles.header}>
           <Text style={styles.headerText}>Matches</Text>
         </View>
-        <View style={styles.container}>
+        <View style={styles.flatContainer}>
           <FlatList
             data={props.matches.matches}
             renderItem={({ item }) => (
@@ -113,6 +113,10 @@ export default connect(mapState, mapDispatch)(Matches)
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  flatContainer: {
+    flex: 1,
+    maxHeight: "80%"
   },
   header: {
     padding: 2,
