@@ -31,7 +31,16 @@ const Login = (props) => {
 
   const onSubmit = async (data) => {
     console.log(data)
-    await props.submitForm(data.Email, data.Password, data.Name === "null")
+    const res = await props.submitForm(
+      data.Email,
+      data.Password,
+      data.Name === "null"
+    )
+
+    if (res.auth.error) {
+      Alert.alert("Wrong password or email")
+    }
+    console.log("res", res)
   }
 
   return (
