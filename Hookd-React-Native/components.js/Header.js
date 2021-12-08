@@ -18,6 +18,7 @@ const Header = ({ title, image, match, messages, user }) => {
           >
             <Ionicons name="chevron-back-outline" size={34} color="#f3bae5" />
           </TouchableOpacity>
+          <Image source={{ uri: image}} style={styles.image} />
           <TouchableOpacity
             onPress={() => navigation.navigate("UserProfile", {
               id: match,
@@ -25,8 +26,9 @@ const Header = ({ title, image, match, messages, user }) => {
             })}
             >
             <Text style={styles.goBackText}>{title}</Text>
-            {/* <Image source={image} style={styles.image} /> */}
+
           </TouchableOpacity>
+
         </View>
       ) : (
         <View style={styles.container}>
@@ -82,7 +84,7 @@ const styles = StyleSheet.create({
   },
   headContainer: {
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
   },
   goBack: {
     padding: 10,
@@ -99,5 +101,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
+    marginLeft: 10,
+    marginRight: 5
   },
 })
