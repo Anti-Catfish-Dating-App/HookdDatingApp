@@ -21,6 +21,7 @@ import { Tab } from "react-native-elements/dist/tab/Tab"
 import SexualOrientationForm from "../screens/SexualOrientationForm"
 import Unverified from "../screens/Unverified"
 import ReverificationForm from "../screens/ReverificationForm"
+import Loading from "../screens/Loadings"
 
 const stack = createNativeStackNavigator()
 
@@ -46,6 +47,7 @@ const StackNavigator = (props) => {
               name="ReverificationForm"
               component={ReverificationForm}
             />
+            <stack.Screen name="Loading" component={Loading} />
           </stack.Group>
           <stack.Group screenOptions={{ presentation: "modal" }}>
             <stack.Screen name="Settings" component={Settings} />
@@ -68,6 +70,7 @@ const StackNavigator = (props) => {
           />
           <stack.Screen name="UserConsent" component={UserConsent} />
           <stack.Screen name="BaselinePhoto" component={BaselinePhoto} />
+          <stack.Screen name="Loading" component={Loading} />
         </>
       )}
     </stack.Navigator>

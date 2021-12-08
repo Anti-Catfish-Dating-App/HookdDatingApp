@@ -14,6 +14,7 @@ import { connect } from "react-redux"
 import { Camera } from "expo-camera"
 import { useNavigation } from "@react-navigation/native"
 import { faceVerification } from "../store/singleUser"
+import Loading from "./Loadings"
 
 const ReverificationForm = (props) => {
   const navigation = useNavigation()
@@ -31,11 +32,7 @@ const ReverificationForm = (props) => {
   }, [])
 
   if (loadingStatus === true) {
-    return (
-      <View>
-        <Text>Loading ....</Text>
-      </View>
-    )
+    return <Loading />
   }
 
   if (hasPermission === null) {
@@ -95,7 +92,7 @@ const ReverificationForm = (props) => {
         />
 
         <Button
-          title="UPLOAD PHOTO"
+          title="UPLOAD THIS PHOTO"
           onPress={async () => {
             console.log(props)
             console.log(currentPhoto)
@@ -108,16 +105,21 @@ const ReverificationForm = (props) => {
             })
 
             setLoading(true)
-            const loading = await props.faceComparison(form, props.auth.id)
-            console.log(loading)
+            const res = await props.faceComparison(form, props.auth.id)
+            console.log(res)
             setLoading(false)
 
-            if (loading === "No face found") {
-              setPhoto("")
-              Alert.alert(loading)
-            } else {
+            if (res === 200) {
               navigation.navigate("Home")
-              Alert.alert("You have been verified, thank you!")
+              Alert.alert("Photo Similarity Accepted")
+            }
+            if (res === 444) {
+              setPhoto("")
+              Alert.alert("Face not found")
+            }
+            if (res === undefined) {
+              setPhoto("")
+              Alert.alert("No similarity found")
             }
           }}
         />

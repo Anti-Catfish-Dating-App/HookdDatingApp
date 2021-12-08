@@ -14,6 +14,7 @@ import { connect } from "react-redux"
 import { Camera } from "expo-camera"
 import { useNavigation } from "@react-navigation/native"
 import { checkForFace } from "../store/singleUser"
+import Loading from "./Loadings"
 
 const BaselinePhoto = (props) => {
   const navigation = useNavigation()
@@ -31,11 +32,7 @@ const BaselinePhoto = (props) => {
   }, [])
 
   if (loadingStatus === true) {
-    return (
-      <View>
-        <Text>Loading ....</Text>
-      </View>
-    )
+    return <Loading />
   }
 
   if (hasPermission === null) {
@@ -95,7 +92,7 @@ const BaselinePhoto = (props) => {
         />
 
         <Button
-          title="UPLOAD PHOTO"
+          title="UPLOAD THIS PHOTO"
           onPress={async () => {
             console.log(props)
             console.log(currentPhoto)
@@ -117,7 +114,7 @@ const BaselinePhoto = (props) => {
               Alert.alert(loading)
             } else {
               navigation.navigate("Login")
-              Alert.alert("Baseline photo setup")
+              Alert.alert("Baseline photo setup, please login!")
             }
           }}
         />
