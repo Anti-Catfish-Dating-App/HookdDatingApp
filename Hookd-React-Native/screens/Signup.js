@@ -14,6 +14,8 @@ import { InputForm } from "./Input"
 import { connect } from "react-redux"
 import { authenticate } from "../store"
 import { useNavigation } from "@react-navigation/native"
+import DismissKeyboard from "../helperFunctions.js/DismissKeyboard"
+import { KeyboardAvoidingView } from "react-native"
 
 const Signup = (props) => {
   const navigation = useNavigation()
@@ -42,22 +44,30 @@ const Signup = (props) => {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Sign Up</Text>
-      <Text>Please enter your email and password</Text>
-      <InputForm name="Name" style={styles.input} control={control} />
+    <DismissKeyboard>
+      <KeyboardAvoidingView style={styles.container} behavior="padding">
+        <View style={styles.container}>
+          <Text style={styles.title}>Sign Up</Text>
+          <Text>Please enter your email and password</Text>
+          <InputForm name="Name" style={styles.input} control={control} />
 
-      <InputForm name="Email" style={styles.input} control={control} />
+          <InputForm name="Email" style={styles.input} control={control} />
 
-      <InputForm
-        name="Password"
-        secureTextEntry={true}
-        style={styles.input}
-        control={control}
-      />
-
-      <Button title="Sign Up" onPress={handleSubmit(onSubmit)} />
-    </View>
+          <InputForm
+            name="Password"
+            secureTextEntry={true}
+            style={styles.input}
+            control={control}
+          />
+          <TouchableOpacity
+            style={styles.button}
+            onPress={handleSubmit(onSubmit)}
+          >
+            <Text style={styles.buttonText}>Sign Up</Text>
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
+    </DismissKeyboard>
   )
 }
 
@@ -79,6 +89,16 @@ const styles = StyleSheet.create({
     width: 250,
     borderWidth: 2,
     padding: 10,
+  },
+  button: {
+    backgroundColor: "#288cd7",
+    padding: 10,
+    marginTop: 20,
+    width: "30%",
+  },
+  buttonText: {
+    color: "#fff",
+    textAlign: "center",
   },
 })
 

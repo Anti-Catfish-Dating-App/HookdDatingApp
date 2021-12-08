@@ -81,6 +81,7 @@ const Matches = (props) => {
   } else {
     return (
       <SafeAreaView style={styles.container}>
+        <Header title={"Keep Fishing"} />
         <Text style={styles.noMatches}>No Matches!</Text>
         <Entypo
           style={styles.noMatchesIcon}
