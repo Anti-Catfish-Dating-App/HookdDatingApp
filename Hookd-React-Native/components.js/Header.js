@@ -37,7 +37,7 @@ const Header = ({ title, image, match, messages, user }) => {
             onPress={() => navigation.goBack()}
             style={styles.goBack}
           >
-            <Ionicons name="chevron-back-outline" size={34} color="#288cd7" />
+            <Ionicons name="chevron-back-outline" size={34} color="#f3bae5" />
           </TouchableOpacity>
           <View style={styles.infoContainer}>
             <Image source={{ uri: image }} style={styles.image} />
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "transparent",
+    backgroundColor: "#fff",
     borderBottomWidth: 1,
     borderBottomColor: "#ddd",
     alignSelf: "stretch",
