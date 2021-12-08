@@ -10,12 +10,14 @@ const Header = ({ title, image, match, messages, user }) => {
   return (
     <View style={styles.container}>
       {!messages || messages.length < 10 ? (
-        <View>
+        <View style={styles.headContainer}>
           <TouchableOpacity
             onPress={() => navigation.goBack()}
             style={styles.goBack}
           >
             <Ionicons name="chevron-back-outline" size={34} color="#f3bae5" />
+          </TouchableOpacity>
+          <TouchableOpacity>
             <Text style={styles.goBackText}>{title}</Text>
             {/* <Image source={image} style={styles.image} /> */}
           </TouchableOpacity>
@@ -72,6 +74,10 @@ const styles = StyleSheet.create({
     borderBottomColor: "#ddd",
     alignSelf: "stretch",
   },
+  headContainer: {
+    flexDirection: "row",
+    alignItems: "center"
+  },
   goBack: {
     padding: 10,
     flexDirection: "row",
@@ -79,7 +85,7 @@ const styles = StyleSheet.create({
   goBackText: {
     fontSize: 25,
     paddingTop: 3,
-    paddingLeft: 5,
+    paddingLeft: 3,
     fontWeight: "bold",
     color: "#288cd7",
   },
