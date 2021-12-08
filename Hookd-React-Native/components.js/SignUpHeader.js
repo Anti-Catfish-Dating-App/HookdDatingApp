@@ -4,9 +4,8 @@ import { Foundation } from "@expo/vector-icons"
 import { Ionicons } from "@expo/vector-icons"
 import { MaterialIcons } from "@expo/vector-icons"
 import { useNavigation } from "@react-navigation/native"
-import UserProfile from "../screens/UserProfile"
 
-const Header = ({ title, image, match, messages, user }) => {
+const SignUpHeader = ({ title, image, match, messages, user }) => {
   const navigation = useNavigation()
 
   return (
@@ -17,17 +16,10 @@ const Header = ({ title, image, match, messages, user }) => {
             onPress={() => navigation.goBack()}
             style={styles.goBack}
           >
-            <Ionicons name="chevron-back-outline" size={34} color="#f3bae5" />
+            <Ionicons name="chevron-back-outline" size={34} color="#288cd7" />
           </TouchableOpacity>
           <Image source={{ uri: image }} style={styles.image} />
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate("UserProfile", {
-                id: match,
-                name: title,
-              })
-            }
-          >
+          <TouchableOpacity onPress={() => navigation.goBack()}>
             <Text style={styles.goBackText}>{title}</Text>
           </TouchableOpacity>
         </View>
@@ -42,14 +34,7 @@ const Header = ({ title, image, match, messages, user }) => {
           <View style={styles.infoContainer}>
             <Image source={{ uri: image }} style={styles.image} />
             <View style={styles.textContainer}>
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate("UserProfile", {
-                    id: match,
-                    name: title,
-                  })
-                }
-              >
+              <TouchableOpacity onPress={() => navigation.goBack()}>
                 <Text style={styles.goBackText}>{title}</Text>
               </TouchableOpacity>
             </View>
@@ -57,9 +42,7 @@ const Header = ({ title, image, match, messages, user }) => {
           <View style={styles.goBack}>
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate("AddMatchReview", {
-                  match: match,
-                })
+                navigation.goBack()
               }}
             >
               <MaterialIcons
@@ -76,17 +59,14 @@ const Header = ({ title, image, match, messages, user }) => {
   )
 }
 
-export default Header
+export default SignUpHeader
 
 const styles = StyleSheet.create({
   container: {
-    padding: 2,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     backgroundColor: "transparent",
-    borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
     alignSelf: "stretch",
   },
   headContainer: {
@@ -112,16 +92,14 @@ const styles = StyleSheet.create({
   },
   goBackText: {
     fontSize: 25,
-    paddingTop: 3,
-    paddingLeft: 3,
     fontWeight: "bold",
     color: "#288cd7",
+    left: "-20%",
   },
   image: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    marginLeft: 10,
     marginRight: 5,
   },
   reviewButton: {

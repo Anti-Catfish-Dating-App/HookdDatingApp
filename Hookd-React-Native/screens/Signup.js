@@ -16,7 +16,7 @@ import { authenticate } from "../store"
 import { useNavigation } from "@react-navigation/native"
 import DismissKeyboard from "../helperFunctions.js/DismissKeyboard"
 import { KeyboardAvoidingView } from "react-native"
-import Header from "../components.js/Header"
+import SignUpHeader from "../components.js/SignUpHeader"
 
 const Signup = (props) => {
   const navigation = useNavigation()
@@ -47,7 +47,7 @@ const Signup = (props) => {
   return (
     <DismissKeyboard>
       <SafeAreaView style={styles.container}>
-        <Header title="login" />
+        <SignUpHeader title="Login" />
         <KeyboardAvoidingView style={styles.container} behavior="padding">
           <View style={styles.container}>
             <Text style={styles.title}>Sign Up</Text>

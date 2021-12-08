@@ -18,8 +18,8 @@ import { connect } from "react-redux"
 import { useNavigation } from "@react-navigation/native"
 import { editUser } from "../store/auth"
 import { Picker } from "@react-native-picker/picker"
-import Header from "../components.js/Header"
 import DismissKeyboard from "../helperFunctions.js/DismissKeyboard"
+import SignUpHeader from "../components.js/SignUpHeader"
 
 const SignUpInfo = (props) => {
   const navigation = useNavigation()
@@ -59,7 +59,7 @@ const SignUpInfo = (props) => {
   return (
     <DismissKeyboard style={styles.mainContainer}>
       <SafeAreaView style={styles.container}>
-        <Header title={"Back"} />
+        <SignUpHeader title={"Sign Up"} />
 
         <KeyboardAvoidingView
           style={styles.KeyboardAvoidingView}
@@ -134,7 +134,6 @@ const styles = StyleSheet.create({
   },
   pickerContainer: {
     width: "80%",
-    marginBottom: 200,
   },
   picker: {
     width: "100%",
