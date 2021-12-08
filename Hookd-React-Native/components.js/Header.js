@@ -37,7 +37,9 @@ const Header = ({ title, image, match, messages, user }) => {
         >
           <Ionicons name="chevron-back-outline" size={34} color="#f3bae5" />
         </TouchableOpacity>
+        <View style={styles.infoContainer}>
         <Image source={{ uri: image}} style={styles.image} />
+        <View style={styles.textContainer}>
         <TouchableOpacity
           onPress={() => navigation.navigate("UserProfile", {
             id: match,
@@ -46,6 +48,9 @@ const Header = ({ title, image, match, messages, user }) => {
           >
           <Text style={styles.goBackText}>{title}</Text>
         </TouchableOpacity>
+        </View>
+        </View>
+        <View style={styles.goBack}>
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("AddMatchReview", {
@@ -60,6 +65,7 @@ const Header = ({ title, image, match, messages, user }) => {
               color="black"
             />
           </TouchableOpacity>
+          </View>
         </View>
       )}
     </View>
@@ -81,11 +87,24 @@ const styles = StyleSheet.create({
   },
   headContainer: {
     flexDirection: "row",
+    flexShrink: 1,
     alignItems: "center",
+  },
+  infoContainer: {
+    flexDirection: "row",
+    flexShrink: 1,
+    alignItems: "center",
+  },
+  textContainer:{
+    flexDirection: "row",
+    flexGrow: 1,
+    alignItems: "center",
+    maxWidth: "80%"
   },
   goBack: {
     padding: 8,
     flexDirection: "row",
+    flexWrap: "wrap",
   },
   goBackText: {
     fontSize: 25,
@@ -102,10 +121,11 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   reviewButton: {
-    alignItems: "flex-end",
+    position: "relative",
+    justifyContent: "flex-end",
     fontWeight: "bold",
-    marginLeft: 35,
     color: "#f3bae5",
     marginTop: 10,
+
   },
 })
