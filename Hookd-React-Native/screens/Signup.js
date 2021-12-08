@@ -16,6 +16,7 @@ import { authenticate } from "../store"
 import { useNavigation } from "@react-navigation/native"
 import DismissKeyboard from "../helperFunctions.js/DismissKeyboard"
 import { KeyboardAvoidingView } from "react-native"
+import Header from "../components.js/Header"
 
 const Signup = (props) => {
   const navigation = useNavigation()
@@ -45,28 +46,31 @@ const Signup = (props) => {
 
   return (
     <DismissKeyboard>
-      <KeyboardAvoidingView style={styles.container} behavior="padding">
-        <View style={styles.container}>
-          <Text style={styles.title}>Sign Up</Text>
-          <Text>Please enter your email and password</Text>
-          <InputForm name="Name" style={styles.input} control={control} />
+      <SafeAreaView style={styles.container}>
+        <Header title="login" />
+        <KeyboardAvoidingView style={styles.container} behavior="padding">
+          <View style={styles.container}>
+            <Text style={styles.title}>Sign Up</Text>
+            <Text>Please enter your email and password</Text>
+            <InputForm name="Name" style={styles.input} control={control} />
 
-          <InputForm name="Email" style={styles.input} control={control} />
+            <InputForm name="Email" style={styles.input} control={control} />
 
-          <InputForm
-            name="Password"
-            secureTextEntry={true}
-            style={styles.input}
-            control={control}
-          />
-          <TouchableOpacity
-            style={styles.button}
-            onPress={handleSubmit(onSubmit)}
-          >
-            <Text style={styles.buttonText}>Sign Up</Text>
-          </TouchableOpacity>
-        </View>
-      </KeyboardAvoidingView>
+            <InputForm
+              name="Password"
+              secureTextEntry={true}
+              style={styles.input}
+              control={control}
+            />
+            <TouchableOpacity
+              style={styles.button}
+              onPress={handleSubmit(onSubmit)}
+            >
+              <Text style={styles.buttonText}>Sign Up</Text>
+            </TouchableOpacity>
+          </View>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
     </DismissKeyboard>
   )
 }
