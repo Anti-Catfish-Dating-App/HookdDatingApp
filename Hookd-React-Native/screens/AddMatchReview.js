@@ -27,7 +27,7 @@ const AddMatchReview = (props) => {
     })
 
     if(resStatus === 200){
-      navigation.navigate("Matches");
+      navigation.popToTop();
     } else {
       Alert.alert("Error!");
     }
