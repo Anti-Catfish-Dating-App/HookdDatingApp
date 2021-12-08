@@ -29,20 +29,21 @@ const Messages = (props) => {
       headerShown: false,
     })
   }, [])
+  const FlatListRef = React.useRef()
 
   const sendMessage = () => {
     props.sendMessage(props.route.params.match.id, input)
     setInput("")
+    FlatListRef.current.scrollToEnd({ animating: true })
   }
 
   React.useEffect(async () => {
     await props.getUser(props.route.params.match.id)
     props.getMessages(props.route.params.match.id)
+    FlatListRef.current.scrollToEnd({ animating: true })
   }, [])
 
-
   return (
-    // {props.messages.length} > 2 ? (
     <SafeAreaView style={styles.container}>
       <Header
         title={props.user.user.name}
@@ -60,6 +61,7 @@ const Messages = (props) => {
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.messages}>
             <FlatList
+              ref={FlatListRef}
               data={props.messages}
               renderItem={({ item }) => {
                 if (item.userId === props.route.params.match.id) {
@@ -167,7 +169,7 @@ const mapStateToProps = (state) => {
     messages: state.messages,
     auth: state.auth,
     user: state.singleUser,
-    allUserReviews: state.reviews.allUserReviews
+    allUserReviews: state.reviews.allUserReviews,
   }
 }
 
