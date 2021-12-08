@@ -21,7 +21,7 @@ const AddMatchReview = (props) => {
 
   const onSubmit = async (data) => {
     const resStatus = await props.addReview({
-      reviewedUser: props.route.params.matchId,
+      reviewedUser: props.route.params.match,
       rating: data.Rating,
       review: data.Review
     })
