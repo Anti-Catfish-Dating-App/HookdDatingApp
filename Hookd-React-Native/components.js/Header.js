@@ -2,7 +2,9 @@ import React from "react"
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { Foundation } from "@expo/vector-icons"
 import { Ionicons } from "@expo/vector-icons"
+import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native"
+import UserProfile from "../screens/UserProfile"
 
 const Header = ({ title, image, match, messages, user }) => {
   const navigation = useNavigation()
@@ -10,27 +12,42 @@ const Header = ({ title, image, match, messages, user }) => {
   return (
     <View style={styles.container}>
       {!messages || messages.length < 10 ? (
-        <View>
+        <View style={styles.headContainer}>
           <TouchableOpacity
             onPress={() => navigation.goBack()}
             style={styles.goBack}
           >
             <Ionicons name="chevron-back-outline" size={34} color="#f3bae5" />
-            <Text style={styles.goBackText}>{title}</Text>
-            {/* <Image source={image} style={styles.image} /> */}
           </TouchableOpacity>
+          <Image source={{ uri: image}} style={styles.image} />
+          <TouchableOpacity
+            onPress={() => navigation.navigate("UserProfile", {
+              id: match,
+              name: title,
+            })}
+            >
+            <Text style={styles.goBackText}>{title}</Text>
+          </TouchableOpacity>
+
         </View>
       ) : (
-        <View style={styles.container}>
-          <View>
+        <View style={styles.headContainer}>
             <TouchableOpacity
-              onPress={() => navigation.goBack()}
-              style={styles.goBack}
+            onPress={() => navigation.goBack()}
+            style={styles.goBack}
+          >
+            <Ionicons name="chevron-back-outline" size={34} color="#f3bae5" />
+          </TouchableOpacity>
+          <Image source={{ uri: image}} style={styles.image} />
+          <TouchableOpacity
+            onPress={() => navigation.navigate("UserProfile", {
+              id: match,
+              name: title,
+            })}
             >
-              <Ionicons name="chevron-back-outline" size={34} color="#f3bae5" />
-              <Text style={styles.goBackText}>{title}</Text>
-              {/* <Image source={image} style={styles.image} /> */}
-            </TouchableOpacity>
+            <Text style={styles.goBackText}>{title}</Text>
+
+          </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate("AddMatchReview", {
@@ -38,21 +55,8 @@ const Header = ({ title, image, match, messages, user }) => {
                 })
               }}
             >
-              <Text
-                style={{
-                  alignItems: "flex-end",
-                  fontSize: 18,
-                  fontWeight: "bold",
-                  color: "#f3bae5",
-                  marginLeft: "auto",
-                  marginRight: "auto",
-                  marginTop: 10,
-                }}
-              >
-                Add a review
-              </Text>
+            <MaterialIcons style={styles.reviewButton} name="rate-review" size={36} color="black" />
             </TouchableOpacity>
-          </View>
         </View>
       )}
     </View>
@@ -72,6 +76,10 @@ const styles = StyleSheet.create({
     borderBottomColor: "#ddd",
     alignSelf: "stretch",
   },
+  headContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
   goBack: {
     padding: 10,
     flexDirection: "row",
@@ -79,7 +87,7 @@ const styles = StyleSheet.create({
   goBackText: {
     fontSize: 25,
     paddingTop: 3,
-    paddingLeft: 5,
+    paddingLeft: 3,
     fontWeight: "bold",
     color: "#288cd7",
   },
@@ -87,5 +95,14 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
+    marginLeft: 10,
+    marginRight: 5
   },
+  reviewButton: {
+    alignItems: "flex-end",
+    fontWeight: "bold",
+    marginLeft: 35,
+    color: "#f3bae5",
+    marginTop: 10,
+  }
 })

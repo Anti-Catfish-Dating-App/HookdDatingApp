@@ -29,16 +29,15 @@ const UserProfile = (props) => {
   const [avgRating, setAvgRating] = useState(props.avgRating)
   const [allUserReviews, setAllUserReviews] = useState(props.allUserReviews)
 
-
-
   useEffect(async () => {
+    await props.getUser(props.route.params.id)
+
     const newUser = props.user.user
     setUser(newUser)
     setAllUserReviews(await props.getReviews(newUser.id));
   }, [])
 
   return (
-    <ScrollView style={styles.container}>
       <FlatList
           ListHeaderComponent={
             <View style={styles.profilePictureContainer}>
@@ -58,13 +57,12 @@ const UserProfile = (props) => {
       }
           data={props.allUserReviews}
           renderItem={({item}) =>
-          <View>
-            <Text>{item.reviewText} - {item.rating}</Text>
+          <View style={styles.item}>
+            <Text style={styles.itemText}>{item.reviewText}</Text>
           </View>
           }
           keyExtractor={(item, index) => index.toString()}
         />
-    </ScrollView>
   )
 }
 
@@ -99,6 +97,7 @@ const styles = StyleSheet.create({
     width: 300,
     height: 300,
     borderRadius: 15,
+    marginTop: 8,
     position: "relative",
     alignItems: "center",
   },
@@ -123,4 +122,15 @@ const styles = StyleSheet.create({
     margin: 20,
     width: 300,
   },
+  item: {
+    backgroundColor: "#f9c2ff",
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
+    borderRadius: 10,
+  },
+  itemText: {
+    fontSize: 20,
+    fontWeight: "bold"
+  }
 })

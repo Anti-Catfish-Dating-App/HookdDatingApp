@@ -65,8 +65,6 @@ export const checkForFace = (imageData) => async (dispatch) => {
 
 export const _editProfilePic = (imageData, id) => async (dispatch) => {
   try {
-    console.log(id)
-
     const config = { headers: { "Content-Type": "multipart/form-data" } }
 
     const res = await axios.post(

@@ -46,10 +46,12 @@ const Matches = (props) => {
     }
   }
 
-  if (props.matches.matches.length > 1) {
+  if (props.matches.matches.length >= 1) {
     return (
       <SafeAreaView style={styles.container}>
-        <Header title={"Chat"} />
+        <View style={styles.header}>
+          <Text style={styles.headerText}>Matches</Text>
+        </View>
         <View style={styles.container}>
           <FlatList
             data={props.matches.matches}
@@ -111,6 +113,24 @@ export default connect(mapState, mapDispatch)(Matches)
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  header: {
+    padding: 2,
+    height: 57,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    borderBottomWidth: 1,
+    borderBottomColor: "#ddd",
+    alignSelf: "stretch",
+  },
+  headerText:{
+    fontSize: 25,
+    paddingTop: 3,
+    paddingLeft: 5,
+    fontWeight: "bold",
+    color: "#288cd7",
   },
   noMatches: {
     fontSize: 30,
