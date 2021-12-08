@@ -36,8 +36,8 @@ const Login = (props) => {
       data.Name === "null"
     )
 
-    if (res.auth.error) {
-      Alert.alert("Wrong password or email")
+    if (res === 405) {
+      Alert.alert("Wrong email password")
     }
   }
 
