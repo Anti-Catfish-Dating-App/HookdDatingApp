@@ -13,24 +13,39 @@ const Header = ({ title, image, match, messages, user }) => {
     <View style={styles.container}>
       {!messages || messages.length < 10 ? (
         <View style={styles.headContainer}>
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            style={styles.goBack}
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={styles.goBack}
+        >
+          <Ionicons name="chevron-back-outline" size={34} color="#f3bae5" />
+        </TouchableOpacity>
+        <Image source={{ uri: image}} style={styles.image} />
+        <TouchableOpacity
+          onPress={() => navigation.navigate("UserProfile", {
+            id: match,
+            name: title,
+          })}
           >
-            <Ionicons name="chevron-back-outline" size={34} color="#f3bae5" />
-
-            <Text style={styles.goBackText}>{title}</Text>
-          </TouchableOpacity>
-        </View>
+          <Text style={styles.goBackText}>{title}</Text>
+        </TouchableOpacity>
+      </View>
       ) : (
         <View style={styles.headContainer}>
           <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            style={styles.goBack}
+          onPress={() => navigation.goBack()}
+          style={styles.goBack}
+        >
+          <Ionicons name="chevron-back-outline" size={34} color="#f3bae5" />
+        </TouchableOpacity>
+        <Image source={{ uri: image}} style={styles.image} />
+        <TouchableOpacity
+          onPress={() => navigation.navigate("UserProfile", {
+            id: match,
+            name: title,
+          })}
           >
-            <Ionicons name="chevron-back-outline" size={34} color="#f3bae5" />
-            <Text style={styles.goBackText}>{title}</Text>
-          </TouchableOpacity>
+          <Text style={styles.goBackText}>{title}</Text>
+        </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("AddMatchReview", {
@@ -69,7 +84,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   goBack: {
-    padding: 10,
+    padding: 8,
     flexDirection: "row",
   },
   goBackText: {
