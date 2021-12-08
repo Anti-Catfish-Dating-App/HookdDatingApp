@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useLayoutEffect } from "react"
 import { useController, useForm } from "react-hook-form"
 import {
   StyleSheet,
@@ -15,12 +15,19 @@ import { connect } from "react-redux"
 import { useNavigation } from "@react-navigation/native"
 import { editUser } from "../store/auth"
 import { Picker } from "@react-native-picker/picker"
-import { AutoFocus } from "expo-camera/build/Camera.types"
+import SignUpHeader from "../components.js/SignUpHeader"
 
 const OtherGender = (props) => {
   const navigation = useNavigation()
   const { control, handleSubmit } = useForm()
   const [gender, setGender] = useState("")
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: false,
+    })
+  }, [navigation])
+
   const onSubmit = async (data) => {
     const resStatus = await props.editUser({
       id: props.auth.id,
@@ -36,67 +43,64 @@ const OtherGender = (props) => {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Sign Up</Text>
-      <Text>Please enter your gender identity</Text>
+    <SafeAreaView style={styles.mainContainer}>
+      <SignUpHeader title="Sign up Info" />
 
-      <InputForm name="Gender" style={styles.input} control={control} />
+      <View style={styles.container}>
+        <Text>Please enter your gender identity</Text>
 
-      <Text style={styles.innerText}>
-        Which gender category would you prefer to be catergorized in?
-      </Text>
-      <Picker
-        selectedValue={gender}
-        onValueChange={(itemValue, itemIndex) => setGender(itemValue)}
-        style={styles.picker}
-        mode={"dropdown"}
-      >
-        <Picker.Item label="What is your catergory preference?" />
-        <Picker.Item label="Man" value="Man" />
-        <Picker.Item label="Woman" value="Woman" />
-      </Picker>
+        <InputForm name="Gender" style={styles.input} control={control} />
 
-      <Button title="Submit" onPress={handleSubmit(onSubmit)} />
-    </View>
+        <Text style={styles.innerText}>
+          Which gender category would you prefer to be catergorized in?
+        </Text>
+        <Picker
+          selectedValue={gender}
+          onValueChange={(itemValue, itemIndex) => setGender(itemValue)}
+          style={styles.picker}
+          mode={"dropdown"}
+        >
+          <Picker.Item label="What is your catergory preference?" />
+          <Picker.Item label="Man" value="Man" />
+          <Picker.Item label="Woman" value="Woman" />
+        </Picker>
+
+        <Button title="Submit" onPress={handleSubmit(onSubmit)} />
+      </View>
+    </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    backgroundColor: "#f3bae5",
+  },
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
     justifyContent: "center",
+    alignItems: "center",
   },
-  title: {
+  text: {
     fontSize: 20,
-    fontWeight: "bold",
     marginBottom: 20,
-  },
-  innerText: {
-    width: 250,
-    textAlign: "center",
-    marginBottom: 20,
-    marginTop: 20,
-  },
-  input: {
-    height: 40,
-    marginBottom: 200,
-    margin: 12,
-    width: 250,
-    borderWidth: 2,
-    padding: 10,
   },
   pickerContainer: {
-    width: 400,
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    width: "100%",
+    marginBottom: 20,
   },
   picker: {
-    width: 250,
-    borderWidth: 2,
-    position: "relative",
+    width: "100%",
+  },
+  button: {
+    backgroundColor: "#288cd7",
+    padding: 10,
+    marginTop: 20,
+    width: "30%",
+  },
+  buttonText: {
+    color: "#fff",
+    textAlign: "center",
   },
 })
 

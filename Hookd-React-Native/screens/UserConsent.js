@@ -10,7 +10,7 @@ import {
 } from "react-native"
 import { connect } from "react-redux"
 import { useNavigation } from "@react-navigation/native"
-import Header from "../components.js/Header"
+import SignUpHeader from "../components.js/SignUpHeader"
 
 const UserConsent = (props) => {
   const navigation = useNavigation()
@@ -19,12 +19,12 @@ const UserConsent = (props) => {
     navigation.setOptions({
       headerShown: false,
     })
-  }, [])
+  }, [navigation])
 
   return (
     <SafeAreaView style={styles.mainContainer}>
       <View style={styles.container}>
-        <Header title="User Consent" />
+        <SignUpHeader title="Sexual Orientation" />
         <View style={styles.innerContainer}>
           <Text style={styles.title}>User Consent</Text>
           <Text style={styles.paragraph}>
