@@ -1,5 +1,6 @@
-import React, { useLayoutEffect } from "react"
+import React from "react"
 import {
+  ActivityIndicator,
   StyleSheet,
   Text,
   View,
@@ -12,11 +13,8 @@ import {
   TouchableOpacity,
   Animated,
 } from "react-native"
-import { StatusBar } from "expo-status-bar"
-import { InputForm } from "./Input"
-import { connect } from "react-redux"
 
-const Login = (props) => {
+const Loading = () => {
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
@@ -24,6 +22,8 @@ const Login = (props) => {
           source={require("../hookd-logos_transparent.png")}
           style={styles.logo}
         />
+        <Text style={styles.loadingText}> Loading .... </Text>
+        <ActivityIndicator size="large" color="#f3bae5" />
       </View>
     </View>
   )
@@ -36,49 +36,21 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  backgroundImage: {
-    flex: 0.6,
-    width: "100%",
-    height: "100%",
-    backgroundColor: "#288cd7",
-  },
   logoContainer: {
     alignItems: "center",
     justifyContent: "center",
+    position: "relative",
+    top: "-10%",
   },
   logo: {
     width: 200,
     height: 200,
   },
-  formContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  button: {
-    backgroundColor: "#288cd7",
-    padding: 10,
-    margin: 10,
-    borderRadius: 10,
-  },
-  buttonText: {
-    color: "white",
-    fontSize: 20,
-    textAlign: "center",
+  loadingText: {
+    fontSize: 30,
+    color: "#f3bae5",
+    marginBottom: 50,
   },
 })
 
-const mapState = (state) => {
-  return {
-    name: "login",
-    displayName: "Login",
-  }
-}
-
-const mapDispatch = (dispatch) => {
-  return {
-    submitForm: (email, password, name, method = "login") =>
-      dispatch(authenticate(email, password, name, method)),
-  }
-}
-
-export default connect(mapState, mapDispatch)(Login)
+export default Loading

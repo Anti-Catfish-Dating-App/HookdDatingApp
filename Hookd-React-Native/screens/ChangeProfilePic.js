@@ -14,10 +14,12 @@ import { useEffect, useState } from "react"
 import { connect } from "react-redux"
 import { _editProfilePic } from "../store/singleUser"
 import { useNavigation } from "@react-navigation/native"
+import Loading from "./Loadings"
 
 const ChangeProfilePic = (props) => {
   const navigation = useNavigation()
   const [profilePicture, setImage] = useState(props.user.profilePicture)
+  const [loadingStatus, setLoading] = useState(false)
   const { user } = props
 
   useEffect(() => {
@@ -53,8 +55,9 @@ const ChangeProfilePic = (props) => {
       uri: profilePicture,
       type: "image/jpg",
     })
+    setLoading(true)
     const res = await props.editProfilePic(form, props.user.id)
-    console.log(res)
+    setLoading(false)
     if (res === 200) {
       navigation.navigate("Settings")
       Alert.alert("Photo Similarity Accepted")
@@ -62,9 +65,13 @@ const ChangeProfilePic = (props) => {
     if (res === 444) {
       Alert.alert("Face not found")
     }
-    if (res === 445) {
+    if (res === undefined) {
       Alert.alert("No similarity found")
     }
+  }
+
+  if (loadingStatus === true) {
+    return <Loading />
   }
 
   return (
