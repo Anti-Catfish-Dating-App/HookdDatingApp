@@ -33,7 +33,7 @@ const TabNavigator = (props) => {
           }
 
           // You can return any component that you like here!
-          return <Ionicons name={iconName} size={15} color={"black"} />
+          return <Ionicons name={iconName} size={25} color={"black"} />
         },
         tabBarActiveTintColor: "#f3bae5",
         tabBarInactiveTintColor: "gray",
