@@ -46,7 +46,7 @@ const Matches = (props) => {
     }
   }
 
-  if (props.matches.matches.length > 1) {
+  if (props.matches.matches.length >= 1) {
     return (
       <SafeAreaView style={styles.container}>
         <Header title={"Chat"} />

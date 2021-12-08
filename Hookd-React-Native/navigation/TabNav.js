@@ -3,6 +3,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { Icon } from "react-native-elements"
 import { Ionicons } from "@expo/vector-icons"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
+import { connect } from "react-redux"
+import { getMatches } from "../store/matches"
 import Home from "../screens/Home"
 import Matches from "../screens/Matches"
 
@@ -15,7 +17,8 @@ const TabIcon = (props) => (
 )
 
 const Tab = createBottomTabNavigator()
-const TabNavigator = () => {
+
+const TabNavigator = (props) => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -25,6 +28,7 @@ const TabNavigator = () => {
           if (route.name === "Home") {
             iconName = focused ? "ios-home-sharp" : "ios-home-outline"
           } else if (route.name === "Matches") {
+            props.getMatches();
             iconName = focused ? "ios-heart-sharp" : "ios-heart-outline"
           }
 
@@ -49,4 +53,11 @@ const TabNavigator = () => {
     </Tab.Navigator>
   )
 }
-export default TabNavigator
+
+const mapDispatch = (dispatch) => {
+  return {
+    getMatches: () => dispatch(getMatches()),
+  }
+}
+
+export default connect(null, mapDispatch)(TabNavigator)
