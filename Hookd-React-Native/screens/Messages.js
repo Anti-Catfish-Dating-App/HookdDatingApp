@@ -50,6 +50,7 @@ const Messages = (props) => {
         match={props.user.user.id}
         messages={props.messages}
         user={props.auth}
+        reviews={props.allUserReviews}
       />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -165,7 +166,8 @@ const mapStateToProps = (state) => {
   return {
     messages: state.messages,
     auth: state.auth,
-    user: state.singleUser
+    user: state.singleUser,
+    allUserReviews: state.reviews.allUserReviews
   }
 }
 
