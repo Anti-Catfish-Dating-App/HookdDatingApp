@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useLayoutEffect } from "react"
 import {
   StyleSheet,
   Text,
@@ -19,10 +19,16 @@ import Loading from "./Loadings"
 const BaselinePhoto = (props) => {
   const navigation = useNavigation()
   const [hasPermission, setHasPermission] = useState(null)
-  const [type, setType] = useState(Camera.Constants.Type.back)
+  const [type, setType] = useState(Camera.Constants.Type.front)
   const [currentPhoto, setPhoto] = useState("")
   const [loadingStatus, setLoading] = useState(false)
   let camera = Camera
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: false,
+    })
+  }, [])
 
   useEffect(() => {
     ;(async () => {
@@ -148,10 +154,10 @@ const styles = StyleSheet.create({
   takePictureButton: {
     width: 75,
     height: 75,
-    backgroundColor: "gray",
+    backgroundColor: "#f3bae5",
     borderRadius: 50,
     alignSelf: "flex-end",
-    left: "20%",
+    left: "15%",
     zIndex: 2,
   },
   text: {
