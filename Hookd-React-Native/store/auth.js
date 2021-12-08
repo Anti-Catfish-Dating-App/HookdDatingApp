@@ -60,9 +60,9 @@ export const authenticate =
       )
       AsyncStorage.setItem(TOKEN, res.data.token)
       dispatch(me())
-      return res
+      return res.status
     } catch (error) {
-      return 405
+      return 405, dispatch(setAuth({ error: error }))
     }
   }
 
