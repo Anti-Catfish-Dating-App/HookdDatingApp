@@ -30,7 +30,6 @@ const Login = (props) => {
   }, [navigation])
 
   const onSubmit = async (data) => {
-    console.log(data)
     const res = await props.submitForm(
       data.Email,
       data.Password,
@@ -40,7 +39,6 @@ const Login = (props) => {
     if (res.auth.error) {
       Alert.alert("Wrong password or email")
     }
-    console.log("res", res)
   }
 
   return (
