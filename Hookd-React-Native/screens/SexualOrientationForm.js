@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useLayoutEffect } from "react"
 import { useController, useForm } from "react-hook-form"
 import {
   StyleSheet,
@@ -15,11 +15,19 @@ import { connect } from "react-redux"
 import { useNavigation } from "@react-navigation/native"
 import { editUser } from "../store/auth"
 import { Picker } from "@react-native-picker/picker"
+import Header from "../components.js/Header"
 
 const SexualOrientationForm = (props) => {
   const navigation = useNavigation()
   const { control, handleSubmit } = useForm()
   const [orientation, setOrientation] = useState("")
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: false,
+    })
+  }, [navigation])
+
   const onSubmit = async () => {
     const resStatus = await props.editUser({
       id: props.auth.id,
@@ -34,45 +42,63 @@ const SexualOrientationForm = (props) => {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Sign Up</Text>
-      <Text>What is your sexual orientation?</Text>
-
-      <Picker
-        selectedValue={orientation}
-        onValueChange={(itemValue, itemIndex) => setOrientation(itemValue)}
-        style={styles.picker}
-        mode={"dropdown"}
-      >
-        <Picker.Item label="What is your sexual orientation?" />
-        <Picker.Item label="Straight" value="Straight" />
-        <Picker.Item label="Gay" value="Gay" />
-        <Picker.Item label="Bisexual" value="Bisexual" />
-      </Picker>
-
-      <Button title="Submit" onPress={handleSubmit(onSubmit)} />
-    </View>
+    <SafeAreaView style={styles.mainContainer}>
+      <Header title="Sexual Orientation" />
+      <View style={styles.container}>
+        <View style={styles.pickerContainer}>
+          <Picker
+            selectedValue={orientation}
+            onValueChange={(itemValue, itemIndex) => setOrientation(itemValue)}
+            style={styles.picker}
+            mode={"dropdown"}
+          >
+            <Picker.Item label="What is your sexual orientation?" />
+            <Picker.Item label="Straight" value="Straight" />
+            <Picker.Item label="Gay" value="Gay" />
+            <Picker.Item label="Bisexual" value="Bisexual" />
+          </Picker>
+        </View>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={handleSubmit(onSubmit)}
+        >
+          <Text style={styles.buttonText}>Submit</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    backgroundColor: "#f3bae5",
+  },
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
     justifyContent: "center",
+    alignItems: "center",
   },
-  title: {
+  text: {
     fontSize: 20,
-    fontWeight: "bold",
+    marginBottom: 20,
+  },
+  pickerContainer: {
+    width: "100%",
     marginBottom: 20,
   },
   picker: {
-    width: 250,
-    borderWidth: 2,
+    width: "100%",
+  },
+  button: {
+    backgroundColor: "#288cd7",
     padding: 10,
-    margin: 12,
-    overflow: "hidden",
+    marginTop: 20,
+    width: "30%",
+  },
+  buttonText: {
+    color: "#fff",
+    textAlign: "center",
   },
 })
 
