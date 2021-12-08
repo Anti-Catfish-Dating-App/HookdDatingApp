@@ -5,11 +5,11 @@ const {
 const { requireToken } = require("./middleware");
 const matchReducer = require("./findAllMatches")
 
-router.get("/:reviewedId", async (req, res, next) => {
+router.get("/:userId", async (req, res, next) => {
   try {
     const allUserReviewInfo = await Reviews.findAll({
       where: {
-        reviewedUserId: req.params.reviewedId
+        userId: req.params.userId
       }
     })
     const avgRating = (allUserReviewInfo.reduce((prev, curr) => {
