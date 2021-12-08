@@ -31,7 +31,7 @@ const Settings = (props) => {
       age,
       bio,
     })
-    props.navigation.navigate("Home")
+    navigation.popToTop()
   }
 
   return (
