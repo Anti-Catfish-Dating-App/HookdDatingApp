@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 20,
-    color: "#f45ca5",
+    color: "white",
   },
   buttonLogout: {
     backgroundColor: "#f45ca5",
@@ -186,6 +186,6 @@ const styles = StyleSheet.create({
   },
   buttonTextLogout: {
     fontSize: 20,
-    color: "#288cd7",
+    color: "white",
   },
 })
