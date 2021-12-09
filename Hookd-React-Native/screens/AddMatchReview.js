@@ -35,7 +35,7 @@ const AddMatchReview = (props) => {
 
   return (
     <View style={styles.container}>
-      <Text style={{fontSize: 24}}>Add a review!</Text>
+      <Text style={{fontSize: 20}}>Please add a rating (1 - 5) and a review!</Text>
       <InputForm name="Rating" style={styles.input} control={control} />
       <InputForm name="Review" style={styles.input} control={control} />
       <Button title="Submit Review" onPress={handleSubmit(onSubmit)} />
