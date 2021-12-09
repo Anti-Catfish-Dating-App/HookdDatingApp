@@ -1,5 +1,6 @@
 import axios from "axios"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import domainName from "./domainName"
 
 //action types
 const SET_MESSAGES = "SET_MESSAGES"
@@ -32,14 +33,11 @@ export const fetchMessages = (id) => {
   return async (dispatch) => {
     try {
       const token = await AsyncStorage.getItem("token")
-      const res = await axios.get(
-        `https://hookd-datingapp.herokuapp.com/api/messages/${id}`,
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      )
+      const res = await axios.get(`${domainName}api/messages/${id}`, {
+        headers: {
+          Authorization: token,
+        },
+      })
       dispatch(setMessages(res.data))
     } catch (err) {
       dispatch(emptyMessages())
@@ -53,7 +51,7 @@ export const sendMessageThunk = (id, message) => {
     try {
       const token = await AsyncStorage.getItem("token")
       const res = await axios.post(
-        "https://hookd-datingapp.herokuapp.com/api/messages",
+        `${domainName}api/messages`,
         {
           message: message,
           receiverId: id,

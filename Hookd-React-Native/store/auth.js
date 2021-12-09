@@ -1,9 +1,14 @@
 import axios from "axios"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { getToken } from "./headers"
+import constants from "expo-constants"
+
+console.log(constants.manifest.extra.ServerDomain)
+console.log(process.env.NODE_ENV)
+
+const DOMAIN_NAME = constants.manifest.extra.ServerDomain
 
 const TOKEN = "token"
-
 const SET_AUTH = "SET_AUTH"
 const EDIT_PROFILE = "EDIT_PROFILE"
 const EDIT_PROFILE_PIC = "EDIT_PROFILE_PIC"
