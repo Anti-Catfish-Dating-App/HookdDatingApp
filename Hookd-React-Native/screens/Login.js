@@ -50,6 +50,7 @@ const Login = (props) => {
               source={require("../hookd-logos_transparent.png")}
               style={styles.logo}
             />
+            <Text style={styles.logoText}>The Anti Catfish Dating App</Text>
           </View>
           <View style={styles.formContainer}>
             <InputForm
@@ -99,10 +100,12 @@ const styles = StyleSheet.create({
   logoContainer: {
     alignItems: "center",
     justifyContent: "center",
+    paddingBottom: 40,
   },
   logo: {
     width: 200,
-    height: 200,
+    height: 100,
+    marginBottom: 15
   },
   formContainer: {
     alignItems: "center",
@@ -130,6 +133,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 20,
   },
+  logoText: {
+    position: "relative",
+    color: "#fff",
+    fontWeight: "bold",
+    fontStyle: "italic"
+  }
 })
 
 const mapState = (state) => {
