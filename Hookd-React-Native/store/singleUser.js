@@ -1,5 +1,6 @@
 import axios from "axios"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import domainName from "./domainName"
 
 //action types
 const SET_USER = "SET_USER"
@@ -37,9 +38,7 @@ export const editProfilePic = (user) => ({
 //thunk creators
 export const getUser = (userId) => async (dispatch) => {
   try {
-    const res = await axios.get(
-      `https://hookd-datingapp.herokuapp.com/api/users/${userId}`
-    )
+    const res = await axios.get(`${domainName}api/users/${userId}`)
     dispatch(setUser(res.data))
   } catch (error) {
     dispatch(setError(error))
@@ -50,7 +49,7 @@ export const checkForFace = (imageData) => async (dispatch) => {
   const config = { headers: { "Content-Type": "multipart/form-data" } }
 
   const { data } = await axios.post(
-    "https://hookd-datingapp.herokuapp.com/api/faceapi",
+    `${domainName}api/faceapi`,
     imageData,
     config
   )
@@ -68,12 +67,10 @@ export const _editProfilePic = (imageData, id) => async (dispatch) => {
     const config = { headers: { "Content-Type": "multipart/form-data" } }
 
     const res = await axios.post(
-      `https://hookd-datingapp.herokuapp.com/api/faceapi/profilepic/${id}`,
+      `${domainName}api/faceapi/profilepic/${id}`,
       imageData,
       config
     )
-
-
 
     if (res.status === 200) {
       dispatch(editProfilePic(res.data))
@@ -90,7 +87,7 @@ export const faceVerification = (imageData, id) => async (dispatch) => {
     const config = { headers: { "Content-Type": "multipart/form-data" } }
 
     const res = await axios.post(
-      `https://hookd-datingapp.herokuapp.com/api/faceapi/profilepic/${id}`,
+      `${domainName}api/faceapi/profilepic/${id}`,
       imageData,
       config
     )

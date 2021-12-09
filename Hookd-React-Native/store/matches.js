@@ -1,6 +1,7 @@
 import axios from "axios"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { getToken } from "./headers"
+import domainName from "./domainName"
 
 const SET_MATCHES = "SET_MATCHES"
 const ADD_SWIPE = "ADD_SWIPE"
@@ -20,7 +21,7 @@ export const getMatches = () => async (dispatch) => {
   try {
     const tokenHeader = await getToken()
 
-    const res = await axios.get(`https://hookd-datingapp.herokuapp.com/api/matches`, {
+    const res = await axios.get(`${domainName}api/matches`, {
       headers: {
         authorization: tokenHeader,
       },
@@ -35,7 +36,7 @@ export const addSwipe = (direction, id) => async (dispatch) => {
   try {
     const tokenHeader = await getToken()
     const res = await axios.post(
-      `https://hookd-datingapp.herokuapp.com/api/matches`,
+      `${domainName}api/matches`,
       { direction, id },
       {
         headers: {

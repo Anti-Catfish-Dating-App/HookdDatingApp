@@ -1,7 +1,7 @@
 import "dotenv/config"
 
 export default {
-  name: "CoolApp",
+  name: "Hookd",
   version: "1.0.0",
   extra: {
     JWT: process.env.JWT,
@@ -12,7 +12,10 @@ export default {
     CloudinaryName: process.env.CLOUDNAME,
     CloudinaryKey: process.env.CLOUDKEY,
     CloudinarySecret: process.env.CLOUDSECRET,
-    localhost: process.env.LOCALHOST,
+    ServerDomain:
+      process.env.NODE_ENV === "development"
+        ? process.env.LOCALHOST
+        : "https://hookd-datingapp.herokuapp.com/",
   },
   ios: {
     bundleIdentifier: "com.Hookd.datingApp",
