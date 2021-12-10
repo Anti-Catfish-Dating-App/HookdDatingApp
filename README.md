@@ -59,3 +59,21 @@ or you can simply visit the [Expo GO page](https://expo.dev/@violetleon93/hookd)
 ## Meet the Team
 
 <img src="https://i.imgur.com/7NtVbWA.png">
+
+Contact Us:
+
+Christian:
+[LinkedIn](https://www.linkedin.com/in/christian-anderson-pgh/)
+[Github](https://github.com/somecallmehans)
+
+Dan:
+[LinkedIn](https://www.linkedin.com/in/daniel-t-schneider92/)
+[Github](https://github.com/Dancodes92)
+
+Laura:
+[LinkedIn](https://www.linkedin.com/in/lauraberkey/)
+[Github](https://github.com/LABerk)
+
+Violet:
+[LinkedIn](https://www.linkedin.com/in/violetleon/)
+[Github](https://github.com/VioletLeon)
