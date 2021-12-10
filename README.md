@@ -2,12 +2,56 @@
 
 Hookd is our team's solution to catfishing on mobile dating apps.
 
+## The App in Action
+
+<strong> Login Funtionality, Swiping, and Matching </strong>
+<img width="50%" height="50%" src="https://i.imgur.com/Xam0LgV.gif">
+
+<strong> General Features </strong>
+<img  width="50%" height="50%" src="https://i.imgur.com/3NaDzDJ.gif">
+
+<strong>Face Verification Working</strong>
+<img  width="50%" height="50%" src="https://i.imgur.com/ypUJmFV.gif">
+
+<strong>Facial Comparison True</strong>
+<img  width="50%" height="50%" src="https://i.imgur.com/juscV67.gif">
+
+## How to Run the Application
+
+To run the application you must first install the node modules in both the React-Native folder and the Server-Heroku folder.
+
+You will need to setup environment variables and API keys if you'd like to start your own server, if not you can set the following as an environment variable NODE_ENV=production
+
+To start the front end application you must use command:
+
+```bash
+expo start
+```
+
+To start the backend you must use command:
+
+```bash
+npm run start:server
+```
+
+or you can simply visit the [Expo GO page](https://expo.dev/@violetleon93/hookd)
+
+## Tech Stack
+
+<strong>These are the technologies that we used: </strong>
+
+- React Native
+- Expo
+- Postgres w/ Sequelize
+- Node
+- Express
+- Babel
+- Axios
+- Redux
+- JWT
+- Microsoft Face API
+- Cloudinary API
+
 ## Meet the Team
 
-<img width="200" height="200" src="https://media-exp1.licdn.com/dms/image/C5603AQEZZI0vUnuxjg/profile-displayphoto-shrink_200_200/0/1609783798387?e=1644451200&v=beta&t=wTa33Z4SfBtrHtSn05IXSg48kx0HQKbwoOLej3B5uj4">
-
-<img width="200" height="200" src="https://media-exp1.licdn.com/dms/image/D4E35AQH5Molo2nZVgQ/profile-framedphoto-shrink_200_200/0/1636558470705?e=1639252800&v=beta&t=y7VWbQB8NRm2Zeso5BBwDnlgV5Qyf448Cs-JJgIpZdg">
-
-<img width="200" height="200" src="https://media-exp1.licdn.com/dms/image/C4E03AQH41c1VqaFRDQ/profile-displayphoto-shrink_800_800/0/1517557819484?e=1644451200&v=beta&t=zffTyBJic6PjRZmm5JYEn53Wc-TX7V99oeRCObY5WKU">
-
-<img width="200" height="200" src="https://media-exp1.licdn.com/dms/image/C4E03AQE-C5nW0ndN7A/profile-displayphoto-shrink_200_200/0/1636994427562?e=1644451200&v=beta&t=yHWgj56iNc4lnrYKdcjEcxBVO0ewAE5Ao8wI5FhM2wQ">
+<img src="https://i.imgur.com/7NtVbWA.png">
