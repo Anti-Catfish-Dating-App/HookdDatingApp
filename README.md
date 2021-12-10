@@ -5,16 +5,16 @@ Hookd is our team's solution to catfishing on mobile dating apps.
 ## The App in Action
 
 <strong> Login Funtionality, Swiping, and Matching </strong>
-<img width="50%" height="50%" src="https://i.imgur.com/Xam0LgV.gif">
+<img width="50%" height="50%" src="readMeGifs/LoginandSwipe.gif">
 
 <strong> General Features </strong>
-<img  width="50%" height="50%" src="https://i.imgur.com/3NaDzDJ.gif">
+<img  width="50%" height="50%" src="readMeGifs/MatchingReviews.gif">
 
 <strong>Face Verification Working</strong>
-<img  width="50%" height="50%" src="https://i.imgur.com/ypUJmFV.gif">
+<img  width="50%" height="50%" src="readMeGifs/UploadFailed.gif">
 
 <strong>Facial Comparison True</strong>
-<img  width="50%" height="50%" src="https://i.imgur.com/juscV67.gif">
+<img  width="50%" height="50%" src="readMeGifs/UploadSuccess.gif">
 
 ## How to Run the Application
 
