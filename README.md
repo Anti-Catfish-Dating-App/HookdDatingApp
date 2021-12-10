@@ -64,8 +64,7 @@ Contact Us:
 
 Christian:
 <br>
-[LinkedIn](https://www.linkedin.com/in/
-christian-anderson-pgh/)
+[LinkedIn](https://www.linkedin.com/in/christian-anderson-pgh/)
 <br>
 [Github](https://github.com/somecallmehans)
 
