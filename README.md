@@ -63,7 +63,10 @@ or you can simply visit the [Expo GO page](https://expo.dev/@violetleon93/hookd)
 Contact Us:
 
 Christian:
-[LinkedIn](https://www.linkedin.com/in/christian-anderson-pgh/)
+<br>
+[LinkedIn](https://www.linkedin.com/in/
+christian-anderson-pgh/)
+<br>
 [Github](https://github.com/somecallmehans)
 
 Dan:
