@@ -67,13 +67,19 @@ Christian:
 [Github](https://github.com/somecallmehans)
 
 Dan:
+<br>
 [LinkedIn](https://www.linkedin.com/in/daniel-t-schneider92/)
+<br>
 [Github](https://github.com/Dancodes92)
 
 Laura:
+<br>
 [LinkedIn](https://www.linkedin.com/in/lauraberkey/)
+<br>
 [Github](https://github.com/LABerk)
 
 Violet:
+<br>
 [LinkedIn](https://www.linkedin.com/in/violetleon/)
+<br>
 [Github](https://github.com/VioletLeon)
